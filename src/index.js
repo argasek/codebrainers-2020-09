@@ -25,5 +25,12 @@ console.log(correctAnswerCount);
 console.log(incorrectAnswerCount);
 
 
-
+function isExamPassed(total, answerCount) {
+    return answerCount >= total * 0.6;
+}
+if (isExamPassed(numberOfQuestions,correctAnswerCount)){
+    alert(`zdałeś`);
+} else {
+    alert(`nie zdałeś`);
+}
 
