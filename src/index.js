@@ -1,4 +1,6 @@
-const numberOfQuestions = 3;
+const numberOfQuestions = 4;
+const arrCor = [];
+const arrInCor = [];
 
 function getRandomInteger() {
     return Math.floor(Math.random() * 10) + 1;
@@ -16,12 +18,16 @@ for (let i = 0; i < numberOfQuestions; i++) {
     let answer;
     while (isNaN(answer)) {
         answer = parseInt(prompt(`Ile jest ${num1} * ${num2} ?`));
+
     }
 
     console.log(num1, num2, result, answer);
 
     if (answer === result) {
         correctAnswerCount++;
+        arrCor.push(answer);
+    }else{
+        arrInCor.push(answer);
     }
 }
 incorrectAnswerCount = numberOfQuestions - correctAnswerCount;
@@ -44,3 +50,6 @@ if (isExamPassed(numberOfQuestions, correctAnswerCount)) {
      Your score is:
        ${correctAnswerCount} correct answers
        ${numberOfQuestions - correctAnswerCount} wrong answers.`);}
+
+console.log('User correct responses ' + arrCor.join(', '));
+console.log('User incorrect responses ' + arrInCor.join(', '))
