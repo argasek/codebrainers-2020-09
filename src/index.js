@@ -4,22 +4,33 @@ function getRandomInteger() {
     return Math.floor(Math.random() * 10) + 1;
 }
 
-console.log(getRandomInteger());
 let correctAnswerCount = 0;
 let incorrectAnswerCount = 0;
+let repeatedQuestion;
+let allQuestionsCount
+allQuestionsCount = 0;
 
 for (let i = 0; i <numberOfQuestions; i++) {
     const num1 = getRandomInteger();
     const num2 = getRandomInteger();
-    const answer = parseInt(prompt(`Ile jest ${num1} * ${num2} ?`));
+
     const result = num1 * num2;
+    let questionsRoundCount;
+    questionsRoundCount=0;
 
-    console.log(num1, num2, result, answer);
+    do{
+    const answer = parseInt(prompt(`Ile jest ${num1} * ${num2} ?`));
+    repeatedQuestion = parseInt(answer);
 
-    if (answer === result) {
+    if (isNaN(parseInt(answer))) {
+        alert ('Please use number!');
+        }
+        questionsRoundCount++
+        allQuestionsCount++;
+    } while (repeatedQuestion !== result)
         correctAnswerCount++;
-    }
 }
+
 incorrectAnswerCount = numberOfQuestions - correctAnswerCount;
 console.log(correctAnswerCount);
 console.log(incorrectAnswerCount);
@@ -28,9 +39,13 @@ console.log(incorrectAnswerCount);
 function isExamPassed(total, answerCount) {
     return answerCount >= total * 0.6;
 }
+
 if (isExamPassed(numberOfQuestions,correctAnswerCount)){
     alert(`zdałeś`);
 } else {
     alert(`nie zdałeś`);
 }
+
+alert(`poprawnych odpowiedzi: ${correctAnswerCount},
+    błędnych odpowiedzi: ${incorrectAnswerCount}`);
 
