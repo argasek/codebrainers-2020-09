@@ -26,20 +26,21 @@ for (let i = 0; i <numberOfQuestions; i++) {
 
 
     do{
-        const answer = prompt(`Question ${i + 1 } z ${numberOfQuestions}. Multiply: ${num1} * ${num2} ?`);
+        const answer = prompt(`Question ${i + 1 } of ${numberOfQuestions}. Multiply numbers:  ${num1} x ${num2} :`);
         repeatedQuestion = parseInt(answer);
 
         if (isNaN(parseInt(answer))) {
             alert('Your answer is not a valid value. Please use integer value.');
         }
         questionsRoundCount++
-        allQuestionsCount++;
-        number1=num1;
-        number2=num2;
+
 
 
     } while ( repeatedQuestion !== result);
 
+    allQuestionsCount++;
+    // number1=num1;
+    // number2=num2;
 
 
     console.log(`Multiplication of: ${num1} x ${num2} = ${ result }, Your answer is: ${repeatedQuestion}, 
@@ -56,10 +57,8 @@ incorrectAnswerCount = allQuestionsCount - correctAnswerCount;
 console.log(`All questions: ${allQuestionsCount}`);
 console.log(`Correct answers: ${correctAnswerCount}`);
 console.log(`Incorrect: ${incorrectAnswerCount}`);
-console.log(`number1: ${number1}`);
-console.log(`number1: ${number2}`);
-
-
+// console.log(`number1: ${number1}`);
+// console.log(`number2: ${number2}`);
 
 
 function isExamPassed(total, answerCount){
@@ -68,7 +67,7 @@ function isExamPassed(total, answerCount){
 if (isExamPassed(allQuestionsCount, correctAnswerCount)){
     alert(`Well Done! You passed! Given ${allQuestionsCount} questions, you answered correctly for ${correctAnswerCount} of them, which is ${Math.ceil((correctAnswerCount/allQuestionsCount)*100)} % of all questions. `);
 } else {
-    alert(`Sorry, you didn't succeed! You needed at least 60% of correct aswers. Given ${allQuestionsCount} questions, you answered correctly for ${correctAnswerCount} of them, which is ${Math.ceil((correctAnswerCount/allQuestionsCount)*100)} % of all questions`);
+    alert(`Sorry, you didn't succeed! You needed at least 60% of correct answers. Given ${allQuestionsCount} questions, you answered correctly for ${correctAnswerCount} of them, which is ${Math.ceil((correctAnswerCount/allQuestionsCount)*100)} % of all questions`);
 }
 
 
