@@ -1,19 +1,27 @@
-const names = ['Basia', 'Adrian', 'Jan', 'Paulina', 'Jakub', 'Artur', 'Damian', 'Hermenegilda', 'Konstancja'];
+const names = [
+    'Basia', 'Adrian', 'Jan', 'Paulina',
+    'Jakub', 'Artur', 'Damian', 'Jarema',
+    'Barnaba', 'Hermenegilda', 'Konstancja'
+];
+
 const surnames = ['Kowalsk', 'Nowak', 'Pawlak', 'Kwiatkowsk'];
 const flexTable = [true, false, false, true];
 
-// const filteredNames = names.filter(function (value) {
-//     return value.length > 5;
-// });
-const filteredNames = names;
-console.log(names, filteredNames);
+function filter(value) {
+    return value.length > 5;
+}
 
-const fullNames = filteredNames.map(function (name, index) {
+const filteredNames = names.filter(filter);
+
+// console.log(names, filteredNames);
+
+const mapper = function (name, index) {
     const fullName = name + " " + surnames[index % surnames.length];
     // console.log(name, index, surnames[index % surnames.length] , index % surnames.length);
 
-
     return fullName;
-})
+};
+
+const fullNames = filteredNames.map(mapper);
 
 console.log(fullNames);

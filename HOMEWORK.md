@@ -1,5 +1,24 @@
 # Homework
 
+## 2021-01-07
+
+### Task 1
+
+Modify `mapper()` function in such way that surnames concatenated
+to names have a proper Polish inflection (example: 'Jan Kowalski',
+but 'Janina Kowalska'). Surnames which require applying inflection
+are those which indices in `surnames` table have corresponding
+`true` values in `flexTable` (i.e. if they are `false`, we just
+concatenate surname as is).
+
+Tip 1: You can go with `if` or ternary operator `a ? b : c` 
+
+### Task 2
+
+Modify `filter()` function in such way that only female names
+are selected for further processing as a result.
+
+
 ## 2021-01-05
 
 ### Task 1
