@@ -11,7 +11,10 @@ let incorrectAnswerCount = 0;
 for (let i = 0; i <numberOfQuestions; i++) {
     const num1 = getRandomInteger();
     const num2 = getRandomInteger();
-    const answer = parseInt(prompt(`Ile jest ${num1} * ${num2} ?`));
+    let answer = 0;
+    do {
+        answer = parseInt(prompt(`Ile jest ${num1} * ${num2} ?`));
+    } while (isNaN(answer));
     const result = num1 * num2;
 
     console.log(num1, num2, result, answer);
@@ -29,8 +32,8 @@ function isExamPassed(total, answerCount) {
     return answerCount >= total * 0.6;
 }
 if (isExamPassed(numberOfQuestions,correctAnswerCount)){
-    alert(`zdałeś`);
+    alert(`Zdałeś!. Ilość poprawnych odpowiedzi: ${correctAnswerCount} na ${numberOfQuestions}`);
 } else {
-    alert(`nie zdałeś`);
+    alert(`Nie zdałeś! Ilość błędnych odpowiedzi: ${incorrectAnswerCount} na ${numberOfQuestions}`);
 }
 
