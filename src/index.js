@@ -7,29 +7,43 @@ function getRandomInteger() {
 console.log(getRandomInteger());
 let correctAnswerCount = 0;
 let incorrectAnswerCount = 0;
+let sumOfQue = 0;
+let num11;
+let num22;
+let answer2;
 
 for (let i = 0; i <numberOfQuestions; i++) {
     const num1 = getRandomInteger();
     const num2 = getRandomInteger();
-    const answer = parseInt(prompt(`Ile jest:  ${ num1 } * ${ num2 } ?`));
+
     const result = num1 * num2;
 
-    console.log(num1, num2, result, answer);
+    do {
+        const answer = prompt(`Ile jest:  ${num1} * ${num2} ?`);
+        answer2 = parseInt(answer);
 
-    if (answer === result) {
+        if (isNaN(parseInt(answer))) {
+            alert(`Podaj liczbę!`);
+        }
+        num11 = num1;
+        num22 = num2;
+        sumOfQue++;
+
+    } while (answer2 !== result);
+
+
+    if (answer2 === result) {
         correctAnswerCount++;
     }
-    if (answer !== result) {
-        break;
-    }
 
-    if (isNaN(answer)) {
-        alert(`Podaj liczbę!`);
-    }
+    // if (answer !== result) {
+    //     break;
+    // }
+
 }
 
 
-incorrectAnswerCount = numberOfQuestions - correctAnswerCount;
+incorrectAnswerCount = sumOfQue - correctAnswerCount;
 console.log(correctAnswerCount);
 console.log(incorrectAnswerCount);
 
