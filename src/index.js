@@ -6,9 +6,6 @@ function getRandomInteger() {
 
 let correctAnswerCount = 0;
 let incorrectAnswerCount = 0;
-let repeatedQuestion;
-let allQuestionsCount
-allQuestionsCount = 0;
 
 for (let i = 0; i <numberOfQuestions; i++) {
     const num1 = getRandomInteger();
@@ -17,7 +14,7 @@ for (let i = 0; i <numberOfQuestions; i++) {
     let answer;
 
     do {
-    const answer = parseInt(prompt(`Ile jest ${num1} * ${num2} ?`));
+    answer = parseInt(prompt(`Ile jest ${num1} * ${num2} ?`));
     } while(isNaN(answer));
 
     const result = num1 * num2;
@@ -28,9 +25,9 @@ for (let i = 0; i <numberOfQuestions; i++) {
 }
 
 incorrectAnswerCount = numberOfQuestions - correctAnswerCount;
+
 console.log(correctAnswerCount);
 console.log(incorrectAnswerCount);
-
 
 function isExamPassed(total, answerCount) {
     return answerCount >= total * 0.6;
