@@ -4,33 +4,87 @@ function getRandomInteger() {
     return Math.floor(Math.random() * 10) + 1;
 }
 
-console.log(getRandomInteger());
 let correctAnswerCount = 0;
 let incorrectAnswerCount = 0;
+let repeatedQuestion;
+let allQuestionsCount ;
+allQuestionsCount = 0;
+
+let number1;
+let number2 ;
+
+
+
 
 for (let i = 0; i <numberOfQuestions; i++) {
     const num1 = getRandomInteger();
     const num2 = getRandomInteger();
-    const answer = parseInt(prompt(`Ile jest ${num1} * ${num2} ?`));
+
     const result = num1 * num2;
+    let questionsRoundCount;
+    questionsRoundCount=0;
 
-    console.log(num1, num2, result, answer);
 
-    if (answer === result) {
+    do{
+        const answer = prompt(`Question ${i + 1 } z ${numberOfQuestions}. Multiply: ${num1} * ${num2} ?`);
+        repeatedQuestion = parseInt(answer);
+
+        if (isNaN(parseInt(answer))) {
+            alert('Your answer is not a valid value. Please use integer value.');
+        }
+        questionsRoundCount++
+        allQuestionsCount++;
+        number1=num1;
+        number2=num2;
+
+
+    } while ( repeatedQuestion !== result);
+
+
+
+    console.log(`Multiplication of: ${num1} x ${num2} = ${ result }, Your answer is: ${repeatedQuestion}, 
+    and you gave correct answer after ${questionsRoundCount} time.`);
+
+    if (repeatedQuestion===result) {
         correctAnswerCount++;
     }
+
 }
-incorrectAnswerCount = numberOfQuestions - correctAnswerCount;
-console.log(correctAnswerCount);
-console.log(incorrectAnswerCount);
+
+incorrectAnswerCount = allQuestionsCount - correctAnswerCount;
+
+console.log(`All questions: ${allQuestionsCount}`);
+console.log(`Correct answers: ${correctAnswerCount}`);
+console.log(`Incorrect: ${incorrectAnswerCount}`);
+console.log(`number1: ${number1}`);
+console.log(`number1: ${number2}`);
 
 
-function isExamPassed(total, answerCount) {
-    return answerCount >= total * 0.6;
+
+
+function isExamPassed(total, answerCount){
+    return answerCount >= 0.6 * total;
 }
-if (isExamPassed(numberOfQuestions,correctAnswerCount)){
-    alert(`zdałeś`);
+if (isExamPassed(allQuestionsCount, correctAnswerCount)){
+    alert(`Well Done! You passed! Given ${allQuestionsCount} questions, you answered correctly for ${correctAnswerCount} of them, which is ${Math.ceil((correctAnswerCount/allQuestionsCount)*100)} % of all questions. `);
 } else {
-    alert(`nie zdałeś`);
+    alert(`Sorry, you didn't succeed! You needed at least 60% of correct aswers. Given ${allQuestionsCount} questions, you answered correctly for ${correctAnswerCount} of them, which is ${Math.ceil((correctAnswerCount/allQuestionsCount)*100)} % of all questions`);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
