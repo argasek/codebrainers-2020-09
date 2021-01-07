@@ -4,9 +4,6 @@ function getRandomInteger() {
     return Math.floor(Math.random() * 10) + 1;
 }
 
-let correctAnswerCount = 0;
-let incorrectAnswerCount = 0;
-
 let answers = [];
 let questions = [];
 
@@ -14,7 +11,7 @@ for (let i = 0; i < numberOfQuestions; i++) {
     const num1 = getRandomInteger();
     const num2 = getRandomInteger();
 
-    const question = [num1, num2];
+    const question = [ num1, num2 ];
     questions.push(question);
 
     let answer;
@@ -25,26 +22,37 @@ for (let i = 0; i < numberOfQuestions; i++) {
 
     answers.push(answer);
 }
-incorrectAnswerCount = numberOfQuestions - correctAnswerCount;
 
-console.log(answers);
-console.log(questions);
-
-function isExamPassed(total, answerCount) {
-    return answerCount >= total * 0.6;
+function isExamPassed(questionsAskedCount, correctAnswerCount) {
+    return correctAnswerCount >= questionsAskedCount * 0.6;
 }
 
 function isAnswerCorrect(a, b, c) {
     return c === a * b;
 }
 
+const comment = [];
+let questionCorrectness = [];
+
 for (let i = 0; i < questions.length; i++) {
-    console.log(isAnswerCorrect(questions[i][0], questions[i][1], answers[i]));
+    const a = questions[i][0];
+    const b = questions[i][1];
+    const answer = answers[i];
+    const result = isAnswerCorrect(a, b, answer);
+    questionCorrectness.push(result);
+    comment.push(`User asked if ${a} * ${b} = ${answer} said it was ${result}`);
 }
 
-// if (isExamPassed(numberOfQuestions, correctAnswerCount)) {
-//     alert(`zdałeś`);
-// } else {
-//     alert(`nie zdałeś`);
-// }
+function identity(value) {
+    return value;
+}
+
+const onlyCorrectAnswersArray = questionCorrectness.filter(identity);
+const correctAnswerCount = onlyCorrectAnswersArray.length;
+
+let textToShow = comment.join("\n");
+
+textToShow += '\nDid user pass the exam? ' + isExamPassed(questions.length, correctAnswerCount);
+
+alert(textToShow);
 
