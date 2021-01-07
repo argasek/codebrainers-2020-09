@@ -14,21 +14,17 @@ for (let i = 0; i <numberOfQuestions; i++) {
     const num1 = getRandomInteger();
     const num2 = getRandomInteger();
 
-    const result = num1 * num2;
-    let questionsRoundCount;
-    questionsRoundCount=0;
+    let answer;
 
-    do{
+    do {
     const answer = parseInt(prompt(`Ile jest ${num1} * ${num2} ?`));
-    repeatedQuestion = parseInt(answer);
+    } while(isNaN(answer));
 
-    if (isNaN(parseInt(answer))) {
-        alert ('Please use number!');
-        }
-        questionsRoundCount++
-        allQuestionsCount++;
-    } while (repeatedQuestion !== result)
+    const result = num1 * num2;
+
+    if (answer === result) {
         correctAnswerCount++;
+    }
 }
 
 incorrectAnswerCount = numberOfQuestions - correctAnswerCount;
