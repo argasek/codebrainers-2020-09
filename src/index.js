@@ -1,4 +1,4 @@
-// Homework  solution "borrowed" from Sebastian.
+// Homework solution "borrowed" from Sebastian.
 
 const names = [
     'Basia', 'Adrian', 'Jan', 'Paulina',
@@ -10,7 +10,9 @@ const surnames = ['Kowalsk', 'Nowak', 'Pawlak', 'Kwiatkowsk'];
 const flexTable = [true, false, false, true];
 
 function filter(value) {
-    return value.length > 2;
+    if (value.endsWith('a') && value !== 'Jarema' && value !== 'Barnaba') {
+        return value;
+    }
 }
 
 const filteredNames = names.filter(filter);
@@ -18,11 +20,8 @@ const filteredNames = names.filter(filter);
 const mapper = function (name, index) {
     let fullName;
 
-    if (name.endsWith('a') && name !== 'Jarema' && name !== 'Barnaba'
-        && flexTable[index % surnames.length]) {
+    if (flexTable[index % surnames.length]) {
         fullName = name + " " + surnames[index % surnames.length] + "a";
-    } else if (flexTable[index % surnames.length]) {
-        fullName = name + " " + surnames[index % surnames.length] + "i";
     } else {
         fullName = name + " " + surnames[index % surnames.length];
     }
@@ -33,7 +32,6 @@ const mapper = function (name, index) {
 const fullNames = filteredNames.map(mapper);
 
 console.log(fullNames);
-
 
 
 
