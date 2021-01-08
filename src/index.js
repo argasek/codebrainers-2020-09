@@ -8,7 +8,7 @@ const surnames = ['Kowalsk', 'Nowak', 'Pawlak', 'Kwiatkowsk'];
 const flexTable = [true, false, false, true];
 
 function filter(value) {
-    if (value.endsWith('a')){
+    if (value.endsWith('a') & value !== "Barnaba" & value !== "Jarema"){
         return value;
     }
 }
