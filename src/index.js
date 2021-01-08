@@ -1,36 +1,41 @@
-const numberOfQuestions = 3;
+const names = [
+    'Basia', 'Adrian', 'Jan', 'Paulina',
+    'Jakub', 'Artur', 'Damian', 'Jarema',
+    'Barnaba', 'Hermenegilda', 'Konstancja'
+];
 
-function getRandomInteger() {
-    return Math.floor(Math.random() * 10) + 1;
-}
+const surnames = ['Kowalsk', 'Nowak', 'Pawlak', 'Kwiatkowsk'];
+const flexTable = [true, false, false, true];
 
-console.log(getRandomInteger());
-let correctAnswerCount = 0;
-let incorrectAnswerCount = 0;
+// function filter(value) {
+//     return value.length > 5;
+// }
 
-for (let i = 0; i <numberOfQuestions; i++) {
-    const num1 = getRandomInteger();
-    const num2 = getRandomInteger();
-    const answer = parseInt(prompt(`Ile jest ${num1} * ${num2} ?`));
-    const result = num1 * num2;
+// const filteredNames = names.filter(filter);
 
-    console.log(num1, num2, result, answer);
+// console.log(names, filteredNames);
 
-    if (answer === result) {
-        correctAnswerCount++;
+const mapper = function (name, index) {
+    // const fullName = name + " " + surnames[index % surnames.length];
+    let fullName;
+
+    if (flexTable[index % surnames.length]) {
+        if(name.endsWith('a')){
+        fullName = name + " " + surnames[index % surnames.length] + "a";}else{
+          fullName = name + " " + surnames[index % surnames.length]+ "i";
+        }
+    } else {
+        fullName = name + " " + surnames[index % surnames.length];
     }
-}
-incorrectAnswerCount = numberOfQuestions - correctAnswerCount;
-console.log(correctAnswerCount);
-console.log(incorrectAnswerCount);
+
+    // console.log(name, index, surnames[index % surnames.length] , index % surnames.length);
+
+    return fullName;
 
 
-function isExamPassed(total, answerCount) {
-    return answerCount >= total * 0.6;
-}
-if (isExamPassed(numberOfQuestions,correctAnswerCount)){
-    alert(`zdałeś`);
-} else {
-    alert(`nie zdałeś`);
-}
+};
+
+const fullNames = names.map(mapper);
+
+console.log(fullNames);
 
