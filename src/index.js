@@ -7,13 +7,17 @@ const names = [
 const surnames = ['Kowalsk', 'Nowak', 'Pawlak', 'Kwiatkowsk'];
 const flexTable = [true, false, false, true];
 
-// function filter(value) {
-//     return value.length > 5;
-// }
 
-// const filteredNames = names.filter(filter);
+function filterGender(value) {
+    if(value.endsWith('a') && value !== 'Jarema' && value !=='Barnaba'){
+        return value;
+    }
 
-// console.log(names, filteredNames);
+}
+//supposedly using endsWith don't work on IE browsers, but who uses them anyway.
+const feminineNames = names.filter(filterGender);
+
+
 
 const mapper = function (name, index) {
     // const fullName = name + " " + surnames[index % surnames.length];
@@ -21,7 +25,8 @@ const mapper = function (name, index) {
 
     if (flexTable[index % surnames.length]) {
         if(name.endsWith('a')){
-        fullName = name + " " + surnames[index % surnames.length] + "a";}else{
+        fullName = name + " " + surnames[index % surnames.length] + "a";
+        }else{
           fullName = name + " " + surnames[index % surnames.length]+ "i";
         }
     } else {
@@ -35,7 +40,10 @@ const mapper = function (name, index) {
 
 };
 
-const fullNames = names.map(mapper);
+const fullNames = feminineNames.map(mapper);
 
 console.log(fullNames);
+
+
+
 
