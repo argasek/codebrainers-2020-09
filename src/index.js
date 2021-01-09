@@ -4,7 +4,7 @@ const students = [
     {
         age: 20,
         boozeUnits: 0,
-        name: 'Marek',
+        label: 'Marek',
     },
     {
         age: 18,
@@ -43,12 +43,28 @@ const students = [
     },
 ];
 
-const initialValue = 0;
+// const initialValue = 0;
+
+const comparator = (studentA, studentB) => {
+    if(studentA.label < studentB.label) {
+        return -1;
+    } else if (studentA.label === studentB.label) {
+        return 0;
+    } else {
+        return 1;
+    }
+};
+
+const namesSortedByAge = students
+    .sort(comparator)
+    .map(student => student.label);
+    // .reduce((sumOfAges, age) => sumOfAges + age, initialValue) / students.length;
+
+console.log(namesSortedByAge);
 
 
-const averageAge = students
-    .map(student => student.age)
-    .reduce((sumOfAges, age) => sumOfAges + age, initialValue) / students.length;
+//skrócona wersja zapisu sortowania z wykorzystaniem "comparatora" na przykładzie tablicy liczb.
 
-
+const numbers =[5,6,7,1,9].sort((a,b)=> a-b);
+console.log(numbers);
 
