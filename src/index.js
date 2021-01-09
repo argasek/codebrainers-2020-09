@@ -43,21 +43,12 @@ const students = [
     },
 ];
 
-
-
-function ageReducer(sumOfAges, age) {
-    console.log(`sumOfAges: ${sumOfAges}, age: ${age}, sumOfAges + age = ${sumOfAges + age}`);
-    return sumOfAges + age;
-}
-
-const ages = students
-    .map(student => student.age);
-
-console.log(ages);
-console.log('-----------------------------')
-
 const initialValue = 0;
-const x = ages.reduce(ageReducer, initialValue);
-console.log('-----------------------------')
 
-console.log(x);
+
+const averageAge = students
+    .map(student => student.age)
+    .reduce((sumOfAges, age) => sumOfAges + age, initialValue) / students.length;
+
+
+
