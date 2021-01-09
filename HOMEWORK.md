@@ -1,5 +1,12 @@
 # Homework
 
+## 2021-01-09
+
+Finish task we started up during our course hours, i.e. implement
+correctly working `didEmployeeWorkOvertime()`, which determines
+if employee worked for more than 40h / week.
+
+
 ## 2021-01-07
 
 ### Task 1
