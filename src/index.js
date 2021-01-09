@@ -4,20 +4,48 @@ const names = [
     'Barnaba', 'Hermenegilda', 'Konstancja'
 ];
 
-const surnames = ['Kowalsk', 'Nowak', 'Pawlak', 'Kwiatkowsk'];
-const flexTable = [true, false, false, true];
+// Array of objects
+const surnames = [
+    // POJO = Plain Old Javascript Object
+    {
+        label: 'Kowalsk',
+        isFlex: true,
+    },
+    {
+        label: 'Nowak',
+        isFlex: false,
+    },
+    {
+        label: 'Pawlak',
+        isFlex: false,
+    },
+    {
+        label: 'Kwiatkowsk',
+        isFlex: true,
+    }
+];
+
 
 function filter(value) {
-    return value.length > 5;
+    return value.length > 0;
 }
 
 const filteredNames = names.filter(filter);
 
+const isNameFemale = (name) => name.endsWith('a') && name !== 'Jarema' && name !== 'Barnaba';
+
 // console.log(names, filteredNames);
 
 const mapper = function (name, index) {
-    const fullName = name + " " + surnames[index % surnames.length];
-    // console.log(name, index, surnames[index % surnames.length] , index % surnames.length);
+    const cyclicIndex = index % surnames.length;
+    const surName = surnames[cyclicIndex];
+    const isFlexSurname = surName.isFlex;
+
+    let fullName = name + " " + surName.label;
+
+    if (isFlexSurname) {
+        fullName += isNameFemale(name) ? 'a' : 'i';
+    }
 
     return fullName;
 };
