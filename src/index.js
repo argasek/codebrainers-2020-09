@@ -1,55 +1,44 @@
-const names = [
-    'Basia', 'Adrian', 'Jan', 'Paulina',
-    'Jakub', 'Artur', 'Damian', 'Jarema',
-    'Barnaba', 'Hermenegilda', 'Konstancja'
-];
-
 // Array of objects
-const surnames = [
+const students = [
     // POJO = Plain Old Javascript Object
     {
-        label: 'Kowalsk',
-        isFlex: true,
+        age: 20,
+        boozeUnits: 0,
+        name: 'Marek',
     },
     {
-        label: 'Nowak',
-        isFlex: false,
+        age: 18,
+        boozeUnits: 0,
+        label: 'Paulina',
     },
     {
-        label: 'Pawlak',
-        isFlex: false,
+        age: 16,
+        boozeUnits: 0,
+        label: 'Darek',
     },
     {
-        label: 'Kwiatkowsk',
-        isFlex: true,
-    }
+        age: 66,
+        boozeUnits: 0,
+        label: 'Sebastian',
+    },
+    {
+        age: 70,
+        boozeUnits: 0,
+        label: 'Bartek',
+    },
+    {
+        age: 100,
+        boozeUnits: 0,
+        label: 'Damian',
+    },
+    {
+        age: 3,
+        boozeUnits: 0,
+        label: 'Jonasz',
+    },
+    {
+        age: 39,
+        boozeUnits: 0,
+        label: 'Jakub',
+    },
 ];
-
-
-function filter(value) {
-    return value.length > 0;
-}
-
-const filteredNames = names.filter(filter);
-
-const isNameFemale = (name) => name.endsWith('a') && name !== 'Jarema' && name !== 'Barnaba';
-
-// console.log(names, filteredNames);
-
-const mapper = function (name, index) {
-    const cyclicIndex = index % surnames.length;
-    const surName = surnames[cyclicIndex];
-    const isFlexSurname = surName.isFlex;
-
-    let fullName = name + " " + surName.label;
-
-    if (isFlexSurname) {
-        fullName += isNameFemale(name) ? 'a' : 'i';
-    }
-
-    return fullName;
-};
-
-const fullNames = filteredNames.map(mapper);
-
-console.log(fullNames);
