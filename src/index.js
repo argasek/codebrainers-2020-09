@@ -1,36 +1,50 @@
-const numberOfQuestions = 3;
+const names = ['Basia', 'Adrian', 'Jan', 'Paulina', 'Jakub', 'Artur', 'Damian', 'Jarema', 'Barnaba', 'Hermenegilda', 'Konstancja'];
+const surnames = ['Kowalsk', 'Nowak', 'Pawlak', 'Kwiatkowsk'];
+const flexTable = [true, false, false, true];
 
-function getRandomInteger() {
-    return Math.floor(Math.random() * 10) + 1;
-}
+const filterNames = names;
+console.log(names, filterNames);
 
-console.log(getRandomInteger());
-let correctAnswerCount = 0;
-let incorrectAnswerCount = 0;
+const fullNames = filterNames.map(function (name, index) {
+    let surnameIndex = index % surnames.length
+    const fullName = name + " " + surnames[surnameIndex];
 
-for (let i = 0; i <numberOfQuestions; i++) {
-    const num1 = getRandomInteger();
-    const num2 = getRandomInteger();
-    const answer = parseInt(prompt(`Ile jest ${num1} * ${num2} ?`));
-    const result = num1 * num2;
+    let surnameLastChar;
+    if (flexTable[surnameIndex] === true) {
 
-    console.log(num1, num2, result, answer);
+        if (name.substr(-1, 1) === "a" && name !== "Barnaba" && name !== "Jarema") {
+            surnameLastChar = "a"
+        } else {
+            surnameLastChar = "i"
+        }
 
-    if (answer === result) {
-        correctAnswerCount++;
+    } else {
+        surnameLastChar = ""
     }
-}
-incorrectAnswerCount = numberOfQuestions - correctAnswerCount;
-console.log(correctAnswerCount);
-console.log(incorrectAnswerCount);
 
+    return fullName + surnameLastChar;
+});
 
-function isExamPassed(total, answerCount) {
-    return answerCount >= total * 0.6;
-}
-if (isExamPassed(numberOfQuestions,correctAnswerCount)){
-    alert(`zdałeś`);
-} else {
-    alert(`nie zdałeś`);
-}
+console.log(fullNames);
 
+//----------- female names only
+
+const femaleNames = filterNames.map(function (name, index) {
+    let surnameIndex = index % surnames.length
+    let surnameLastChar;
+    let femaleName;
+
+    if (name.substr(-1, 1) === "a" && name !== "Barnaba" && name !== "Jarema") {
+        femaleName = name + " " + surnames[surnameIndex];
+
+        if(flexTable[surnameIndex] === true){
+            surnameLastChar = "a";
+        } else{
+            surnameLastChar = "";
+        }
+    }
+
+    return femaleName + surnameLastChar;
+});
+
+console.log(femaleNames);
