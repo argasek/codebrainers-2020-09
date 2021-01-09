@@ -8,6 +8,21 @@ const employeeWorkingHours = [
     ['00:00-06:59'],
 ];
 
+
+const timeRangeToMinutes = (text) => {
+    let minutes = 0;
+    let x = text.split('-');
+    const earlierTimeStamp = x[0];
+    const laterTimeStamp = x[1];
+    const earlierHoursWithMinutes = earlierTimeStamp.split(':')
+    console.log(x);
+    return minutes;
+};
+
+const timeRange = timeRangeToMinutes('11:30-12:32');
+
+
+
 const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
     let days = 0;
     let hours = 0;
@@ -21,6 +36,7 @@ const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
         didWorkOvertime: didWorkOvertime,
     }
 };
+
 
 const analysis = getWorkingTimeAnalysis(employeeWorkingHours)
 const didWorkOvertime = analysis.didWorkOvertime;
