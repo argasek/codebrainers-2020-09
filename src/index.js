@@ -44,10 +44,10 @@ const students = [
 ];
 
 let sumOfAges = 0;
-for (let i = 0; i < students.length; i++) {
-    const age = students[i].age;
-    sumOfAges += age;
-}
+const ages = students.map(student => student.age);
+console.log(ages);
+
+
 
 const averageAge = sumOfAges / students.length;
 console.log(sumOfAges, averageAge);
