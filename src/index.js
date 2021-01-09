@@ -42,3 +42,12 @@ const students = [
         label: 'Jakub',
     },
 ];
+
+let sumOfAges = 0;
+for (let i = 0; i < students.length; i++) {
+    const age = students[i].age;
+    sumOfAges += age;
+}
+
+const averageAge = sumOfAges / students.length;
+console.log(sumOfAges, averageAge);
