@@ -36,20 +36,31 @@ const timeRangeToMinutes = (text) => {
     return minutes;
 
 };
-
-
+let dailyMinutes;
+let dailyHours;
 for (let i = 0; i < employeeWorkingHours.length; i++) {
-    let lista = [];
+    let workingHoursIntList = [];
     for (let y = 0; y < employeeWorkingHours[i].length; y++) {
         let dataArguments;
-
         dataArguments = employeeWorkingHours[i][y];
         timeRange = timeRangeToMinutes(dataArguments);
-        lista.push(timeRange);
+        workingHoursIntList.push(timeRange);
     }
-    console.log(lista);
+    console.log(workingHoursIntList);
 
+    dailyMinutes =workingHoursIntList.reduce(function(a, b){
+        return a+b;
+    },0 );
+
+    dailyHours = dailyMinutes/60;
+
+    console.log(dailyMinutes);
+    console.log(dailyHours);
 }
+
+
+
+
 
 
 
