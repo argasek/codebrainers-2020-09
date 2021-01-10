@@ -12,15 +12,30 @@ const employeeWorkingHours = [
 const timeRangeToMinutes = (text) => {
     let minutes = 0;
     let x = text.split('-');
+
     const earlierTimeStamp = x[0];
     const laterTimeStamp = x[1];
-    const earlierHoursWithMinutes = earlierTimeStamp.split(':')
-    console.log(x);
+    const earlierHoursWithMinutes = earlierTimeStamp.split(':');
+    const laterHoursWithMinutes = laterTimeStamp.split(':');
+    const earlierHours = parseInt(earlierHoursWithMinutes[0])*60;
+    const earlierMin = parseInt(earlierHoursWithMinutes[1]);
+    const laterHours = parseInt(laterHoursWithMinutes[0])*60;
+    const laterMin = parseInt(laterHoursWithMinutes[1]);
+
+    let earlierTime= [earlierHours, earlierMin] ;
+    let laterTime = [laterHours, laterMin];
+
+    minutes = laterTime - earlierTime
+
     return minutes;
+
 };
+    timeRanges.reduce((hours,min) => hours * 60 + min);
+
+
 
 const timeRange = timeRangeToMinutes('11:30-12:32');
-
+console.log(timeRange);
 
 
 const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
@@ -40,7 +55,7 @@ const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
 
 const analysis = getWorkingTimeAnalysis(employeeWorkingHours)
 const didWorkOvertime = analysis.didWorkOvertime;
-
+console.log(analysis);
 console.log(`The employee spent ${analysis.days} days, ${analysis.hours} hours and ${analysis.minutes} minutes.`);
 console.log(`This means that this employee ${didWorkOvertime ? 'did' : 'didn\'t'} overtime`);
 
