@@ -8,14 +8,6 @@ const employeeWorkingHours = [
     ['00:00-08:59'],
 ];
 
-
-// for (let i = 0; i < employeeWorkingHours.length; i++) {
-//     for (let y = 0; y < employeeWorkingHours[i].length; y++) {
-
-// let listOf = [];
-
-
-// console.log(dataArguments);
 let timeRange;
 const timeRangeToMinutes = (text) => {
     let minutes = 0;
@@ -36,6 +28,8 @@ const timeRangeToMinutes = (text) => {
     return minutes;
 
 };
+
+
 let dailyMinutesTable =[];
 let dailyMinutes;
 let dailyHours;
@@ -49,57 +43,51 @@ for (let i = 0; i < employeeWorkingHours.length; i++) {
     }
     console.log(workingHoursIntList);
 
-    dailyMinutes =workingHoursIntList.reduce(function(a, b){
-        return a+b;
-    },0 );
+    dailyMinutes =workingHoursIntList.reduce(function(a, b){return a+b;},0 );
     dailyMinutesTable.push(dailyMinutes);
+    dailyHours = (dailyMinutesTable[i]/60).toFixed([2]);
 
-    dailyHours = dailyMinutes/60;
-
-    console.log(dailyMinutes);
+    // console.log(dailyMinutes);
     console.log(dailyHours);
-    console.log(dailyMinutesTable);
+    // console.log(dailyMinutesTable);
 }
 
 let weekTotalMinutes;
-weekTotalMinutes = dailyMinutesTable.reduce(function (a,b) {
-    return a+b;
-
-},0);
-console.log(weekTotalMinutes);
-
-let weekTotalHours;
-weekTotalHours = (weekTotalMinutes/60).toFixed([2]);
-console.log(weekTotalHours);
-
-let numberOfDays;
-numberOfDays = employeeWorkingHours.length;
-console.log(numberOfDays);
-
+weekTotalMinutes = dailyMinutesTable.reduce(function (a,b) {return a+b;},0);
+let weeklyWorkingHours=40;
+let overtime;
 const getWorkingTimeAnalysis = (givenUnitsOfTime, weeklyWorkingHours = 40) => {
-    let days = numberOfDays;
-    let hours = weekTotalHours;
-    let minutes = weekTotalMinutes;
+    let days = employeeWorkingHours.length;
+    let hours = weekTotalMinutes/60;
+    let minutes = dailyMinutesTable.reduce(function (a,b) {return a+b;},0)
     let didWorkOvertime = false;
-    if(weeklyWorkingHours < weekTotalHours){
-        didWorkOvertime = true;
-    } else{
-       didWorkOvertime = false;
-    }
+    overtime = hours - weeklyWorkingHours;
 
+    weeklyWorkingHours < hours ? didWorkOvertime = true :  didWorkOvertime = false;
     return {
         days: days,
         hours: hours,
         minutes: minutes,
         didWorkOvertime: didWorkOvertime,
+        overtime: overtime,
     }
 };
 
-console.log(getWorkingTimeAnalysis(weekTotalMinutes, 100))
+console.log(getWorkingTimeAnalysis(weekTotalMinutes, 40));
 
-const analysis = getWorkingTimeAnalysis(employeeWorkingHours)
+const analysis = getWorkingTimeAnalysis(employeeWorkingHours);
 const didWorkOvertime = analysis.didWorkOvertime;
 
 console.log(`The employee spent ${analysis.days} days, ${analysis.hours} hours and ${analysis.minutes} minutes.`);
 console.log(`This means that this employee ${didWorkOvertime ? 'did' : 'didn\'t'} overtime`);
+console.log(`======================================================================`)
+console.log(`Employee working time given in minutes and hours for: `)
 
+for(let i=0; i<employeeWorkingHours.length;i++){
+   console.log(`Day ${i+1}: ${dailyMinutesTable[i]} minutes in total, which is ${(dailyMinutesTable[i]/60).toFixed([2])} hours.
+   => ${Math.floor(dailyMinutesTable[i]/60)}h and ${dailyMinutesTable[i]%60} minutes`);
+};
+
+console.log(`Allowed amount of working hours per week is ${weeklyWorkingHours} hours. The employee worked this week for
+${Math.floor(analysis.minutes/60)}h and ${analysis.minutes%60} minutes.
+Which gives ${Math.floor(overtime)} hours and ${(overtime*60)%60} minutes of overtime.` )
