@@ -1,11 +1,11 @@
 const employeeWorkingHours = [
-    ['11:30-12:30', '16:00-22:00'],
+    ['10:12-12:30', '16:03-22:00'],
     ['7:15-8:30', '11:30-14:30', '16:00-23:59'],
     ['00:00-01:59'],
     ['6:00-23:00'],
     ['9:15-10:58', '11:30-14:30', '16:00-23:59'],
-    ['6:00-23:00'],
-    ['00:00-06:59'],
+    ['6:00-23:02'],
+    ['00:00-08:59'],
 ];
 
 
@@ -61,20 +61,31 @@ for (let i = 0; i < employeeWorkingHours.length; i++) {
     console.log(dailyMinutesTable);
 }
 
-let allDaysMitutes;
+let weekTotalMinutes;
+weekTotalMinutes = dailyMinutesTable.reduce(function (a,b) {
+    return a+b;
 
+},0);
+console.log(weekTotalMinutes);
 
+let weekTotalHours;
+weekTotalHours = (weekTotalMinutes/60).toFixed([2]);
+console.log(weekTotalHours);
 
+let numberOfDays;
+numberOfDays = employeeWorkingHours.length;
+console.log(numberOfDays);
 
-
-
-
-
-const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
-    let days = 0;
-    let hours = 0;
-    let minutes = 0;
+const getWorkingTimeAnalysis = (givenUnitsOfTime, weeklyWorkingHours = 40) => {
+    let days = numberOfDays;
+    let hours = weekTotalHours;
+    let minutes = weekTotalMinutes;
     let didWorkOvertime = false;
+    if(weeklyWorkingHours < weekTotalHours){
+        didWorkOvertime = true;
+    } else{
+       didWorkOvertime = false;
+    }
 
     return {
         days: days,
@@ -84,6 +95,7 @@ const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
     }
 };
 
+console.log(getWorkingTimeAnalysis(weekTotalMinutes, 100))
 
 const analysis = getWorkingTimeAnalysis(employeeWorkingHours)
 const didWorkOvertime = analysis.didWorkOvertime;
