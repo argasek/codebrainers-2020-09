@@ -36,6 +36,7 @@ const timeRangeToMinutes = (text) => {
     return minutes;
 
 };
+let dailyMinutesTable =[];
 let dailyMinutes;
 let dailyHours;
 for (let i = 0; i < employeeWorkingHours.length; i++) {
@@ -51,12 +52,17 @@ for (let i = 0; i < employeeWorkingHours.length; i++) {
     dailyMinutes =workingHoursIntList.reduce(function(a, b){
         return a+b;
     },0 );
+    dailyMinutesTable.push(dailyMinutes);
 
     dailyHours = dailyMinutes/60;
 
     console.log(dailyMinutes);
     console.log(dailyHours);
+    console.log(dailyMinutesTable);
 }
+
+let allDaysMitutes;
+
 
 
 
