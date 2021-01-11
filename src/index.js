@@ -7,6 +7,7 @@ const employeeWorkingHours = [
     ['6:00-23:02'],
     ['00:00-08:59'],
 ];
+//zmiana testowa
 
 let timeRange;
 const timeRangeToMinutes = (text) => {
