@@ -35,20 +35,49 @@ const timeRangeToMinutes = (text) => {
     console.log(earlierTimeInt);
     console.log(laterTimeInt);
 
-    minutes = earlierTimeFromMidnight - laterTimeFromMidnight;
+    minutes = laterTimeFromMidnight - earlierTimeFromMidnight;
 
     return minutes;
 };
 
-const timeRange = timeRangeToMinutes('11:30-12:32');
+let minutesPerDayArr = [];
+let minutesPerDay;
+let hoursPerDay;
+for (let i = 0; i < employeeWorkingHours.length; i++) {
+    let workingHours = [];
+    for (let y = 0; y < employeeWorkingHours[i].length; y++) {
+        let realWorkHours;
+        realWorkHours = employeeWorkingHours[i][y];
+        timeRange = timeRangeToMinutes(realWorkHours);
+        console.log(realWorkHours);
+        workingHours.push(timeRange);
+    }
+    minutesPerDay = workingHours.reduce(function (a, b) {
+        return a + b
+    });
+    console.log(minutesPerDay);
+    minutesPerDayArr.push(minutesPerDay);
+    hoursPerDay = Math.floor(minutesPerDayArr[i] / 60);
+    console.log(hoursPerDay);
+}
+console.log(minutesPerDayArr);
+
+let weeklyWorkingMinutes = (minutesPerDayArr.reduce((a, b) => a + b));
+console.log(weeklyWorkingMinutes);
+let weeklyWorkHours = Math.floor(weeklyWorkingMinutes / 60);
+console.log(weeklyWorkHours);
 
 
 
 const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
-    let days = 0;
-    let hours = 0;
-    let minutes = 0;
+    let days = employeeWorkingHours.length;
+    let hours = weeklyWorkHours;
+    let minutes = weeklyWorkingMinutes%60;
     let didWorkOvertime = false;
+    if(hours > weeklyWorkingHours){
+        didWorkOvertime = true;
+    }
+
 
     return {
         days: days,
