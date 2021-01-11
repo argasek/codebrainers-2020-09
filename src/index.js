@@ -17,14 +17,14 @@ const timeRangeToMinutes = (text) => {
     const earlierTimeStamp = x[0];
     const earlierHoursWithMinutes = earlierTimeStamp.split(':')
     const earlierHoursWithMinutesAsInt = [parseInt(earlierHoursWithMinutes[0]), parseInt(earlierHoursWithMinutes[1])];
-    const earlierHoursWithMinutesAsIntFormMidnight = (earlierHoursWithMinutesAsInt[0]) * 60 + (earlierHoursWithMinutesAsInt[1]);
+    const earlierHoursWithMinutesAsIntFromMidnight = (earlierHoursWithMinutesAsInt[0]) * 60 + (earlierHoursWithMinutesAsInt[1]);
 
     const laterTimeStamp = x[1];
     const laterHoursWithMinutes = laterTimeStamp.split(':');
     const laterHoursWithMinutesAsInt = [parseInt(laterHoursWithMinutes[0]), parseInt(laterHoursWithMinutes[1])];
-    const laterHoursWithMinutesAsIntFormMidnight = (laterHoursWithMinutesAsInt[0]) * 60 + (laterHoursWithMinutesAsInt[1]);
+    const laterHoursWithMinutesAsIntFromMidnight = (laterHoursWithMinutesAsInt[0]) * 60 + (laterHoursWithMinutesAsInt[1]);
 
-    minutes = laterHoursWithMinutesAsIntFormMidnight - earlierHoursWithMinutesAsIntFormMidnight;
+    minutes = laterHoursWithMinutesAsIntFromMidnight - earlierHoursWithMinutesAsIntFromMidnight;
 
     return minutes;
 
@@ -44,9 +44,9 @@ for (let i = 0; i < employeeWorkingHours.length; i++) {
     }
     console.log(workingHoursIntList);
 
-    dailyMinutes =workingHoursIntList.reduce(function(a, b){return a+b;},0 );
+    dailyMinutes =workingHoursIntList.reduce((a, b)=>a+b);
     dailyMinutesTable.push(dailyMinutes);
-    dailyHours = (dailyMinutesTable[i]/60).toFixed([2]);
+    dailyHours = dailyMinutesTable[i]/60;
 
     // console.log(dailyMinutes);
     console.log(dailyHours);
@@ -54,7 +54,7 @@ for (let i = 0; i < employeeWorkingHours.length; i++) {
 }
 
 let weekTotalMinutes;
-weekTotalMinutes = dailyMinutesTable.reduce(function (a,b) {return a+b;},0);
+weekTotalMinutes = dailyMinutesTable.reduce((a,b)=> a+b);
 let weeklyWorkingHours=40;
 let overtime;
 const getWorkingTimeAnalysis = (givenUnitsOfTime, weeklyWorkingHours = 40) => {
@@ -81,6 +81,7 @@ const didWorkOvertime = analysis.didWorkOvertime;
 
 console.log(`The employee spent ${analysis.days} days, ${analysis.hours} hours and ${analysis.minutes} minutes.`);
 console.log(`This means that this employee ${didWorkOvertime ? 'did' : 'didn\'t'} overtime`);
+
 console.log(`======================================================================`)
 console.log(`Employee working time given in minutes and hours for: `)
 
