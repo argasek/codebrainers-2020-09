@@ -8,6 +8,8 @@ const employeeWorkingHours = [
     ['00:00-06:59'],
 ];
 
+const hourInMinutes = 60;
+
 const timeRangeToMinutes = (text) => {
     let minutes = 0;
     let x = text.split('-');
@@ -18,14 +20,14 @@ const timeRangeToMinutes = (text) => {
     const beginPeriodOfTime = 0;
     const endPeriodOfTime = 1;
 
-    for (let i = 0; i <= 1; i++) {
+    for (let i = 0; i < x.length; i++) {
         hoursWithMinutes[i] = x[i].split(':')
             .map(item => parseInt(item));
 
         const hoursPosition = 0;
         const minutesPosition = 1;
 
-        minutesTimeStamp[i] = hoursWithMinutes[i][hoursPosition] * 60
+        minutesTimeStamp[i] = hoursWithMinutes[i][hoursPosition] * hourInMinutes
             + hoursWithMinutes[i][minutesPosition];
     }
     ;
@@ -52,20 +54,19 @@ const fullWeekWorkingMinutes = (employeeWeekHours) => {
 
 const weekTimeRange = fullWeekWorkingMinutes(employeeWorkingHours);
 
-const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
+const getWorkingTimeAnalysis = (workingMinutes, weeklyWorkingHours = 40) => {
     let days = 0;
     let hours = 0;
     let minutes = 0;
     let didWorkOvertime = false;
 
-    const dayMinutes = 480;
-    const hoursMinutes = 60;
+    const workingDayMinutes = 480;
 
-    days = parseInt(workingHours / dayMinutes);
-    hours = parseInt(workingHours % dayMinutes / hoursMinutes);
-    minutes = parseInt(workingHours % dayMinutes % hoursMinutes);
+    days = parseInt(workingMinutes / workingDayMinutes);
+    hours = parseInt(workingMinutes % workingDayMinutes / hourInMinutes);
+    minutes = parseInt(workingMinutes % workingDayMinutes % hourInMinutes);
 
-    if ((workingHours / 60) > weeklyWorkingHours) {
+    if ((workingMinutes / hourInMinutes) > weeklyWorkingHours) {
         didWorkOvertime = true;
     }
 
