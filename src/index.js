@@ -8,39 +8,52 @@ const employeeWorkingHours = [
     ['00:00-06:59'],
 ];
 
-
-const timeRangeToMinutes = (text) => {
-    let minutes = 0;
-    let x = text.split('-');
-    const earlierTimeStamp = x[0];
-    const laterTimeStamp = x[1];
-    const earlierHoursWithMinutes = earlierTimeStamp.split(':')
-    console.log(x);
-    return minutes;
+let splitter = (text, splitChar) => {
+    return text.split(splitChar);
 };
 
-const timeRange = timeRangeToMinutes('11:30-12:32');
+let timeIntervalToMinutes = timeInterval => {
+    let startTimestamp = (splitter(timeInterval, '-')[0]);
+    let endTimestamp = (splitter(timeInterval, '-')[1]);
+    let startTimeMinutes = parseInt(splitter(startTimestamp, ':')[0]) * 60 + parseInt(splitter(startTimestamp, ':')[1]);
+    let endTimeMinutes = parseInt(splitter(endTimestamp, ':')[0]) * 60 + parseInt(splitter(endTimestamp, ':')[1]);
+    return endTimeMinutes - startTimeMinutes;
+};
 
+let weekWorkingTimestampsQuantity = employeeWorkingHours.length;
+let dayWorkingMinutes = 0;
 
+for (let j = 0; j < weekWorkingTimestampsQuantity; j++) {
+    let dayWorkingTimestamps = employeeWorkingHours[j];
+    let dayWorkingTimestampsQuantity = dayWorkingTimestamps.length;
 
-const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
-    let days = 0;
-    let hours = 0;
-    let minutes = 0;
-    let didWorkOvertime = false;
-
-    return {
-        days: days,
-        hours: hours,
-        minutes: minutes,
-        didWorkOvertime: didWorkOvertime,
+    for (let i = 0; i < dayWorkingTimestampsQuantity; i++) {
+        dayWorkingMinutes += timeIntervalToMinutes(dayWorkingTimestamps[i]);
+        console.log(i, dayWorkingMinutes);
     }
-};
+    console.log(j, dayWorkingMinutes);
+}
 
 
-const analysis = getWorkingTimeAnalysis(employeeWorkingHours)
-const didWorkOvertime = analysis.didWorkOvertime;
-
-console.log(`The employee spent ${analysis.days} days, ${analysis.hours} hours and ${analysis.minutes} minutes.`);
-console.log(`This means that this employee ${didWorkOvertime ? 'did' : 'didn\'t'} overtime`);
-
+//
+// const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
+//     let days = 0;
+//     let hours = 0;
+//     let minutes = 0;
+//     let didWorkOvertime = false;
+//
+//     return {
+//         days: days,
+//         hours: hours,
+//         minutes: minutes,
+//         didWorkOvertime: didWorkOvertime,
+//     }
+// };
+//
+//
+// const analysis = getWorkingTimeAnalysis(employeeWorkingHours)
+// const didWorkOvertime = analysis.didWorkOvertime;
+//
+// console.log(`The employee spent ${analysis.days} days, ${analysis.hours} hours and ${analysis.minutes} minutes.`);
+// console.log(`This means that this employee ${didWorkOvertime ? 'did' : 'didn\'t'} overtime`);
+//
