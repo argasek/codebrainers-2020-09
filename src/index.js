@@ -27,9 +27,7 @@ const timeRangeToMinutes = (text) => {
     minutes = laterHoursWithMinutesAsIntFromMidnight - earlierHoursWithMinutesAsIntFromMidnight;
 
     return minutes;
-
 };
-
 
 let dailyMinutesTable =[];
 let dailyMinutes;
@@ -49,7 +47,7 @@ for (let i = 0; i < employeeWorkingHours.length; i++) {
 
     // console.log(dailyMinutes);
     // console.log(dailyMinutesTable);
-}
+};
 
 let weekTotalMinutes;
 weekTotalMinutes = dailyMinutesTable.reduce((a,b)=> a+b);
@@ -58,7 +56,7 @@ let overtime;
 const getWorkingTimeAnalysis = (givenUnitsOfTime, weeklyWorkingHours = 40) => {
     let days = employeeWorkingHours.length;
     let hours = weekTotalMinutes/60;
-    let minutes = dailyMinutesTable.reduce(function (a,b) {return a+b;},0)
+    let minutes = dailyMinutesTable.reduce((a,b) => a+b);
     let didWorkOvertime = false;
     overtime = hours - weeklyWorkingHours;
     weeklyWorkingHours < hours ? didWorkOvertime = true :  didWorkOvertime = false;
@@ -68,7 +66,7 @@ const getWorkingTimeAnalysis = (givenUnitsOfTime, weeklyWorkingHours = 40) => {
         minutes: minutes,
         didWorkOvertime: didWorkOvertime,
         overtime: overtime,
-    }
+    };
 };
 
 console.log(getWorkingTimeAnalysis(weekTotalMinutes, 40));
@@ -79,8 +77,8 @@ const didWorkOvertime = analysis.didWorkOvertime;
 console.log(`The employee spent ${analysis.days} days, ${analysis.hours} hours and ${analysis.minutes} minutes.`);
 console.log(`This means that this employee ${didWorkOvertime ? 'did' : 'didn\'t'} overtime`);
 
-console.log(`======================================================================`)
-console.log(`Employee working time given in minutes and hours for: `)
+console.log(`======================================================================`);
+console.log(`Employee working time given in minutes and hours for: `);
 
 for(let i=0; i<employeeWorkingHours.length;i++){
    console.log(`Day ${i+1}: ${dailyMinutesTable[i]} minutes in total, which is ${(dailyMinutesTable[i]/60).toFixed([2])} hours.
@@ -89,4 +87,4 @@ for(let i=0; i<employeeWorkingHours.length;i++){
 
 console.log(`Allowed amount of working hours per week is ${weeklyWorkingHours} hours. The employee worked this week for
 ${Math.floor(analysis.minutes/60)}h and ${analysis.minutes%60} minutes.
-Which gives ${Math.floor(overtime)} hours and ${(overtime*60)%60} minutes of overtime.` )
+Which gives ${Math.floor(overtime)} hours and ${(overtime*60)%60} minutes of overtime.` );
