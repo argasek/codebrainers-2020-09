@@ -8,41 +8,60 @@ const employeeWorkingHours = [
     ['00:00-06:59'],
 ];
 
-
 const timeRangeToMinutes = (text) => {
     let minutes = 0;
     let x = text.split('-');
-    const earlierTimeStamp = x[0];
 
-    const earlierHoursWithMinutes = earlierTimeStamp.split(':');
-    let earlierHoursForMinutes = [parseInt(earlierHoursWithMinutes[0]),parseInt(earlierHoursWithMinutes[1])]
-    let sumOfEarlierMinutes = earlierHoursForMinutes[0] * 60 + earlierHoursForMinutes[1];
-    console.log(sumOfEarlierMinutes);
+    let hoursAndMinutes = [];
+    let minutesTimeStamp = [];
 
-    const laterTimeStamp = x[1];
-    const laterHoursWithMinutes = laterTimeStamp.split(':');
-    let laterHoursForMinutes = [parseInt(laterHoursWithMinutes[0]),parseInt(laterHoursWithMinutes[1])];
-    let sumOfLaterMinutes = laterHoursForMinutes[0] * 60 + laterHoursForMinutes[1];
-    console.log(sumOfLaterMinutes)
 
-    // console.log(earlierHoursForMinutes);
-    // console.log(laterTimeStamp)
-    // console.log(earlierHoursWithMinutes);
-    // console.log(laterHoursWithMinutes);
+    for (let i = 0; i < x.length; i++) {
+        hoursAndMinutes[i] = x[i].split(':')
+            .map(item => parseInt(item));
 
-    minutes = sumOfLaterMinutes - sumOfEarlierMinutes;
+        minutesTimeStamp[i] = hoursAndMinutes[i][0] * 60
+            + hoursAndMinutes[i][1];
+    }
+    ;
+    minutes = minutesTimeStamp[1] - minutesTimeStamp[0];
     return minutes;
-
 };
-// console.log(employeeWorkingHours)
 
+const WeekWorkingMinutes = (WeekHours) => {
+    let dayHours = [];
+    let sumOfWorkingMinutes = 0;
 
+    for (let i = 0; i < WeekHours.length; i++) {
+        dayHours = WeekHours[i];
 
-const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
+        for (let y = 0; y < dayHours.length; y++) {
+            sumOfWorkingMinutes += timeRangeToMinutes(dayHours[y]);
+        }
+
+    }
+    ;
+    console.log(`Sum of working minutes in the week: ${sumOfWorkingMinutes}`);
+    return sumOfWorkingMinutes;
+};
+
+const weekTimeRange = WeekWorkingMinutes(employeeWorkingHours);
+
+const getWorkingTimeAnalysis = (workingMinutes, weeklyWorkingHours = 40) => {
     let days = 0;
     let hours = 0;
     let minutes = 0;
     let didWorkOvertime = false;
+
+    const workingDayMinutes = 480;
+
+    days = parseInt(workingMinutes / workingDayMinutes);
+    hours = parseInt(workingMinutes % workingDayMinutes / 60);
+    minutes = parseInt(workingMinutes % workingDayMinutes * 60);
+
+    if ((workingMinutes / 60) > weeklyWorkingHours) {
+        didWorkOvertime = true;
+    }
 
     return {
         days: days,
@@ -52,10 +71,30 @@ const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
     }
 };
 
+const analizeOfTime = getWorkingTimeAnalysis(weekTimeRange);
+const didWorkOvertime = analizeOfTime.didWorkOvertime;
 
-const analysis = getWorkingTimeAnalysis(employeeWorkingHours)
-const didWorkOvertime = analysis.didWorkOvertime;
+console.log(`This employee works ${analizeOfTime.days} days, ${analizeOfTime.hours} hours
+            and ${analizeOfTime.minutes} minutes.`);
+console.log(`Means, ${didWorkOvertime ? 'did' : 'didn\'t'} overtime`);
 
-console.log(`The employee spent ${analysis.days} days, ${analysis.hours} hours and ${analysis.minutes} minutes.`);
-console.log(`This means that this employee ${didWorkOvertime ? 'did' : 'didn\'t'} overtime`);
+    // const earlierHoursWithMinutes = earlierTimeStamp.split(':');
+    // let earlierHoursForMinutes = [parseInt(earlierHoursWithMinutes[0]),parseInt(earlierHoursWithMinutes[1])]
+    // let sumOfEarlierMinutes = earlierHoursForMinutes[0] * 60 + earlierHoursForMinutes[1];
+    // console.log(sumOfEarlierMinutes);
+    //
+    // const laterTimeStamp = x[1];
+    // const laterHoursWithMinutes = laterTimeStamp.split(':');
+    // let laterHoursForMinutes = [parseInt(laterHoursWithMinutes[0]),parseInt(laterHoursWithMinutes[1])];
+    // let sumOfLaterMinutes = laterHoursForMinutes[0] * 60 + laterHoursForMinutes[1];
+    // console.log(sumOfLaterMinutes)
+
+    // console.log(earlierHoursForMinutes);
+    // console.log(laterTimeStamp)
+    // console.log(earlierHoursWithMinutes);
+    // console.log(laterHoursWithMinutes);
+
+    // minutes = sumOfLaterMinutes - sumOfEarlierMinutes;
+    // return minutes;
+
 
