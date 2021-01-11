@@ -13,13 +13,28 @@ const timeRangeToMinutes = (text) => {
     let minutes = 0;
     let x = text.split('-');
     const earlierTimeStamp = x[0];
-    const laterTimeStamp = x[1];
-    const earlierHoursWithMinutes = earlierTimeStamp.split(':')
-    console.log(x);
-    return minutes;
-};
 
-const timeRange = timeRangeToMinutes('11:30-12:32');
+    const earlierHoursWithMinutes = earlierTimeStamp.split(':');
+    let earlierHoursForMinutes = [parseInt(earlierHoursWithMinutes[0]),parseInt(earlierHoursWithMinutes[1])]
+    let sumOfEarlierMinutes = earlierHoursForMinutes[0] * 60 + earlierHoursForMinutes[1];
+    console.log(sumOfEarlierMinutes);
+
+    const laterTimeStamp = x[1];
+    const laterHoursWithMinutes = laterTimeStamp.split(':');
+    let laterHoursForMinutes = [parseInt(laterHoursWithMinutes[0]),parseInt(laterHoursWithMinutes[1])];
+    let sumOfLaterMinutes = laterHoursForMinutes[0] * 60 + laterHoursForMinutes[1];
+    console.log(sumOfLaterMinutes)
+
+    // console.log(earlierHoursForMinutes);
+    // console.log(laterTimeStamp)
+    // console.log(earlierHoursWithMinutes);
+    // console.log(laterHoursWithMinutes);
+
+    minutes = sumOfLaterMinutes - sumOfEarlierMinutes;
+    return minutes;
+
+};
+// console.log(employeeWorkingHours)
 
 
 
