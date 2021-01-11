@@ -33,7 +33,6 @@ const timeRangeToMinutes = (text) => {
 
 let dailyMinutesTable =[];
 let dailyMinutes;
-let dailyHours;
 for (let i = 0; i < employeeWorkingHours.length; i++) {
     let workingHoursIntList = [];
     for (let y = 0; y < employeeWorkingHours[i].length; y++) {
@@ -46,10 +45,9 @@ for (let i = 0; i < employeeWorkingHours.length; i++) {
 
     dailyMinutes =workingHoursIntList.reduce((a, b)=>a+b);
     dailyMinutesTable.push(dailyMinutes);
-    dailyHours = dailyMinutesTable[i]/60;
+
 
     // console.log(dailyMinutes);
-    console.log(dailyHours);
     // console.log(dailyMinutesTable);
 }
 
@@ -63,7 +61,6 @@ const getWorkingTimeAnalysis = (givenUnitsOfTime, weeklyWorkingHours = 40) => {
     let minutes = dailyMinutesTable.reduce(function (a,b) {return a+b;},0)
     let didWorkOvertime = false;
     overtime = hours - weeklyWorkingHours;
-
     weeklyWorkingHours < hours ? didWorkOvertime = true :  didWorkOvertime = false;
     return {
         days: days,
