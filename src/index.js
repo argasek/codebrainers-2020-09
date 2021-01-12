@@ -7,7 +7,6 @@ class CarWheel {
 }
 
 
-
 class Vehicle {
     constructor() {
         console.log('Vehicle constructor called')
@@ -33,7 +32,7 @@ class Car extends Vehicle {
     }
 
     addSpareWheel() {
-        const spareWheel = this.createWheel('spare wheel');
+        const spareWheel = this.createWheel('spare wheel ' + this.spareWheels.length);
         this.spareWheels.push(spareWheel);
     }
 
@@ -43,6 +42,12 @@ class Car extends Vehicle {
 
     getNumberOfWheels() {
         return this.wheels.length + this.spareWheels.length;
+    }
+
+    exchangeWheel(wheelIndex) {
+        const wheel = this.spareWheels[0];
+        this.wheels[wheelIndex] = wheel;
+        this.spareWheels.shift();
     }
 
 }
@@ -56,7 +61,6 @@ class SedanCar extends Car {
 
 }
 
-
 const car = new Car();
 
 car.addSpareWheel();
@@ -64,6 +68,10 @@ car.addSpareWheel();
 const sedanCar = new SedanCar();
 
 sedanCar.addSpareWheel();
+
+car.exchangeWheel(1);
+
+
 
 console.log(car);
 console.log(sedanCar);
