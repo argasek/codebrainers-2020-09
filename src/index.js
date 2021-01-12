@@ -68,11 +68,12 @@ console.log(weeklyWorkHours);
 
 
 const getWorkingTimeAnalysis = (workingHours, weeklyWorkingHours = 40) => {
-    let days = employeeWorkingHours.length;
-    let hours = weeklyWorkHours;
+    // let days = employeeWorkingHours.length;
+    let days = Math.floor(weeklyWorkHours / 24);
+    let hours = weeklyWorkHours % 24;
     let minutes = weeklyWorkingMinutes % 60;
     let didWorkOvertime = false;
-    if (hours > weeklyWorkingHours) {
+    if (weeklyWorkHours > weeklyWorkingHours) {
         didWorkOvertime = true;
     }
 
