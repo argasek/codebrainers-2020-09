@@ -18,21 +18,33 @@ class Vehicle {
         ];
 
         this.spareWheels = [];
+        console.log(this.spareWheels);
 
     }
+
     createWheel(id) {
         return new CarWheel(id);
+    }
+
+    lendAwheel(theInstanceWithNoSpareWheel) {
+        this.spareWheels.shift();
+        const NoName = theInstanceWithNoSpareWheel.spareWheels.push(this.spareWheels[0]);
+
     }
 
     exchangeWheel(wheelIndex) {
         const wheel = this.spareWheels[0];
         this.wheels[wheelIndex] = wheel;
         this.spareWheels.shift();
+
+
     }
-     addSpareWheel() {
-         const spareWheel = this.createWheel('default spare wheel ' + this.spareWheels.length);
-         this.spareWheels.push(spareWheel);
-     }
+
+    addSpareWheel() {
+        const spareWheel = this.createWheel('default spare wheel ' + this.spareWheels.length);
+        this.spareWheels.push(spareWheel);
+
+    }
 }
 
 class Car extends Vehicle {
@@ -41,10 +53,10 @@ class Car extends Vehicle {
         console.log('Car constructor called');
 
         this.wheels = [
-            this.createWheel('front left'),
-            this.createWheel('front right'),
-            this.createWheel('back left'),
-            this.createWheel('back right'),
+            this.createWheel('car front left'),
+            this.createWheel('car front right'),
+            this.createWheel('car back left'),
+            this.createWheel('car back right'),
         ];
 
 
@@ -56,15 +68,19 @@ class Car extends Vehicle {
         this.spareWheels.push(spareWheel);
     }
 
-
-    getNumberOfWheels() {
-        return this.wheels.length + this.spareWheels.length;
-    }
-
-
 }
 
 class SedanCar extends Car {
+    constructor() {
+        super();
+        this.wheels = [
+            this.createWheel('sedan front left'),
+            this.createWheel('sedan front right'),
+            this.createWheel('sedan back left'),
+            this.createWheel('sedan back right'),
+        ];
+
+    }
 
     addSpareWheel() {
         const spareWheel = this.createWheel('sedan spare wheel ' + this.spareWheels.length);
@@ -73,22 +89,34 @@ class SedanCar extends Car {
 
 }
 
-const anyVehicle = new Vehicle();
-anyVehicle.addSpareWheel();
-anyVehicle.addSpareWheel();
-anyVehicle.exchangeWheel(2);
-
-
 const car = new Car();
-car.addSpareWheel();
-car.addSpareWheel();
-car.exchangeWheel(1);
-
-
+const anyVehicle = new Vehicle();
 const sedanCar = new SedanCar();
+
+anyVehicle.addSpareWheel();
+anyVehicle.addSpareWheel();
+anyVehicle.addSpareWheel();
+// anyVehicle.lendAwheel(car);
+anyVehicle.lendAwheel(sedanCar);
+anyVehicle.lendAwheel(sedanCar);
+// anyVehicle.exchangeWheel(2);
+
+
+car.addSpareWheel();
+car.addSpareWheel();
+car.addSpareWheel();
+// car.exchangeWheel(1);
+// car.exchangeWheel(0);
+// car.exchangeWheel(2);
+
+
 sedanCar.addSpareWheel();
-sedanCar.addSpareWheel();
+// sedanCar.addSpareWheel();
 sedanCar.exchangeWheel(2);
+sedanCar.exchangeWheel(0);
+sedanCar.exchangeWheel(1);
+// sedanCar.exchangeWheel(3);
+
 
 console.log(anyVehicle);
 console.log(car);
