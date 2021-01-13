@@ -10,8 +10,29 @@ class CarWheel {
 class Vehicle {
     constructor() {
         console.log('Vehicle constructor called')
+        this.wheels = [
+            this.createWheel('default wheel 1'),
+            this.createWheel('default wheel 2'),
+            this.createWheel('default wheel 3'),
+            this.createWheel('default wheel 4'),
+        ];
+
+        this.spareWheels = [];
+
+    }
+    createWheel(id) {
+        return new CarWheel(id);
     }
 
+    exchangeWheel(wheelIndex) {
+        const wheel = this.spareWheels[0];
+        this.wheels[wheelIndex] = wheel;
+        this.spareWheels.shift();
+    }
+     addSpareWheel() {
+         const spareWheel = this.createWheel('default spare wheel ' + this.spareWheels.length);
+         this.spareWheels.push(spareWheel);
+     }
 }
 
 class Car extends Vehicle {
@@ -26,53 +47,51 @@ class Car extends Vehicle {
             this.createWheel('back right'),
         ];
 
-        this.spareWheels = [];
 
         this.steeringWheel = undefined;
     }
 
     addSpareWheel() {
-        const spareWheel = this.createWheel('spare wheel ' + this.spareWheels.length);
+        const spareWheel = this.createWheel('car spare wheel ' + this.spareWheels.length);
         this.spareWheels.push(spareWheel);
     }
 
-    createWheel(id) {
-        return new CarWheel(id);
-    }
 
     getNumberOfWheels() {
         return this.wheels.length + this.spareWheels.length;
     }
 
-    exchangeWheel(wheelIndex) {
-        const wheel = this.spareWheels[0];
-        this.wheels[wheelIndex] = wheel;
-        this.spareWheels.shift();
-    }
 
 }
 
 class SedanCar extends Car {
 
     addSpareWheel() {
-        const spareWheel = this.createWheel('sedan spare wheel');
+        const spareWheel = this.createWheel('sedan spare wheel ' + this.spareWheels.length);
         this.spareWheels.push(spareWheel);
     }
 
 }
 
+const anyVehicle = new Vehicle();
+anyVehicle.addSpareWheel();
+anyVehicle.addSpareWheel();
+anyVehicle.exchangeWheel(2);
+
+
 const car = new Car();
-
 car.addSpareWheel();
-
-const sedanCar = new SedanCar();
-
-sedanCar.addSpareWheel();
-
+car.addSpareWheel();
 car.exchangeWheel(1);
 
 
+const sedanCar = new SedanCar();
+sedanCar.addSpareWheel();
+sedanCar.addSpareWheel();
+sedanCar.exchangeWheel(2);
 
+console.log(anyVehicle);
 console.log(car);
 console.log(sedanCar);
+
 
