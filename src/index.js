@@ -11,7 +11,6 @@ class Vehicle {
     constructor() {
         console.log('Vehicle constructor called')
     }
-
 }
 
 class Car extends Vehicle {
@@ -49,16 +48,13 @@ class Car extends Vehicle {
         this.wheels[wheelIndex] = wheel;
         this.spareWheels.shift();
     }
-
 }
 
 class SedanCar extends Car {
-
     addSpareWheel() {
         const spareWheel = this.createWheel('sedan spare wheel');
         this.spareWheels.push(spareWheel);
     }
-
 }
 
 const car = new Car();
