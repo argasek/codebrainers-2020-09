@@ -9,6 +9,7 @@ const employeeWorkingHours = [
 ];
 
 const hourInMinutes = 60;
+const dayInMinutes = hourInMinutes * 24;
 
 const timeRangeToMinutes = (text) => {
     let minutes = 0;
@@ -55,12 +56,11 @@ const fullWeekWorkingMinutes = (employeeWeekHours) => {
 const weekTimeRange = fullWeekWorkingMinutes(employeeWorkingHours);
 
 const getWorkingTimeAnalysis = (workingMinutes, weeklyWorkingHours = 40) => {
-    const workingDayMinutes = 480;
     let didWorkOvertime = false;
 
-    let days = parseInt(workingMinutes / workingDayMinutes);
-    let hours = parseInt(workingMinutes % workingDayMinutes / hourInMinutes);
-    let minutes = parseInt(workingMinutes % workingDayMinutes % hourInMinutes);
+    let days = Math.floor(workingMinutes / dayInMinutes);
+    let hours = Math.floor(workingMinutes % dayInMinutes / hourInMinutes);
+    let minutes = workingMinutes % dayInMinutes % hourInMinutes;
 
     if ((workingMinutes / hourInMinutes) > weeklyWorkingHours) {
         didWorkOvertime = true;
