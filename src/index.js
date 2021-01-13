@@ -1,4 +1,4 @@
-// POJO
+// POJO.
 
 class CarWheel {
     constructor(id) {
