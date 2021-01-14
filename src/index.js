@@ -7,6 +7,13 @@ class Wheel {
     setPlacement(placement) {
         this.placement = placement;
     }
+
+    clone() {
+        const wheel = new Wheel();
+        Object.keys(this).forEach(key => wheel[key] = this[key]);
+        return wheel;
+    }
+
 }
 
 
@@ -77,6 +84,12 @@ class Bicycle extends Vehicle {
 
 class CarWheel extends Wheel {
 
+    clone() {
+        const wheel = new CarWheel();
+        Object.keys(this).forEach(key => wheel[key] = this[key]);
+        return wheel;
+    }
+
 }
 
 
@@ -102,22 +115,43 @@ class Car extends Vehicle {
 
 }
 
-try {
-    const car = new Car();
-    const carWheel = new CarWheel();
-    car.addSpareWheel(new CarWheel());
-    car.addSpareWheel(new CarWheel());
-    console.log(car);
+// try {
+//     const car = new Car();
+//     const carWheel = new CarWheel('trunk');
+//     car.addSpareWheel(carWheel);
+//     car.addSpareWheel(carWheel);
+//     // car.addSpareWheel(new CarWheel('trunk'));
+//     // car.addSpareWheel(new CarWheel('trunk'));
+//     console.log(car);
+//
+// } catch (exception) {
+//     console.error(exception)
+// }
 
-    const bicycle = new Bicycle();
-    const bicycleWheel = new BicycleWheel();
-    bicycle.addSpareWheel(bicycleWheel);
+// const carWheel1 = new CarWheel('trunk');
+// const carWheel2 = new CarWheel('trunk');
+//
+// if ({} === { }) {
+//     console.log('Equal');
+// } else {
+//     console.log('Not equal');
+// }
 
-    // Uncomment to see wheel instance checking mechanism in action
-    // bicycle.addSpareWheel(new CarWheel());
-    console.log(bicycle);
+// if (carWheel1 === carWheel2) {
+//     console.log('Equal');
+// } else {
+//     console.log('Not equal');
+// }
 
-} catch (exception) {
-    console.error(exception)
-}
+
+const a = new Array(3).fill(0).map((x, i) => new CarWheel('trunk'));
+const b = a.map(item => item.clone());
+
+// shallow copy
+
+b[0].placement = 'front left';
+
+console.log(a);
+console.log(b);
+
 
