@@ -1,78 +1,123 @@
-// POJO
 
-class CarWheel {
-    constructor(id) {
-        this.id = id;
+class Wheel {
+    constructor(placement = undefined) {
+        this.placement = placement;
+    }
+
+    setPlacement(placement) {
+        this.placement = placement;
     }
 }
 
 
 class Vehicle {
-    constructor() {
+    constructor(numberOfWheels) {
         console.log('Vehicle constructor called')
-    }
-
-}
-
-class Car extends Vehicle {
-    constructor() {
-        super();
-        console.log('Car constructor called');
-
-        this.wheels = [
-            this.createWheel('front left'),
-            this.createWheel('front right'),
-            this.createWheel('back left'),
-            this.createWheel('back right'),
-        ];
-
+        if (typeof numberOfWheels !== 'number' || numberOfWheels <= 0) {
+            throw Error('Cannot create a new Vehicle with non-positive numberOfWheels');
+        }
+        this.wheels = new Array(numberOfWheels).fill(0).map(() => this.createWheel());
         this.spareWheels = [];
-
-        this.steeringWheel = undefined;
     }
 
-    addSpareWheel() {
-        const spareWheel = this.createWheel('spare wheel ' + this.spareWheels.length);
-        this.spareWheels.push(spareWheel);
+    addSpareWheel(wheel, wheelClass) {
+        // console.log(wheelClass);
+        if (wheel instanceof wheelClass) {
+            this.spareWheels.push(wheel);
+        } else {
+            throw new Error('Invalid type of wheel added as a spare wheel');
+        }
     }
 
-    createWheel(id) {
-        return new CarWheel(id);
+    createWheel(placement) {
+        return new Wheel(placement);
+    }
+    
+    getWheel(wheelIndex) {
+        return this.wheels[wheelIndex];
     }
 
-    getNumberOfWheels() {
-        return this.wheels.length + this.spareWheels.length;
+    setWheel(wheelIndex, wheel) {
+        this.wheels[wheelIndex] = wheel;
     }
 
     exchangeWheel(wheelIndex) {
         const wheel = this.spareWheels[0];
-        this.wheels[wheelIndex] = wheel;
+        this.setWheel(wheelIndex, wheel);
         this.spareWheels.shift();
     }
 
+    setWheelPlacement(wheelIndex, placement) {
+        this.getWheel(wheelIndex).setPlacement(placement);
+    }
 }
 
-class SedanCar extends Car {
+class BicycleWheel extends Wheel {
 
-    addSpareWheel() {
-        const spareWheel = this.createWheel('sedan spare wheel');
-        this.spareWheels.push(spareWheel);
+}
+
+class Bicycle extends Vehicle {
+
+    constructor() {
+        super(2);
+        this.setWheelPlacement(0, 'front');
+        this.setWheelPlacement(1, 'back');
+        console.log('Bicycle constructor called');
+    }
+
+    createWheel(placement) {
+        return new BicycleWheel(placement);
+    }
+
+    addSpareWheel(wheel) {
+        super.addSpareWheel(wheel, BicycleWheel);
     }
 
 }
 
-const car = new Car();
+class CarWheel extends Wheel {
 
-car.addSpareWheel();
-
-const sedanCar = new SedanCar();
-
-sedanCar.addSpareWheel();
-
-car.exchangeWheel(1);
+}
 
 
+class Car extends Vehicle {
+    constructor() {
+        super(4);
 
-console.log(car);
-console.log(sedanCar);
+        this.setWheelPlacement(0, 'front left');
+        this.setWheelPlacement(1, 'front right');
+        this.setWheelPlacement(2, 'back left');
+        this.setWheelPlacement(3, 'back right');
+
+        console.log('Car constructor called');
+    }
+
+    createWheel(placement) {
+        return new CarWheel(placement);
+    }
+
+    addSpareWheel(wheel) {
+        super.addSpareWheel(wheel, CarWheel);
+    }
+
+}
+
+try {
+    const car = new Car();
+    const carWheel = new CarWheel();
+    car.addSpareWheel(new CarWheel());
+    car.addSpareWheel(new CarWheel());
+    console.log(car);
+
+    const bicycle = new Bicycle();
+    const bicycleWheel = new BicycleWheel();
+    bicycle.addSpareWheel(bicycleWheel);
+
+    // Uncomment to see wheel instance checking mechanism in action
+    // bicycle.addSpareWheel(new CarWheel());
+    console.log(bicycle);
+
+} catch (exception) {
+    console.error(exception)
+}
 
