@@ -26,11 +26,29 @@ class Vehicle {
         return new CarWheel(id);
     }
 
-    lendAwheel(theInstanceWithNoSpareWheel) {
-        this.spareWheels.shift();
-        const NoName = theInstanceWithNoSpareWheel.spareWheels.push(this.spareWheels[0]);
+    // exchangeFromAny(instanceWithExtra) {
+    //
+    //         const name = instanceWithExtra.spareWheels.shift();
+    //         this.spareWheels.push(instanceWithExtra.spareWheels[0]);
+    //
+    //
+    // }
+
+    lendAwheel(wheelIndex, theInstanceWithNoSpareWheel) {
+        if (this.spareWheels.length > 0) {
+            const wheel = this.spareWheels[0];
+            theInstanceWithNoSpareWheel.wheels[wheelIndex] = wheel;
+            this.spareWheels.shift();
+        }
+        else {
+           console.log("no wheels to lend left");
+
+        }
+
+        // theInstanceWithNoSpareWheel.spareWheels.push(this.spareWheels[0]);
 
     }
+
 
     exchangeWheel(wheelIndex) {
         const wheel = this.spareWheels[0];
@@ -60,7 +78,6 @@ class Car extends Vehicle {
         ];
 
 
-        this.steeringWheel = undefined;
     }
 
     addSpareWheel() {
@@ -89,34 +106,30 @@ class SedanCar extends Car {
 
 }
 
-const car = new Car();
 const anyVehicle = new Vehicle();
+const car = new Car();
 const sedanCar = new SedanCar();
 
 anyVehicle.addSpareWheel();
 anyVehicle.addSpareWheel();
-anyVehicle.addSpareWheel();
+anyVehicle.lendAwheel(3, sedanCar);
 // anyVehicle.lendAwheel(car);
-anyVehicle.lendAwheel(sedanCar);
-anyVehicle.lendAwheel(sedanCar);
-// anyVehicle.exchangeWheel(2);
 
 
 car.addSpareWheel();
 car.addSpareWheel();
-car.addSpareWheel();
-// car.exchangeWheel(1);
-// car.exchangeWheel(0);
-// car.exchangeWheel(2);
+car.exchangeWheel(3);
+car.exchangeWheel(2);
+
+
+
 
 
 sedanCar.addSpareWheel();
-// sedanCar.addSpareWheel();
-sedanCar.exchangeWheel(2);
-sedanCar.exchangeWheel(0);
-sedanCar.exchangeWheel(1);
-// sedanCar.exchangeWheel(3);
-
+sedanCar.addSpareWheel();
+// sedanCar.lendAwheel(0, car);
+// sedanCar.lendAwheel(0, anyVehicle);
+// sedanCar.lendAwheel(1,anyVehicle);
 
 console.log(anyVehicle);
 console.log(car);
