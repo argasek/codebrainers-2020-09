@@ -41,7 +41,8 @@ class Vehicle {
             this.spareWheels.shift();
         }
         else {
-           console.log("no wheels to lend left");
+           console.log("no wheels to lend left from this vehicle, try to borrow a wheel from another vehicle");
+           // alert("no wheels to lend left from this vehicle, try to borrow a wheel from another vehicle");
 
         }
 
@@ -120,6 +121,7 @@ car.addSpareWheel();
 car.addSpareWheel();
 car.exchangeWheel(3);
 car.exchangeWheel(2);
+car.lendAwheel(2,sedanCar);
 
 
 
