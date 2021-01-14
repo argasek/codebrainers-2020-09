@@ -10,35 +10,8 @@ class CarWheel {
 class Vehicle {
     constructor() {
         console.log('Vehicle constructor called')
-
-        this.wheels = [
-            this.createWheel('front left'),
-            this.createWheel('front right'),
-            this.createWheel('back left'),
-            this.createWheel('back right'),
-        ];
-
-        this.spareWheels = [];
-
-        this.steeringWheel = undefined;
-    }
-    addSpareWheel() {
-        const spareWheel = this.createWheel('spare wheel ' + this.spareWheels.length);
-        this.spareWheels.push(spareWheel);
     }
 
-    createWheel(id) {
-        return new CarWheel(id);
-    }
-
-    exchangeWheel(wheelIndex) {
-        do {
-            const wheel = this.spareWheels[0];
-            this.wheels[wheelIndex] = wheel;
-            this.spareWheels.shift();
-        }
-        while (this.spareWheels>0);
-    };
 }
 
 class Car extends Vehicle {
@@ -84,9 +57,9 @@ class SedanCar extends Car {
     addSpareWheel() {
         const spareWheel = this.createWheel('sedan spare wheel');
         this.spareWheels.push(spareWheel);
-    };
+    }
 
-};
+}
 
 const car = new Car();
 
@@ -102,4 +75,3 @@ car.exchangeWheel(1);
 
 console.log(car);
 console.log(sedanCar);
-
