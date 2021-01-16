@@ -27,9 +27,12 @@ function StudentList(props) {
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
+                <th colspan={3} style={{backgroundColor: '#555'}}>Sort by: "fullName", sort direction: true</th>
+            </tr>
+            <tr>
                 <th>Full name</th>
                 <th>Number of beers</th>
-                <th>Participation</th>
+                <th style={{backgroundColor: '#621'}}>Participation</th>
             </tr>
             </thead>
             <tbody>
