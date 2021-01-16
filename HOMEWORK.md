@@ -1,22 +1,95 @@
 # Homework
 
-## 2021-01-05
+### Homework 2021-01-16
 
-### Task 1
+#### Task 1.
 
-Implement kind of "protection" mechanism, which will prevent user
-from providing non-numeric answers. The solution should work in
-such way that user should be asked **the same** question as
-originally asked, unless correct answer is provided. Then the
-algorithm should continue as usual. (Tip: Remember to properly
-deal with `NaN` value!).
+Implement `startAllEngines`, `areAllEnginesRunning()` and
+`areAllEnginesStopped()` methods of `Vehicle` class.
 
-### Task 2
+```
+const airplane = new Airplane();
+airplane.startEngine(0);
+airplane.startEngine(1);
+airplane.startEngine(2);
+airplane.startEngine(3);
 
-Besides of informing user on passed (or not) exam, give him / her
-feedback on number of correct and incorrect answers.
+airplane.stopEngine(1);
 
-### Task 3*
+// areAllEnginesStopped() -> false
 
-How would you modify the code in order to show all correct and
-all incorrect results provided.
+airplane.stopEngine(0);
+airplane.stopEngine(2);
+airplane.stopEngine(3);
+
+// areAllEnginesStopped() -> true
+
+```
+
+#### Task 2.
+Implement `isAnyEngineRunning()` method of `Vehicle` class.
+
+```
+const airplane = new Airplane();
+// isAnyEngineRunning() -> false
+
+airplane.startEngine(2);
+
+// isAnyEngineRunning() -> true
+
+```
+
+#### Task 3.
+Implement `areAtLeastThisMuchEnginesRunning(count)` method of `Vehicle` class.
+
+```
+const airplane = new Airplane();
+
+airplane.startEngine(2);
+airplane.startEngine(3);
+
+// areAtLeastThisMuchEnginesRunning(2) -> true
+// areAtLeastThisMuchEnginesRunning(3) -> false
+
+```
+
+#### Task 4.
+Modify `areAllEnginesRunning()` method so it does not use `reduce()` but
+it also doesn't use any loops (like `for`, `while`, etc.).
+
+
+#### Task 5.*
+
+Modify vehicle engine in such way that each engine produces
+some level of noise (70db level of noise, 36 db). Level of noise
+is a hit or miss, i.e. factory produces engines which have
+better or worse parameters. What does it mean?
+
+It means engines should have level of noise assigned randomly
+during engine assembly ;-) to a value between (20-60) dB.
+
+Implement method `isNoiseLevelExceeded(maximumNoiseLevel)` which
+checks if total noise produced by all running (!!!!) engines
+is greater than `maximumNoiseLevel`
+
+Example: engines produce these much levels of noise:
+```
+0: 20
+1: 45
+2: 23
+3: 60
+
+airplane.startEngine(2);
+airplane.startEngine(3);
+
+totalNoiseLevel = 45 + 23;
+```
+
+```
+isNoiseLevelExceeded(90) -> false // 45 + 23 < 90
+```
+
+
+
+
+
