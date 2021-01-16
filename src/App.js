@@ -9,10 +9,10 @@ function App() {
             <h1>Hej!</h1>
             <p>Ala ma kota</p>
             <ul>
-                {arr.map(color =>
+                {arr.map((color, index) =>
                     (
                         <li key={color} style={{color: color}}>
-                           <span style ={{paddingLeft:'30px', paddingRight:'30px', backgroundColor:'#ccc'}}> {color}</span>
+                           <span className='list-item' style ={{paddingLeft: (30+(index*20)).toString()+'px'}}> {color}</span>
                         </li>
                     )
                 )}
