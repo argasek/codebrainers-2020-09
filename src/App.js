@@ -8,6 +8,9 @@ function App() {
       <div>
         <h1>Hej!</h1>
         <p>Ala ma kota</p>
+          <ul>
+              {arr.map(color => (<li key={color}>{color}</li>))}
+          </ul>
       </div>
   );
 }
