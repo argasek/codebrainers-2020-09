@@ -5,26 +5,22 @@ import StudentRow from "./StudentRow";
 function StudentList(props) {
     const students = props.students;
     const sortBy = props.sortBy;
+    const sortDirection = props.sortDirection;
+    const multiplier = sortDirection ? 1 : -1;
 
-    const compareStrings = (a, b) => {
+
+    const sortedStudents = students.sort((student1, student2) => {
+        const a = student1[sortBy];
+        const b = student2[sortBy];
+        console.log(a,b,sortBy);
         if (a > b) {
-            return 1;
+            return 1 * multiplier;
         }
         if (b > a) {
-            return -1;
+            return -1 * multiplier;
         }
         return 0;
-    }
 
-    const sortedStudents = students.sort((a, b) => {
-        console.log(a[sortBy], b[sortBy], sortBy);
-        // compareStrings(a.fullName, b.fullName)
-        if (typeof a[sortBy] === "string") {
-            return compareStrings(a[sortBy], b[sortBy]);
-        } else if (typeof a[sortBy] === "number") {
-            return a[sortBy] - b[sortBy];
-        }
-        return 0;
     });
 
     return (
@@ -38,7 +34,7 @@ function StudentList(props) {
             </thead>
             <tbody>
             {
-                sortedStudents.map((student, index) => <StudentRow student={ student } key={ index } />)
+                sortedStudents.map((student, index) => <StudentRow student={student} key={index}/>)
             }
             </tbody>
         </table>
