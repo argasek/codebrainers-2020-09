@@ -6,10 +6,9 @@ import {codebrainersStudents} from "./models/student";
 function App() {
     return (
         <div>
-            <StudentList students={codebrainersStudents} sortBy='fullName'/>
-            {/*<StudentList students={codebrainersStudents} sortBy="participationCount"/>*/}
-            {/*<StudentList students={codebrainersStudents} sortBy='numberOfBeers'/>*/}
-
+            <StudentList students={codebrainersStudents} sortBy="fullName"/>
+            <StudentList students={codebrainersStudents} sortBy="participationCount"/>
+            <StudentList students={codebrainersStudents} sortBy="numberOfBeers"/>
         </div>
     );
 }

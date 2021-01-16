@@ -1,15 +1,25 @@
 import React from "react";
-import {Student} from "../models/student";
 import StudentRow from "./StudentRow";
-
 
 
 function StudentList(props) {
     const students = props.students;
-    const sortBy =props.sortBy;
-    console.log(props);
-    debugger;
-    const sortedByName = students.sort((a,b)=> a.fullName-b.fullName);
+    const sortBy = props.sortBy;
+
+    const compareStrings = (a, b) => {
+        if (a > b) {
+            return 1;
+        }
+        if (b > a) {
+            return -1;
+        }
+        return 0;
+    }
+
+    const sortedStudents = students.sort((a, b) => {
+        // compareStrings(a.fullName, b.fullName)
+        return 0;
+    });
 
     return (
         <table className='student-table' cellSpacing="0" cellPadding="0">
@@ -22,7 +32,7 @@ function StudentList(props) {
             </thead>
             <tbody>
             {
-            sortedByName.map((student, index) => <StudentRow student={student} key={index}/> )
+                sortedStudents.map((student, index) => <StudentRow student={ student } key={ index } />)
             }
             </tbody>
         </table>
