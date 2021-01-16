@@ -6,6 +6,8 @@ import StudentRow from "./StudentRow";
 
 function StudentList(props) {
     const students = props.students;
+    const sortBy =props.sortBy;
+    console.log(props);
 
     return (
         <table className='student-table' cellSpacing="0" cellPadding="0">
@@ -18,7 +20,7 @@ function StudentList(props) {
             </thead>
             <tbody>
             {
-            students.map(student => <StudentRow student={student}/> )
+            students.map((student, index) => <StudentRow student={student} key={index}/> )
             }
             </tbody>
         </table>
