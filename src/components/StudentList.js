@@ -17,7 +17,13 @@ function StudentList(props) {
     }
 
     const sortedStudents = students.sort((a, b) => {
+        console.log(a[sortBy], b[sortBy], sortBy);
         // compareStrings(a.fullName, b.fullName)
+        if (typeof a[sortBy] === "string") {
+            return compareStrings(a[sortBy], b[sortBy]);
+        } else if (typeof a[sortBy] === "number") {
+            return a[sortBy] - b[sortBy];
+        }
         return 0;
     });
 
