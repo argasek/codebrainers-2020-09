@@ -8,6 +8,8 @@ function StudentList(props) {
     const students = props.students;
     const sortBy =props.sortBy;
     console.log(props);
+    debugger;
+    const sortedByName = students.sort((a,b)=> a.fullName-b.fullName);
 
     return (
         <table className='student-table' cellSpacing="0" cellPadding="0">
@@ -20,7 +22,7 @@ function StudentList(props) {
             </thead>
             <tbody>
             {
-            students.map((student, index) => <StudentRow student={student} key={index}/> )
+            sortedByName.map((student, index) => <StudentRow student={student} key={index}/> )
             }
             </tbody>
         </table>
