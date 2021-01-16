@@ -4,6 +4,7 @@ body {
 
 .student-table {
   border-collapse: collapse;
+  margin-bottom: 1rem;
 }
 
 .student-table td, .student-table th {

@@ -5,6 +5,7 @@ import StudentRow from "./StudentRow";
 
 
 function StudentList(props) {
+    const students = props.students;
 
     return (
         <table className='student-table' cellSpacing="0" cellPadding="0">
@@ -16,7 +17,9 @@ function StudentList(props) {
             </tr>
             </thead>
             <tbody>
-            <StudentRow student={new Student('Marek', 3, 1)}/>
+            {
+            students.map(student => <StudentRow student={student}/> )
+            }
             </tbody>
         </table>
     );
