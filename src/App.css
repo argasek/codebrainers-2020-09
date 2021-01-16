@@ -1,5 +1,18 @@
-.list-item {
-  padding-left: 30px;
-  padding-right: 30px;
-  background-color: #cccccc;
+body {
+  padding: 2rem;
+}
+
+.student-table {
+  border-collapse: collapse;
+}
+
+.student-table td, .student-table th {
+  border: 1px solid #444;
+  padding: 1rem;
+}
+
+.student-table th {
+  background-color: #444;
+  border: 1px solid #666;
+  color: #ccc;
 }
