@@ -1,4 +1,18 @@
 import React from "react";
+import {Student} from "../models/student";
+
+
+function StudentRow(props) {
+    const student = props.student;
+    const {fullName, numberOfBeers, participationCount} = student;
+    return (
+        <tr>
+            <td> {fullName} </td>
+            <td> {numberOfBeers}</td>
+            <td> {participationCount}</td>
+        </tr>
+    );
+}
 
 function StudentList(props) {
 
@@ -6,28 +20,13 @@ function StudentList(props) {
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
-                <th>Kolumna 1</th>
-                <th>Kolumna 2</th>
-                <th>Kolumna 3</th>
+                <th>Full name</th>
+                <th>Number of beers</th>
+                <th>Participation</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Kolumna 1</td>
-                <td>Kolumna 2</td>
-                <td>Kolumna 3</td>
-            </tr>
-            <tr>
-                <td>Kolumna 1</td>
-                <td>Kolumna 2</td>
-                <td>Kolumna 3</td>
-
-            </tr>
-            <tr>
-                <td>Kolumna 1</td>
-                <td>Kolumna 2</td>
-                <td>Kolumna 3</td>
-            </tr>
+            <StudentRow student={new Student('Marek', 3, 1)}/>
             </tbody>
         </table>
     );
