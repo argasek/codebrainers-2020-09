@@ -7,12 +7,16 @@ function StudentList(props) {
     const sortBy = props.sortBy;
     const sortDirection = props.sortDirection;
     const multiplier = sortDirection ? 1 : -1;
-
+    const sortDirectionLabel = sortDirection ? "ascending" : "descending";
+    const sortByLabel = {
+        fullName : 'full name',
+        participationCount : 'participation',
+        numberOfBeers : 'number of beers'
+    }
 
     const sortedStudents = students.sort((student1, student2) => {
         const a = student1[sortBy];
         const b = student2[sortBy];
-        console.log(a,b,sortBy);
         if (a > b) {
             return 1 * multiplier;
         }
@@ -27,7 +31,7 @@ function StudentList(props) {
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
-                <th colspan={3} style={{backgroundColor: '#555'}}>Sort by: "fullName", sort direction: true</th>
+                <th colSpan={3} style={{backgroundColor: '#555'}}>Sorted by {sortByLabel[sortBy]}, {sortDirectionLabel}</th>
             </tr>
             <tr>
                 <th>Full name</th>
