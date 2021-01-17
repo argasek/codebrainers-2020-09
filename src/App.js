@@ -6,9 +6,9 @@ import {codebrainersStudents} from "./models/student";
 function App() {
     return (
         <div>
-            <StudentList students={codebrainersStudents} sortBy="fullName" sortDirection={false}/>
-            <StudentList students={codebrainersStudents} sortBy="participationCount" sortDirection={true}/>
-            <StudentList students={codebrainersStudents} sortBy="numberOfBeers" sortDirection={false}/>
+            <StudentList students={codebrainersStudents} sortBy="fullName" sortDirection="ascending"/>
+            <StudentList students={codebrainersStudents} sortBy="participationCount" sortDirection="descending"/>
+            <StudentList students={codebrainersStudents} sortBy="numberOfBeers" sortDirection="ascending"/>
         </div>
     );
 }

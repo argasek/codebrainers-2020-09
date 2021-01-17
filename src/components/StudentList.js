@@ -6,13 +6,14 @@ function StudentList(props) {
     const students = props.students;
     const sortBy = props.sortBy;
     const sortDirection = props.sortDirection;
-    const multiplier = sortDirection ? 1 : -1;
 
+    const multiplier = (sortDirection  === "ascending") ?
+        1 : (sortDirection  === "descending") ? -1 : 0;
 
     const sortedStudents = students.sort((student1, student2) => {
         const a = student1[sortBy];
         const b = student2[sortBy];
-        console.log(a,b,sortBy);
+
         if (a > b) {
             return 1 * multiplier;
         }
@@ -20,19 +21,21 @@ function StudentList(props) {
             return -1 * multiplier;
         }
         return 0;
-
     });
 
     return (
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
-                <th colspan={3} style={{backgroundColor: '#555'}}>Sort by: "fullName", sort direction: true</th>
+                <th colSpan={3} style={{backgroundColor: '#555'}}>
+                    Sort by: Student's {sortBy}.
+                    Sort direction: {sortDirection}.
+                </th>
             </tr>
             <tr>
                 <th>Full name</th>
                 <th>Number of beers</th>
-                <th style={{backgroundColor: '#621'}}>Participation</th>
+                <th>Participation</th>
             </tr>
             </thead>
             <tbody>
