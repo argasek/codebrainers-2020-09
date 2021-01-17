@@ -11,13 +11,14 @@ function StudentList(props) {
     let backgroundStyleName;
     let backgroundStyleBeer;
     let backgroundStyleAttend;
-    let backgroundStyleNameCells= props.student;
+
 
 
     if (sortBy === "fullName") {
         sortBy = " student's name";
         backgroundStyleName = {backgroundColor: "#621"};
-        backgroundStyleNameCells = {backgroundColor: "#623"};
+
+
 
     } else if (sortBy === "participationCount") {
         sortBy = " attendance";
