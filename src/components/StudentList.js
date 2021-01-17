@@ -4,34 +4,15 @@ import StudentRow from "./StudentRow";
 
 function StudentList(props) {
     const students = props.students;
-    let sortBy = props.sortBy;
+    const sortBy = props.sortBy;
     const sortDirection = props.sortDirection;
     const multiplier = sortDirection ? 1 : -1;
-    const directionValue = sortDirection ? "Ascending" : "Descending";
-    let backgroundStyleName;
-    let backgroundStyleBeer;
-    let backgroundStyleAttend;
-    let backgroundStyleNameCells= props.student;
-
-
-    if (sortBy === "fullName") {
-        sortBy = " student's name";
-        backgroundStyleName = {backgroundColor: "#621"};
-        backgroundStyleNameCells = {backgroundColor: "#623"};
-
-    } else if (sortBy === "participationCount") {
-        sortBy = " attendance";
-        backgroundStyleAttend = {backgroundColor: "#621"};
-
-    } else {
-        sortBy = " earned beers";
-        backgroundStyleBeer = {backgroundColor: "#621"};
-    }
 
 
     const sortedStudents = students.sort((student1, student2) => {
         const a = student1[sortBy];
         const b = student2[sortBy];
+        console.log(a,b,sortBy);
         if (a > b) {
             return 1 * multiplier;
         }
@@ -46,13 +27,12 @@ function StudentList(props) {
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
-                <th colSpan={3}>Table sorted by: {sortBy} | {directionValue}</th>
-
+                <th colspan={3} style={{backgroundColor: '#555'}}>Sort by: "fullName", sort direction: true</th>
             </tr>
             <tr>
-                <th style={backgroundStyleName}>Full name</th>
-                <th style={backgroundStyleBeer}>Number of beers</th>
-                <th style={backgroundStyleAttend}>Participation</th>
+                <th>Full name</th>
+                <th>Number of beers</th>
+                <th style={{backgroundColor: '#621'}}>Participation</th>
             </tr>
             </thead>
             <tbody>
@@ -64,6 +44,5 @@ function StudentList(props) {
     );
 
 }
-
 
 export default StudentList;
