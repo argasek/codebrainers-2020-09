@@ -17,3 +17,9 @@ body {
   border: 1px solid #666;
   color: #ccc;
 }
+
+.student-table th .active{
+  background-color: #ff0000;
+  border: 1px solid #666;
+  color: #ccc;
+}
