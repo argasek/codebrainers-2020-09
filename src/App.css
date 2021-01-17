@@ -17,3 +17,8 @@ body {
   border: 1px solid white;
   color: #ccc;
 }
+
+
+.student-row-full-name {
+  background-color: red;
+}
