@@ -8,7 +8,6 @@ function StudentList(props) {
     const sortDirection = props.sortDirection;
     const multiplier = sortDirection ? 1 : -1;
 
-
     const sortedStudents = students.sort((student1, student2) => {
         const a = student1[sortBy];
         const b = student2[sortBy];
@@ -22,12 +21,16 @@ function StudentList(props) {
         return 0;
 
     });
+    const style = {backgroundColor:"#621"}
+    const style2 = {backgroundColor:"#fff"};
+
+    const col = sortBy ? style : style2;
 
     return (
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
-                <th colspan={3} style={{backgroundColor: '#555'}}>Sort by: "fullName", sort direction: true</th>
+                <th colspan={3} style={{backgroundColor: '#555'}}> Sort by: {sortBy}, Sort direction: {sortDirection}</th>
             </tr>
             <tr>
                 <th>Full name</th>
