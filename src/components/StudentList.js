@@ -23,6 +23,7 @@ function StudentList(props) {
     };
 
 
+
     const sortedStudents = students.sort((student1, student2) => {
         const a = student1[sortBy];
         const b = student2[sortBy];
@@ -43,7 +44,8 @@ function StudentList(props) {
                 <th colSpan={3} style={{background: 'teal'}}>Sorted by {sortByLabel[sortBy]}, {sortDirectionLabel}</th>
             </tr>
             <tr>
-                <th style={isSortingColumnLabel('fullName') ? {background: 'teal'} : {background: '#444'}}>Full name</th>
+                <th style={isSortingColumnLabel('fullName') ? {background: 'teal'} : {background: '#444'}}>Full name
+                </th>
                 <th style={isSortingColumnLabel('numberOfBeers') ? {background: 'teal'} : {background: '#444'}}>Number
                     of
                     beers
@@ -61,4 +63,6 @@ function StudentList(props) {
 
 }
 
+
 export default StudentList;
+

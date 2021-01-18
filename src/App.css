@@ -18,7 +18,12 @@ body {
   color: #ccc;
 }
 
+.highlighted {
+  background: green;
+  color: rgba(255, 255, 255, 1);
+}
 
-.student-row-full-name {
-  background-color: red;
+.non-highlighted {
+  background: red;
+  color: rgba(255, 255, 255, 0.2);
 }
