@@ -7,8 +7,8 @@ function StudentList(props) {
     const sortBy = props.sortBy;
     const sortDirection = props.sortDirection;
 
-    const multiplier = (sortDirection  === "ascending") ?
-        1 : (sortDirection  === "descending") ? -1 : 0;
+    const multiplier = (sortDirection === "ascending") ?
+        1 : (sortDirection === "descending") ? -1 : 0;
 
     const sortedStudents = students.sort((student1, student2) => {
         const a = student1[sortBy];
@@ -23,6 +23,18 @@ function StudentList(props) {
         return 0;
     });
 
+    const highlightStyle = {backgroundColor: '#c60707'};
+    const regularStyle = {backgroundColor: '#555'};
+
+    function highlightHeader(headerName) {
+        if (sortBy === headerName){
+            return highlightStyle;
+        }
+        return regularStyle;
+    }
+
+    let counter = 0;
+
     return (
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
@@ -33,14 +45,15 @@ function StudentList(props) {
                 </th>
             </tr>
             <tr>
-                <th>Full name</th>
-                <th>Number of beers</th>
-                <th>Participation</th>
+                <th style={highlightHeader('fullName')}>Full name</th>
+                <th style={highlightHeader('numberOfBeers')}>Number of beers</th>
+                <th style={highlightHeader('participationCount')}>Participation</th>
             </tr>
             </thead>
             <tbody>
             {
-                sortedStudents.map((student, index) => <StudentRow student={student} key={index}/>)
+                sortedStudents.map((student, index) =>
+                    <StudentRow student={student} key={index} sortBy={sortBy} counter={counter++} />)
             }
             </tbody>
         </table>
