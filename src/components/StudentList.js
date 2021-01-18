@@ -11,22 +11,23 @@ function StudentList(props) {
     let backgroundStyleName;
     let backgroundStyleBeer;
     let backgroundStyleAttend;
+    let checkedLabelBackground = {backgroundColor:"#621"};
 
 
 
     if (sortBy === "fullName") {
         sortBy = " student's name";
-        backgroundStyleName = {backgroundColor: "#621"};
+        backgroundStyleName = checkedLabelBackground;
 
 
 
     } else if (sortBy === "participationCount") {
         sortBy = " attendance";
-        backgroundStyleAttend = {backgroundColor: "#621"};
+        backgroundStyleAttend = checkedLabelBackground;
 
     } else {
         sortBy = " earned beers";
-        backgroundStyleBeer = {backgroundColor: "#621"};
+        backgroundStyleBeer = checkedLabelBackground;
     }
 
 
