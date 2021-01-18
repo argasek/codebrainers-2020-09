@@ -16,17 +16,15 @@ function StudentList(props) {
 
 
     if (sortBy === "fullName") {
-        sortBy = " student's name";
+        sortBy = "student's name";
         backgroundStyleName = checkedLabelBackground;
 
-
-
     } else if (sortBy === "participationCount") {
-        sortBy = " attendance";
+        sortBy = "attendance";
         backgroundStyleAttend = checkedLabelBackground;
 
     } else {
-        sortBy = " earned beers";
+        sortBy = "earned beers";
         backgroundStyleBeer = checkedLabelBackground;
     }
 
@@ -59,13 +57,14 @@ function StudentList(props) {
             </thead>
             <tbody>
             {
-                sortedStudents.map((student, index) => <StudentRow student={student} key={index}/>)
+                sortedStudents.map((student, index) => <StudentRow student={student} key={index} sortBy={sortBy}/>)
             }
             </tbody>
         </table>
     );
 
 }
+
 
 
 export default StudentList;
