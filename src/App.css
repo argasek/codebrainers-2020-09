@@ -17,3 +17,7 @@ body {
   border: 1px solid #666;
   color: #ccc;
 }
+
+.student-table .table-gradient {
+  background: linear-gradient(#fff,#666);
+}
