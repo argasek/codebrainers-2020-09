@@ -4,15 +4,14 @@ import {codebrainersStudents} from "../models/student";
 export default function StudentRow(props) {
     const student = props.student;
     const sortBy = props.sortBy;
-    let counter = props.counter;
+    const counter = props.counter;
 
     const numberOfStudents = codebrainersStudents.length;
 
     const {fullName, numberOfBeers, participationCount} = student;
 
     function setOpacity(counter) {
-        let opacityAmount = 100 / (numberOfStudents - 1) * counter * 0.01;
-        return opacityAmount;
+        return 100 / (numberOfStudents - 1) * counter * 0.01;
     }
 
     const r = 0;
