@@ -18,7 +18,7 @@ export default function StudentRow(props) {
     const g = 0;
     const b = 0;
     const a = setOpacity(counter);
-    const opacityColor = 'rgba' + '(' + r + ',' + g + ',' + b + ',' + a + ')';
+    const opacityColor = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
 
     const columnHighlightStyle = {backgroundColor: opacityColor, color: '#c60707'};
     const columnRegularStyle = {backgroundColor: '#fff'};
