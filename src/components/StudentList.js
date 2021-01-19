@@ -12,6 +12,7 @@ function StudentList(props) {
     let backgroundStyleBeer;
     let backgroundStyleAttend;
     let checkedLabelBackground = {backgroundColor:"#621"};
+    let counter =0;
 
 
 
@@ -57,7 +58,7 @@ function StudentList(props) {
             </thead>
             <tbody>
             {
-                sortedStudents.map((student, index) => <StudentRow student={student} key={index} sortBy={sortBy}/>)
+                sortedStudents.map((student, index) => <StudentRow student={student} key={index} sortBy={sortBy} counter={counter++} />)
             }
             </tbody>
         </table>
