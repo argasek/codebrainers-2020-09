@@ -14,6 +14,7 @@ const codebrainersStudents = [
     new Student('Damian', 2, 11),
     new Student('Jonasz', 1, 24),
     new Student('Darek', 192, 77),
+   ,
 ];
 
-export { codebrainersStudents, Student };
+export {codebrainersStudents, Student};

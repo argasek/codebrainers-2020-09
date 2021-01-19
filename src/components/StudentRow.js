@@ -20,10 +20,10 @@ export default function StudentRow(props) {
     let alterA =changeAlterA(counter);
 
     function changeA(counter) {
-        return counter * 0.1;
+        return 0.1 +(counter/10);
     }
     function changeAlterA(counter){
-        return 1-(counter * 0.1);
+        return (iterationCount/10)-(counter * 0.1);
     }
 
     let concatenatedColor = rgba + '(' + r + ',' + g + ',' + b + ',' + a + ')';
@@ -31,29 +31,32 @@ export default function StudentRow(props) {
     let checkedCellsBackground = {backgroundColor: concatenatedColor};
     let checkedCellsBackgroundAlter ={backgroundColor: concatenatedColorAlter};
     console.log(checkedCellsBackgroundAlter);
+    console.log(checkedCellsBackground);
+    console.log(iterationCount);
 
 
-    if (sortBy === "student's name") {
+
+    if (sortBy === "fullName") {
         if (directionValue === "Ascending") {
             backgroundStyleCellsName = checkedCellsBackground;
         } else {
-            backgroundStyleCellsName = {checkedCellsBackgroundAlter};
+            backgroundStyleCellsName = checkedCellsBackgroundAlter;
 
         }
 
-    } else if (sortBy === "earned beers") {
+    } else if (sortBy === "numberOfBeers") {
         if (directionValue === "Ascending") {
             backgroundStyleCellsBeers = checkedCellsBackground;
         } else {
-            backgroundStyleCellsBeers = {backgroundColor: "#333"}
+            backgroundStyleCellsBeers = checkedCellsBackgroundAlter;
 
         }
-    } else if (sortBy === "attendance") {
+    } else if (sortBy === "participationCount") {
         if (directionValue === "Ascending") {
             backgroundStyleCellsAttendance = checkedCellsBackground;
 
         } else {
-            backgroundStyleCellsAttendance = {backgroundColor: "#333"}
+            backgroundStyleCellsAttendance = checkedCellsBackgroundAlter;
 
         }
     }

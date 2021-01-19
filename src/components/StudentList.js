@@ -13,19 +13,20 @@ function StudentList(props) {
     let backgroundStyleAttend;
     let checkedLabelBackground = {backgroundColor:"#621"};
     let counter =0;
+    let sortingTitle;
 
 
 
     if (sortBy === "fullName") {
-        sortBy = "student's name";
+        sortingTitle = "student's name";
         backgroundStyleName = checkedLabelBackground;
 
     } else if (sortBy === "participationCount") {
-        sortBy = "attendance";
+        sortingTitle = "attendance";
         backgroundStyleAttend = checkedLabelBackground;
 
     } else {
-        sortBy = "earned beers";
+        sortingTitle = "earned beers";
         backgroundStyleBeer = checkedLabelBackground;
     }
 
@@ -47,7 +48,7 @@ function StudentList(props) {
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
-                <th colSpan={3}>Table sorted by: {sortBy} | {directionValue}</th>
+                <th colSpan={3}>Table sorted by: {sortingTitle} | {directionValue}</th>
 
             </tr>
             <tr>
