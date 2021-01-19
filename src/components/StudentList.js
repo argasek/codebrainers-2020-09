@@ -58,7 +58,7 @@ function StudentList(props) {
             </thead>
             <tbody>
             {
-                sortedStudents.map((student, index) => <StudentRow student={student} key={index} sortBy={sortBy} counter={counter++} />)
+                sortedStudents.map((student, index) => <StudentRow student={student} key={index} sortBy={sortBy} counter={counter++} directionValue={directionValue}/>)
             }
             </tbody>
         </table>

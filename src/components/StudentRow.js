@@ -6,43 +6,58 @@ export default function StudentRow(props) {
     const {fullName, numberOfBeers, participationCount} = student;
     let sortBy = props.sortBy;
     let counter = props.counter;
-    let sortDirection = props.sortDirection;
+    let directionValue = props.directionValue;
     let backgroundStyleCellsName;
     let backgroundStyleCellsBeers;
     let backgroundStyleCellsAttendance;
     let iterationCount = codebrainersStudents.length;
-
 
     let rgba = "rgba";
     let r = 136;
     let g = 15;
     let b = 15;
     let a = changeA(counter);
+    let alterA =changeAlterA(counter);
 
     function changeA(counter) {
-
-        return iterationCount / 10 * counter * 0.1;
-
+        return counter * 0.1;
+    }
+    function changeAlterA(counter){
+        return 1-(counter * 0.1);
     }
 
-
     let concatenatedColor = rgba + '(' + r + ',' + g + ',' + b + ',' + a + ')';
-
-
-    let checkedCellsBackground = {background: concatenatedColor};
+    let concatenatedColorAlter = rgba + '(' + r + ',' + g + ',' + b + ',' + alterA + ')';
+    let checkedCellsBackground = {backgroundColor: concatenatedColor};
+    let checkedCellsBackgroundAlter ={backgroundColor: concatenatedColorAlter};
+    console.log(checkedCellsBackgroundAlter);
 
 
     if (sortBy === "student's name") {
-        backgroundStyleCellsName = checkedCellsBackground;
+        if (directionValue === "Ascending") {
+            backgroundStyleCellsName = checkedCellsBackground;
+        } else {
+            backgroundStyleCellsName = {checkedCellsBackgroundAlter};
+
+        }
+
     } else if (sortBy === "earned beers") {
-        backgroundStyleCellsBeers = checkedCellsBackground;
+        if (directionValue === "Ascending") {
+            backgroundStyleCellsBeers = checkedCellsBackground;
+        } else {
+            backgroundStyleCellsBeers = {backgroundColor: "#333"}
+
+        }
     } else if (sortBy === "attendance") {
-        backgroundStyleCellsAttendance = checkedCellsBackground;
+        if (directionValue === "Ascending") {
+            backgroundStyleCellsAttendance = checkedCellsBackground;
+
+        } else {
+            backgroundStyleCellsAttendance = {backgroundColor: "#333"}
+
+        }
     }
 
-    if(sortDirection){
-         backgroundStyleCellsName ={backgroundColor:"#000"}
-    }
 
 
     return (
