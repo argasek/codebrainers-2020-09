@@ -2,6 +2,7 @@ class Engine {
     constructor() {
         this.isRunning = false;
         this.type = undefined;
+        this.noise = Math.floor(Math.random() * (60 - 20 + 1)) + 20;
     }
 
     turnOn() {
@@ -71,8 +72,20 @@ class Vehicle {
 
     // Task 3
     areAtLeastThisMuchEnginesRunning(count) {
-        let countOfRunningEngines = this.engines.filter(engine => engine.isRunning === true);
+        const countOfRunningEngines = this.engines.filter(engine => engine.isRunning === true);
         return  count <= countOfRunningEngines.length;
+    }
+
+    // Task 5
+    isNoiseLevelExceeded(maximumNoiseLevel) {
+        const initialValue = 0;
+
+        let runningEngines = this.engines.filter(engine => engine.isRunning === true)
+        const noiseProduce = runningEngines.map(engine => engine.noise)
+            .reduce((noiseLevel, noise) =>
+                noiseLevel + noise, initialValue);
+
+        return noiseProduce > maximumNoiseLevel;
     }
 
 }
@@ -109,9 +122,9 @@ const car = new Car();
 
 const airplane = new Airplane();
 
-// airplane.startEngine(0);
-// airplane.startEngine(3);
-airplane.startAllEngines();
+airplane.startEngine(0);
+airplane.startEngine(3);
+// airplane.startAllEngines();
 
 // airplane.stopEngine(0);
 // airplane.stopEngine(1);
@@ -122,9 +135,11 @@ const result1 = airplane.areAllEnginesRunning();
 const result2 = airplane.areAllEnginesStopped();
 const result3 = airplane.isAnyEngineRunning();
 const result4 = airplane.areAtLeastThisMuchEnginesRunning(2);
+const result5 = airplane.isNoiseLevelExceeded(90);
 
 console.log(airplane);
 console.log("Are all airplane engines running? ", result1);
 console.log("Are all airplane engines stopped? ", result2);
 console.log("Is any airplane engine running? ", result3);
 console.log("Are at least this much airplane's engines running? ", result4);
+console.log("Is total noise produced by all running engines is greater than maximum level noise? ", result5);
