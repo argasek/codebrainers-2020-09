@@ -45,13 +45,10 @@ class Vehicle {
         engines.forEach(engine => engine.turnOn());
     }
 
-    // Task 1 -- implement this method using .reduce().
+    // Task 4 -- modify this method so it does not use .reduce() and also don't use any loops.
     areAllEnginesRunning() {
-        const initialValue = true;
-
-        return this.engines.map(engine => engine.isRunning)
-            .reduce((enginesRunningReducer, isRunning) =>
-                enginesRunningReducer && isRunning, initialValue);
+        const allRunning = this.engines.filter(engine => engine.isRunning === true);
+        return allRunning.length === this.engines.length;
     }
 
     // Task 1
@@ -75,7 +72,7 @@ class Vehicle {
     // Task 3
     areAtLeastThisMuchEnginesRunning(count) {
         let countOfRunningEngines = this.engines.filter(engine => engine.isRunning === true);
-        return  count >= countOfRunningEngines.length;
+        return  count <= countOfRunningEngines.length;
     }
 
 }
@@ -112,9 +109,9 @@ const car = new Car();
 
 const airplane = new Airplane();
 
-airplane.startEngine(0);
-airplane.startEngine(3);
-// airplane.startAllEngines();
+// airplane.startEngine(0);
+// airplane.startEngine(3);
+airplane.startAllEngines();
 
 // airplane.stopEngine(0);
 // airplane.stopEngine(1);
