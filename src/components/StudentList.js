@@ -22,8 +22,6 @@ function StudentList(props) {
         return false;
     };
 
-
-
     const sortedStudents = students.sort((student1, student2) => {
         const a = student1[sortBy];
         const b = student2[sortBy];
@@ -35,6 +33,8 @@ function StudentList(props) {
         }
         return 0;
     });
+
+
 
 
     return (
@@ -53,7 +53,7 @@ function StudentList(props) {
                 <th style={isSortingColumnLabel('participationCount') ? {background: 'teal'} : {background: '#444'}}>Participation</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody >
             {
                 sortedStudents.map((student, index) => <StudentRow student={student} key={index}/>)
             }
@@ -65,4 +65,5 @@ function StudentList(props) {
 
 
 export default StudentList;
+
 
