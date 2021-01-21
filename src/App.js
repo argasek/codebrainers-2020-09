@@ -5,20 +5,32 @@ import {codebrainersStudents} from "./models/student";
 
 class App extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            counter:1,
+        };
+
+    }
+
     render() {
         console.log('render()');
-        let counter = 1;
 
         return (
             <div>
-                <p>Counter has value: {counter}</p>
+                <p>Counter has value: {this.state.counter}</p>
                 <p>
                     <button
-                        style={{ fontSize: '2rem' }}
-                        onClick={function () {
-                            alert('Click!');
+                        style={{fontSize: '2rem'}}
+                        onClick={ () => {
+                            console.log(this);
+                            this.state.counter++;
+                            console.log(this.state.counter);
+                            // alert('Click!');
                         }}
-                    >Increase counter</button>
+                    >Increase counter
+                    </button>
                 </p>
                 <StudentList students={codebrainersStudents} sortBy="fullName" sortDirection={false}/>
                 <StudentList students={codebrainersStudents} sortBy="participationCount" sortDirection={true}/>
