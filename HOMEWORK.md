@@ -2,6 +2,22 @@
 
 Comrade! In case of doubt, ASK. Always ask! <3 :-))
 
+### Homework 2021-01-21
+
+#### Task 1.
+
+Modify code in such way that the `<button>…</button>` element present
+in `App` component is moved from `App` to `StudentList` (i.e. into
+`<th>` element of this component). The button should (obviously!) work
+in the same way it used to work.
+
+#### Task 2*.
+
+Modify code in such way (after completing Task 1) that clicking
+`<button>` changes order of sorting not all, but this particular
+`<StudentList>` where the button is present.
+
+
 ### Homework 2021-01-16
 
 #### Task 1.
