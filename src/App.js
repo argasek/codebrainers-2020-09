@@ -10,9 +10,17 @@ class App extends React.Component {
 
         this.state = {
             sortDirection: false,
+
         };
 
     }
+
+    sortHandlerFunc = () => {
+        const sortDirection = this.state.sortDirection;
+        this.setState({sortDirection: !this.state.sortDirection});
+    }
+
+
 
     render() {
         console.log('render()');
@@ -21,22 +29,24 @@ class App extends React.Component {
             <div>
                 <p>Counter has value: {this.state.counter}</p>
                 <p>
-                    <button
-                        style={{fontSize: '2rem'}}
-                        onClick={ () => {
-                            console.log(this);
-                            this.setState({sortDirection: !this.state.sortDirection});
-                        }}
-                    >Increase counter
-                    </button>
+                    {/*<button*/}
+                    {/*    style={{fontSize: '2rem'}}*/}
+                    {/*    onClick={ () => {*/}
+                    {/*        console.log(this);*/}
+                    {/*        this.setState({sortDirection: !this.state.sortDirection});*/}
+                    {/*    }}*/}
+                    {/*>Increase counter*/}
+                    {/*</button>*/}
                 </p>
                 <StudentList
                     students={codebrainersStudents}
                     sortBy="fullName"
-                    sortDirection={sortDirection}
+                    sortDirection= {sortDirection}
+                    sortHandler={this.sortHandlerFunc}
+
                 />
-                <StudentList students={codebrainersStudents} sortBy="participationCount" sortDirection={sortDirection}/>
-                <StudentList students={codebrainersStudents} sortBy="numberOfBeers" sortDirection={sortDirection}/>
+                {/*<StudentList students={codebrainersStudents} sortBy="participationCount" sortDirection={sortDirection} sortHandler={this.sortHandlerFunc}/>*/}
+                {/*<StudentList students={codebrainersStudents} sortBy="numberOfBeers" sortDirection={sortDirection}  sortHandler={this.sortHandlerFunc}/>*/}
             </div>
         );
     }

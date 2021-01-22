@@ -11,9 +11,11 @@ function StudentList(props) {
     let backgroundStyleName;
     let backgroundStyleBeer;
     let backgroundStyleAttend;
-    let checkedLabelBackground = {backgroundColor:"#621"};
-    let counter =0;
+    let checkedLabelBackground = {backgroundColor: "#621"};
+    let counter = 0;
     let sortingTitle;
+    const {sortHandler} = props;
+
 
 
 
@@ -21,13 +23,18 @@ function StudentList(props) {
         sortingTitle = "student's name";
         backgroundStyleName = checkedLabelBackground;
 
+
+
     } else if (sortBy === "participationCount") {
         sortingTitle = "attendance";
         backgroundStyleAttend = checkedLabelBackground;
 
+
+
     } else {
         sortingTitle = "earned beers";
         backgroundStyleBeer = checkedLabelBackground;
+
     }
 
 
@@ -52,21 +59,41 @@ function StudentList(props) {
 
             </tr>
             <tr>
-                <th style={backgroundStyleName}>Full name</th>
-                <th style={backgroundStyleBeer}>Number of beers</th>
-                <th style={backgroundStyleAttend}>Participation</th>
+                <th style={backgroundStyleName}>Full name
+                    <button
+                            style={{fontSize: '0.5rem'}}
+                            onClick={sortHandler}
+                    >sort
+                    </button>
+
+                </th>
+                <th style={backgroundStyleBeer}>Number of beers
+                    <button
+                            style={{fontSize: '0.5rem'}}
+                            onClick={sortHandler}
+                    >sort
+                    </button>
+                </th>
+                <th  style={backgroundStyleAttend}>Participation
+                    <button
+                            style={{fontSize: '0.5rem'}}
+                            onClick={sortHandler}
+                    >sort
+                    </button>
+                </th>
             </tr>
             </thead>
             <tbody>
             {
-                sortedStudents.map((student, index) => <StudentRow student={student} key={index} sortBy={sortBy} counter={counter++} directionValue={directionValue}/>)
+                sortedStudents.map((student, index) => <StudentRow student={student} key={index} sortBy={sortBy}
+                                                                   counter={counter++}
+                                                                   directionValue={directionValue}/>)
             }
             </tbody>
         </table>
     );
 
 }
-
 
 
 export default StudentList;
