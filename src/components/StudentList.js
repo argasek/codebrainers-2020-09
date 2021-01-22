@@ -17,11 +17,16 @@ function StudentList(props) {
     const {sortHandler} = props;
 
 
+   
+
+
 
 
     if (sortBy === "fullName") {
         sortingTitle = "student's name";
         backgroundStyleName = checkedLabelBackground;
+
+
 
 
 
@@ -55,31 +60,26 @@ function StudentList(props) {
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
-                <th colSpan={3}>Table sorted by: {sortingTitle} | {directionValue}</th>
+                <th colSpan={3}>Table sorted by: {sortingTitle} | {directionValue}
+
+                 <button
+                            style={{fontSize: '0.5rem'}}
+                            onClick={sortHandler}
+                    >sort
+                    </button>
+                </th>
 
             </tr>
             <tr>
                 <th style={backgroundStyleName}>Full name
-                    <button
-                            style={{fontSize: '0.5rem'}}
-                            onClick={sortHandler}
-                    >sort
-                    </button>
+
 
                 </th>
                 <th style={backgroundStyleBeer}>Number of beers
-                    <button
-                            style={{fontSize: '0.5rem'}}
-                            onClick={sortHandler}
-                    >sort
-                    </button>
+
                 </th>
                 <th  style={backgroundStyleAttend}>Participation
-                    <button
-                            style={{fontSize: '0.5rem'}}
-                            onClick={sortHandler}
-                    >sort
-                    </button>
+
                 </th>
             </tr>
             </thead>
