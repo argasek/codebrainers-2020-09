@@ -4,8 +4,7 @@ import {codebrainersStudents} from "../models/student";
 export default function StudentRow(props) {
     const student = props.student;
     const sortBy = props.sortBy;
-    const counter = props.index;
-    console.log('sortBy wynosi:'+sortBy, 'counter(index) wynosi:'+counter);
+    const counter = props.counter;
 
     const numberOfStudents = codebrainersStudents.length;
 
@@ -39,6 +38,7 @@ export default function StudentRow(props) {
         </tr>
     );
 }
+
 //
 // import React from "react";
 // import '../App.css';
