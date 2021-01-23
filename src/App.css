@@ -14,8 +14,8 @@ body {
 
 .student-table th {
   background-color: #444;
-  border: 1px solid white;
-  color: #ccc;
+  border: 1px solid black;
+  color: black;
 }
 
 .highlighted {
