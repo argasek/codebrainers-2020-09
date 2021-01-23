@@ -4,8 +4,9 @@ import {codebrainersStudents} from "../models/student";
 export default function StudentRow(props) {
     const student = props.student;
     const sortBy = props.sortBy;
-    const counter = props.counter;
 
+
+    const counter = props.counter;
     const numberOfStudents = codebrainersStudents.length;
 
     const {fullName, numberOfBeers, participationCount} = student;
