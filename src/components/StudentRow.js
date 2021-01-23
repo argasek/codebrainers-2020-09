@@ -1,31 +1,38 @@
-
 import React from "react";
 import {codebrainersStudents} from "../models/student";
 
 export default function StudentRow(props) {
     const student = props.student;
-    // const gradientId = props.gradientId+1;
     const sortBy = props.sortBy;
+    const gradientId = props.gradientId;
+    const sortDirection = props.sortDirection;
 
+    let numberOfStudents = codebrainersStudents.length;
+    let reverseSortDirection = !sortDirection;
 
-
-    const highlightedStyle = {background: 'teal'};
-    const normalStyle = {background: 'white'};
-
-
-
-    function isSortingColumn (columnName){
-        if (columnName === sortBy)
-        {
-            return highlightedStyle;
+    function getColorNumber(gradientId, sortDirection) {
+        if (sortDirection === false) {
+            return Math.round((gradientId / numberOfStudents) * 255);
+        } else {
+            return Math.round(255 - ((gradientId / numberOfStudents) * 255));
         }
-        else {
+    }
+
+    let gradientColor = 'rgba(0,' + getColorNumber(gradientId,sortDirection) + ',' + getColorNumber(gradientId,sortDirection) + ')';
+    let gradientTextColor = 'rgba(0,' + getColorNumber(gradientId,reverseSortDirection) + ',' + getColorNumber( gradientId,reverseSortDirection) + ')';
+
+    const highlightedStyle = {background: gradientColor, color: gradientTextColor};
+    const normalStyle = {background: 'white', color: 'black'};
+
+    function isSortingColumn(columnName) {
+        if (columnName === sortBy) {
+            return highlightedStyle;
+        } else {
             return normalStyle;
         }
     }
 
     const {fullName, numberOfBeers, participationCount} = student;
-
 
     return (
         <tr>

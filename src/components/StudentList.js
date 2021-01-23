@@ -63,7 +63,7 @@ function StudentList(props) {
             </thead>
             <tbody >
             {
-                sortedStudents.map((student, index) => <StudentRow student={student} sortBy={sortBy} key={index} gradientId={index} />)
+                sortedStudents.map((student, index) => <StudentRow student={student} sortBy={sortBy} key={index} gradientId={index} sortDirection={sortDirection}/>)
             }
             </tbody>
         </table>
