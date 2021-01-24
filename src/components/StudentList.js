@@ -1,12 +1,21 @@
+
 import React from "react";
 import StudentRow from "./StudentRow";
-
 
 function StudentList(props) {
     const students = props.students;
     const sortBy = props.sortBy;
     const sortDirection = props.sortDirection;
+
     const multiplier = sortDirection ? 1 : -1;
+    const sortDirectionLabel = sortDirection ? "ascending" : "descending";
+
+
+    const sortByLabel = {
+        fullName: 'full name',
+        participationCount: 'participation',
+        numberOfBeers: 'number of beers'
+    };
 
 
     const sortedStudents = students.sort((student1, student2) => {
@@ -19,26 +28,44 @@ function StudentList(props) {
             return -1 * multiplier;
         }
         return 0;
-
     });
+
+
+
+    const highlightedStyle = {background: 'teal'};
+    const normalStyle = {background: 'white'};
+
+    function isSortingColumnLabel (columnName){
+        if (columnName === sortBy)
+        {
+            return highlightedStyle;
+        }
+        else {
+            return normalStyle;
+        }
+    }
 
     return (
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
-                <th colSpan={3} style={{backgroundColor: '#555'}}>Sort by: "fullName", sort direction: true
-                <button>Change sort direction</button>
-                </th>
+                <th colSpan={3} style={{background: 'teal'}}>Sorted by {sortByLabel[sortBy]}, {sortDirectionLabel}</th>
+<button>Change sort direction</button>
+
             </tr>
             <tr>
-                <th>Full name</th>
-                <th>Number of beers</th>
-                <th style={{backgroundColor: '#621'}}>Participation</th>
+                <th style={isSortingColumnLabel('fullName')}>Full name
+                </th>
+                <th style={isSortingColumnLabel('numberOfBeers')}>Number
+                    of
+                    beers
+                </th>
+                <th style={isSortingColumnLabel('participationCount')}>Participation</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody >
             {
-                sortedStudents.map((student, index) => <StudentRow student={student} key={index}/>)
+                sortedStudents.map((student, index) => <StudentRow student={student} sortBy={sortBy} key={index} gradientId={index} sortDirection={sortDirection}/>)
             }
             </tbody>
         </table>
@@ -46,4 +73,8 @@ function StudentList(props) {
 
 }
 
+
 export default StudentList;
+
+
+
