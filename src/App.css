@@ -5,17 +5,33 @@ body {
 .student-table {
   border-collapse: collapse;
   margin-bottom: 1rem;
+  width:500px;
+}
+.student-table tr:first-child{
+  font-size: 1.2rem;
 }
 
 .student-table td, .student-table th {
   border: 1px solid #444;
   padding: 1rem;
+  width:30%;
 }
 
 .student-table th {
   background-color: #444;
   border: 1px solid #666;
   color: #ccc;
+
+
+}
+
+
+.student-table th .title-row{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 
 

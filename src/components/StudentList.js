@@ -1,5 +1,7 @@
 import React from "react";
 import StudentRow from "./StudentRow";
+import {FaAngleDoubleDown} from "react-icons/fa";
+import {FaAngleDoubleUp} from "react-icons/fa";
 
 
 function StudentList(props) {
@@ -7,14 +9,22 @@ function StudentList(props) {
     let sortBy = props.sortBy;
     const sortDirection = props.sortDirection;
     const multiplier = sortDirection ? 1 : -1;
-    const directionValue = sortDirection ? "Ascending" : "Descending";
+
+    const {sortHandler} = props;
+
+
+    const descending = <FaAngleDoubleDown
+    onClick={sortHandler}/>;
+    const ascending = <FaAngleDoubleUp
+    onClick={sortHandler}/>;
+
+    const directionValue = sortDirection ? descending: ascending ;
     let backgroundStyleName;
     let backgroundStyleBeer;
     let backgroundStyleAttend;
     let checkedLabelBackground = {backgroundColor: "#621"};
     let counter = 0;
     let sortingTitle;
-    const {sortHandler} = props;
 
 
     if (sortBy === "fullName") {
@@ -47,19 +57,25 @@ function StudentList(props) {
 
     });
 
+
+
     return (
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
-                <th colSpan={3}>Table sorted by: {sortingTitle} | {directionValue}
+                <th colSpan={3}>
+                    <div className="title-row">
+                        <div>Table sorted by: {sortingTitle} |</div>
+                        <div>
+                           <small style={{marginRight:"10px"}}>sort</small>
+                            {directionValue}
+                        </div>
 
-                    <button
-                        style={{fontSize: '0.5rem'}}
-                        onClick={sortHandler}
-                    >sort
-                    </button>
+                    </div>
+
+
+
                 </th>
-
             </tr>
             <tr>
                 <th style={backgroundStyleName}>Full name</th>
