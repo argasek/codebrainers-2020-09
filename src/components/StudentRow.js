@@ -18,8 +18,12 @@ export default function StudentRow(props) {
         }
     }
 
-    let gradientColor = 'rgba(0,' + getColorNumber(gradientId,sortDirection) + ',' + getColorNumber(gradientId,sortDirection) + ')';
-    let gradientTextColor = 'rgba(0,' + getColorNumber(gradientId,reverseSortDirection) + ',' + getColorNumber( gradientId,reverseSortDirection) + ')';
+    function makeRGB(colorNumber) {
+        return 'rgba(0,' + colorNumber + ',' + colorNumber + ')';
+    }
+
+    let gradientColor = makeRGB(getColorNumber(gradientId, sortDirection));
+    let gradientTextColor = makeRGB(getColorNumber(gradientId, reverseSortDirection));
 
     const highlightedStyle = {background: gradientColor, color: gradientTextColor};
     const normalStyle = {background: 'white', color: 'black'};
