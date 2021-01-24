@@ -9,7 +9,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            sortDirection: false,
+            sortDirection: props.sortDirection,
         };
 
     }
@@ -19,17 +19,6 @@ class App extends React.Component {
         const sortDirection = this.state.sortDirection;
         return (
             <div>
-                <p>Counter has value: {this.state.counter}</p>
-                <p>
-                    <button
-                        style={{fontSize: '2rem'}}
-                        onClick={ () => {
-                            console.log(this);
-                            this.setState({sortDirection: !this.state.sortDirection});
-                        }}
-                    >Increase counter
-                    </button>
-                </p>
                 <StudentList
                     students={codebrainersStudents}
                     sortBy="fullName"

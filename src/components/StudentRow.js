@@ -10,6 +10,8 @@ export default function StudentRow(props) {
     let numberOfStudents = codebrainersStudents.length;
     let reverseSortDirection = !sortDirection;
 
+    console.log(sortDirection, reverseSortDirection);
+
     function getColorNumber(gradientId, sortDirection) {
         if (sortDirection === false) {
             return Math.round((gradientId / numberOfStudents) * 255);
