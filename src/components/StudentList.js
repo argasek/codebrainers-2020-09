@@ -11,12 +11,33 @@ class StudentList extends React.Component {
             sortBy: props.sortBy,
             sortDirection: props.sortDirection,
         };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(element) {
+        this.setState({sortBy: element.target.value})
     }
 
     render() {
         const students = this.state.students;
         const sortBy = this.state.sortBy;
         const sortDirection = this.state.sortDirection;
+
+        const options = [
+            {
+                label: "Full Name",
+                value: "fullName",
+            },
+            {
+                label: "Number of Beers",
+                value: "numberOfBeers",
+            },
+            {
+                label: "Participation",
+                value: "participationCount",
+            },
+        ];
 
         const
             multiplier = sortDirection ? 1 : -1;
@@ -68,14 +89,26 @@ class StudentList extends React.Component {
                 <tr>
                     <th colSpan={3} style={{background: 'teal'}}>Sorted
                         by {sortByLabel[sortBy]}, {sortDirectionLabel}</th>
-                    <p>
-                        <button
-                            onClick={() => {
-                                this.setState({sortDirection: !this.state.sortDirection});
-                            }}
-                        >Set sort direction
-                        </button>
-                    </p>
+                    <div className="sorting-menu">
+
+                        <div className="select-container">
+                            <select value={this.state.sortBy} onChange={this.handleChange}>
+                                {options.map((option) => (
+                                    <option value={option.value}>Set sorting column ({option.label})</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="button-container">
+                            <button
+                                onClick={() => {
+                                    this.setState({sortDirection: !this.state.sortDirection});
+                                }}
+                            >Change sort direction
+                            </button>
+
+                        </div>
+                    </div>
 
                 </tr>
                 <tr>
