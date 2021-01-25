@@ -7,6 +7,7 @@ function StudentList(props) {
     const sortBy = props.sortBy;
     const sortDirection = props.sortDirection;
     const multiplier = sortDirection ? 1 : -1;
+    const {directionButton} = props;
 
 
     const sortedStudents = students.sort((student1, student2) => {
@@ -27,7 +28,9 @@ function StudentList(props) {
             <thead>
             <tr>
                 <th colSpan={3} style={{backgroundColor: '#555'}}>Sort by: "fullName", sort direction: true
-                <button>Change sort direction</button>
+                <button
+                    onClick={directionButton}
+                >Change sort direction</button>
                 </th>
             </tr>
             <tr>
