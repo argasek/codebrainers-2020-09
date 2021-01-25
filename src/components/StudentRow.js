@@ -7,37 +7,36 @@ export default function StudentRow(props) {
     let sortBy = props.sortBy;
     let counter = props.counter;
     let directionValue = props.directionValue;
+    const sortDirection = props.sortDirection;
     let backgroundStyleCellsName;
     let backgroundStyleCellsBeers;
     let backgroundStyleCellsAttendance;
     let iterationCount = codebrainersStudents.length;
+    console.log(sortDirection);
 
     let rgba = "rgba";
     let r = 136;
     let g = 15;
     let b = 15;
     let a = changeA(counter);
-    let alterA =changeAlterA(counter);
+    let alterA = changeAlterA(counter);
 
     function changeA(counter) {
-        return 0.1 +(counter/10);
+        return 0.1 + (counter / 10);
     }
-    function changeAlterA(counter){
-        return (iterationCount/10)-(counter * 0.1);
+
+    function changeAlterA(counter) {
+        return (iterationCount / 10) - (counter * 0.1);
     }
 
     let concatenatedColor = rgba + '(' + r + ',' + g + ',' + b + ',' + a + ')';
     let concatenatedColorAlter = rgba + '(' + r + ',' + g + ',' + b + ',' + alterA + ')';
     let checkedCellsBackground = {backgroundColor: concatenatedColor};
-    let checkedCellsBackgroundAlter ={backgroundColor: concatenatedColorAlter};
-    console.log(checkedCellsBackgroundAlter);
-    console.log(checkedCellsBackground);
-    console.log(iterationCount);
-
+    let checkedCellsBackgroundAlter = {backgroundColor: concatenatedColorAlter};
 
 
     if (sortBy === "fullName") {
-        if (directionValue === "Ascending") {
+        if (sortDirection) {
             backgroundStyleCellsName = checkedCellsBackground;
         } else {
             backgroundStyleCellsName = checkedCellsBackgroundAlter;
@@ -45,14 +44,14 @@ export default function StudentRow(props) {
         }
 
     } else if (sortBy === "numberOfBeers") {
-        if (directionValue === "Ascending") {
+        if (sortDirection) {
             backgroundStyleCellsBeers = checkedCellsBackground;
         } else {
             backgroundStyleCellsBeers = checkedCellsBackgroundAlter;
 
         }
     } else if (sortBy === "participationCount") {
-        if (directionValue === "Ascending") {
+        if (sortDirection) {
             backgroundStyleCellsAttendance = checkedCellsBackground;
 
         } else {
@@ -60,7 +59,6 @@ export default function StudentRow(props) {
 
         }
     }
-
 
 
     return (

@@ -37,6 +37,9 @@ class StudentList extends React.Component {
             onClick={sortHandler}/>;
 
         const directionValue = sortDirection ? descending : ascending;
+
+
+
         let backgroundStyleName;
         let backgroundStyleBeer;
         let backgroundStyleAttend;
@@ -103,7 +106,10 @@ class StudentList extends React.Component {
                 {
                     sortedStudents.map((student, index) => <StudentRow student={student} key={index} sortBy={sortBy}
                                                                        counter={counter++}
-                                                                       directionValue={directionValue}/>)
+                                                                       directionValue={directionValue}
+                                                                       sortDirection={this.state.sortDirection}
+
+                    />)
                 }
                 </tbody>
             </table>
