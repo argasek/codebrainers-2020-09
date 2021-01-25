@@ -9,40 +9,49 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            sortDirection: false,
+            sortDirections: [false, false, false],
         };
 
     }
 
-    changeSortDirection = () => {
-        const sortDirection = this.state.sortDirection;
-        this.setState({sortDirection: !sortDirection});
-
+    changeSortDirection = (sortBy) => {
+        const sortDirection = this.state.sortDirections;
+        if (sortBy === "fullName") {
+            this.setState({
+                sortDirections: [!sortDirection[0], sortDirection[1], sortDirection[2]]});
+        } else if (sortBy === "participationCount") {
+            this.setState({
+                sortDirections: [sortDirection[0], !sortDirection[1], sortDirection[2]]});
+        } else if (sortBy === "numberOfBeers") {
+            this.setState({
+                sortDirections: [sortDirection[0], sortDirection[1], !sortDirection[2]]});
+        }
+        console.log(sortDirection);
     }
 
     render() {
         console.log('render()');
 
-        const sortDirection = this.state.sortDirection;
+        const sortDirection = this.state.sortDirections;
 
         return (
             <div>
                 <StudentList
                     students={codebrainersStudents}
                     sortBy="fullName"
-                    sortDirection={sortDirection}
+                    sortDirection={sortDirection[0]}
                     handleSortDirectionButtonClick={this.changeSortDirection}
                 />
                 <StudentList
                     students={codebrainersStudents}
                     sortBy="participationCount"
-                    sortDirection={sortDirection}
+                    sortDirection={sortDirection[1]}
                     handleSortDirectionButtonClick={this.changeSortDirection}
                 />
                 <StudentList
                     students={codebrainersStudents}
                     sortBy="numberOfBeers"
-                    sortDirection={sortDirection}
+                    sortDirection={sortDirection[2]}
                     handleSortDirectionButtonClick={this.changeSortDirection}
                 />
             </div>

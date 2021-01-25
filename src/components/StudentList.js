@@ -46,7 +46,7 @@ function StudentList(props) {
                         Sort direction: {showSortDirection}
                     </p>
                     <button style={{fontSize: '1.5rem'}}
-                        onClick={ handleSortDirectionButtonClick }
+                        onClick={ () => handleSortDirectionButtonClick(sortBy) }
                     >Change sort direction
                     </button>
                 </th>
