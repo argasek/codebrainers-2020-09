@@ -15,9 +15,9 @@ class App extends React.Component {
 
     }
 
-    sortHandlerFunc = () => {
-        this.setState({sortDirection: !this.state.sortDirection});
-    }
+    // sortHandlerFunc = () => {
+    //     this.setState({sortDirection: !this.state.sortDirection});
+    // }
 
 
 
@@ -32,10 +32,10 @@ class App extends React.Component {
                     students={codebrainersStudents}
                     sortBy="fullName"
                     sortDirection= {sortDirection}
-                    sortHandler={this.sortHandlerFunc}
+                    // sortHandler={this.sortHandlerFunc}
                 />
-                <StudentList students={codebrainersStudents} sortBy="participationCount" sortDirection={sortDirection} sortHandler={this.sortHandlerFunc}/>
-                <StudentList students={codebrainersStudents} sortBy="numberOfBeers" sortDirection={sortDirection}  sortHandler={this.sortHandlerFunc}/>
+                <StudentList students={codebrainersStudents} sortBy="participationCount" sortDirection={sortDirection} />
+                <StudentList students={codebrainersStudents} sortBy="numberOfBeers" sortDirection={sortDirection}  s/>
             </div>
         );
     }
