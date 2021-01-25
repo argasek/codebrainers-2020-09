@@ -21,19 +21,27 @@ function StudentList(props) {
         return 0;
 
     });
+    const fullName = (sortBy ==='fullName') ? {backgroundColor:"#621"} : {backgroundColor: "#444"};
+    const numberOfBeers = (sortBy ==='numberOfBeers') ? {backgroundColor:"#621"} : {backgroundColor: "#444"};
+    const participationCount = (sortBy ==='participationCount') ? {backgroundColor:"#621"} : {backgroundColor: "#444"};
+    const {btnSort} = props;
 
     return (
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
-                <th colSpan={3} style={{backgroundColor: '#555'}}>Sort by: "fullName", sort direction: true
-                <button>Change sort direction</button>
+                <th colSpan={3} style={{backgroundColor: '#555'}}>
+                    <p>Sort by: "fullName", sort direction: true</p>
+                <p>
+                    <button style={{fontSize: '1rem'}} onClick={btnSort}>Change sort direction</button>
+                </p>
                 </th>
+
             </tr>
             <tr>
-                <th>Full name</th>
-                <th>Number of beers</th>
-                <th style={{backgroundColor: '#621'}}>Participation</th>
+                <th style={fullName}>Full name</th>
+                <th style={numberOfBeers}>Number of beers</th>
+                <th style={participationCount}>Participation</th>
             </tr>
             </thead>
             <tbody>

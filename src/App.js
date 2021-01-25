@@ -9,9 +9,13 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            sortDirection: false,
+            sortDirection: false
         };
 
+    }
+    sortingDirection = () => {
+        const sortDirection = this.state.sortDirection;
+        this.setState({sortDirection: !sortDirection});
     }
 
     render() {
@@ -19,28 +23,12 @@ class App extends React.Component {
         const sortDirection = this.state.sortDirection;
         return (
             <div>
-                <p>Counter has value: {this.state.counter}</p>
-                <p>
-                    <button
-                        style={{fontSize: '2rem'}}
-                        onClick={ () => {
-                            console.log(this);
-                            this.setState({sortDirection: !this.state.sortDirection});
-                        }}
-                    >Increase counter
-                    </button>
-                </p>
-                <StudentList
-                    students={codebrainersStudents}
-                    sortBy="fullName"
-                    sortDirection={sortDirection}
-                />
-                <StudentList students={codebrainersStudents} sortBy="participationCount" sortDirection={sortDirection}/>
-                <StudentList students={codebrainersStudents} sortBy="numberOfBeers" sortDirection={sortDirection}/>
+                <StudentList students={codebrainersStudents} sortBy="fullName" sortDirection={sortDirection} btnSort={this.sortingDirection}/>
+                <StudentList students={codebrainersStudents} sortBy="participationCount" sortDirection={sortDirection} btnSort={this.sortingDirection}/>
+                <StudentList students={codebrainersStudents} sortBy="numberOfBeers" sortDirection={sortDirection} btnSort={this.sortingDirection}/>
             </div>
         );
     }
-
 }
 
 export default App;
