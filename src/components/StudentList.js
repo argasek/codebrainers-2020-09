@@ -8,6 +8,11 @@ function StudentList(props) {
     const sortDirection = props.sortDirection;
     const multiplier = sortDirection ? 1 : -1;
     const {directionButton} = props;
+    const sortDirectionPrint = sortDirection ? 'ascending' : 'descending';
+    const customSortNames =
+        sortBy === "fullName" ? "Student\s full name" :
+            sortBy === "numberOfBeers" ? "Number of beers" :
+                sortBy === "participationCount" ? "Course participation count" : "no";
 
 
     const sortedStudents = students.sort((student1, student2) => {
@@ -27,17 +32,30 @@ function StudentList(props) {
         <table className='student-table' cellSpacing="0" cellPadding="0">
             <thead>
             <tr>
-                <th colSpan={3} style={{backgroundColor: '#555'}}>Sort by: "fullName", sort direction: true
-                <button
-                    onClick={directionButton}
-                >Change sort direction</button>
+                <th colspan={3} style={{backgroundColor: '#555'}}>Sorted by: {customSortNames},
+                    sort direction: {sortDirectionPrint}
+                    <button
+                        onClick={directionButton}
+                    >Change sort direction
+                    </button>
                 </th>
             </tr>
+
             <tr>
-                <th>Full name</th>
-                <th>Number of beers</th>
-                <th style={{backgroundColor: '#621'}}>Participation</th>
+                <th style={sortBy === "fullName" ? {backgroundColor: '#333'} : {backgroundColor: '#555'}}>
+                    Full
+                    name
+                </th>
+                <th style={sortBy === "numberOfBeers" ? {backgroundColor: '#333'} : {backgroundColor: '#555'}}>
+                    Number
+                    of
+                    beers
+                </th>
+                <th style={sortBy === "participationCount" ? {backgroundColor: '#333'} : {backgroundColor: '#555'}}>
+                    Participation
+                </th>
             </tr>
+
             </thead>
             <tbody>
             {
