@@ -26,10 +26,16 @@ class Plants extends React.PureComponent {
   fetchPlants() {
     const requestUrl = "http://gentle-tor-07382.herokuapp.com/plants/";
     this.setState({ inProgress: true });
+
+    // debugger;
+
     return this.props.delayFetch(PLANTS_FETCH_DELAY, (resolve, reject) => {
       axios
         .get(requestUrl)
         .then((response) => {
+
+          // debugger;
+
           const data = response.data;
           const plants = data.map((item) => {
             const { id, name } = item;
@@ -40,10 +46,15 @@ class Plants extends React.PureComponent {
           resolve();
         })
         .catch((error) => {
+
+          // debugger;
+
           this.setState({ successPlants: false });
           reject();
         });
     });
+
+
   }
 
   render() {
@@ -53,9 +64,13 @@ class Plants extends React.PureComponent {
       <Card className="mb-4">
         <CardBody>
           <InProgress inProgress={inProgress} />
-          {successPlants === false && <p>Nie udało się pobrać Kwiatow</p>}
+          {
+            successPlants === false &&
+            <p>Unable to fetch plants.</p>
+          }
           {successPlants && (
             <div className="plants">
+              <h1>Plants:</h1>
               {plants.map((plant, index, arr) => (
                 <Plant plant={plant} key={index} />
               ))}

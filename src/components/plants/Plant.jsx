@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import './Plant.scss';
 
 class Plant extends React.PureComponent {
@@ -15,8 +15,8 @@ class Plant extends React.PureComponent {
 
 }
 
-Plant.propTypes = {
-  plant: PropTypes.instanceOf(Plant).isRequired,
-};
+// Plant.propTypes = {
+//   plant: PropTypes.instanceOf(Plant).isRequired,
+// };
 
 export default Plant;
