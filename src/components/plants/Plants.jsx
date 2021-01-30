@@ -5,7 +5,7 @@ import axios from "axios";
 import Plant from "components/plants/Plant";
 import InProgress from "components/shared/InProgress";
 
-const PLANTS_FETCH_DELAY = 250;
+const PLANTS_FETCH_DELAY = 2500;
 
 class Plants extends React.PureComponent {
   constructor(props) {
@@ -18,9 +18,7 @@ class Plants extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.fetchPlants().finally(() => {
-      this.setState({ inProgress: false });
-    });
+    this.fetchPlants();
   }
 
   fetchPlants() {
@@ -30,8 +28,9 @@ class Plants extends React.PureComponent {
     // debugger;
 
     return this.props.delayFetch(PLANTS_FETCH_DELAY, (resolve, reject) => {
-      axios
-        .get(requestUrl)
+      const promise = axios.get(requestUrl);
+
+      promise
         .then((response) => {
 
           // debugger;
@@ -51,7 +50,10 @@ class Plants extends React.PureComponent {
 
           this.setState({ successPlants: false });
           reject();
-        });
+        })
+        .finally(() => {
+            this.setState({ inProgress: false });
+        })
     });
 
 
