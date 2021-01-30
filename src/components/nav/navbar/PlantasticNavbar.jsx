@@ -14,6 +14,7 @@ import { ROUTE_CATEGORIES, ROUTE_PLANTS, ROUTE_ROOMS, ROUTE_PREFERENCES } from "
 import {faCog, faCogs, faHome, faLeaf, faSeedling} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Link } from 'react-router-dom'
 
 class PlantasticNavbar extends React.PureComponent {
   constructor(props) {
@@ -49,7 +50,7 @@ class PlantasticNavbar extends React.PureComponent {
                 Account
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
+                <DropdownItem tag={Link} to={ROUTE_PREFERENCES}>
                   Preferences…
                 </DropdownItem>
                 <DropdownItem divider/>

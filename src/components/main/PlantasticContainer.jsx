@@ -43,7 +43,6 @@ class PlantasticContainer extends React.PureComponent {
                 </Route>
                 <Route path={ROUTE_PREFERENCES}>
                   <Preferences/>
-
                 </Route>
               </Switch>
             </Container>
