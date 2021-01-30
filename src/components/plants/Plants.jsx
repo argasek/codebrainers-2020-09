@@ -1,9 +1,10 @@
-import { Card, CardBody } from "reactstrap";
+import {Card, CardBody, Table} from "reactstrap";
 import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Plant from "components/plants/Plant";
 import InProgress from "components/shared/InProgress";
+
 
 const PLANTS_FETCH_DELAY = 2500;
 
@@ -23,7 +24,7 @@ class Plants extends React.PureComponent {
 
   fetchPlants() {
     const requestUrl = "http://gentle-tor-07382.herokuapp.com/plants/";
-    this.setState({ inProgress: true });
+    this.setState({inProgress: true});
 
     // debugger;
 
@@ -31,55 +32,77 @@ class Plants extends React.PureComponent {
       const promise = axios.get(requestUrl);
 
       promise
-        .then((response) => {
+              .then((response) => {
 
-          // debugger;
+                // debugger;
 
-          const data = response.data;
-          const plants = data.map((item) => {
-            const { id, name } = item;
-            return { id, name };
-          });
-          const successPlants = true;
-          this.setState({ plants, successPlants });
-          resolve();
-        })
-        .catch((error) => {
+                const data = response.data;
+                const plants = data.map((item) => {
+                  const {id, name, difficulty} = item;
+                  console.log(item);
+                  return {id, name, difficulty};
 
-          // debugger;
+                });
 
-          this.setState({ successPlants: false });
-          reject();
-        })
-        .finally(() => {
-            this.setState({ inProgress: false });
-        })
+                // console.log(plants);
+                const successPlants = true;
+                this.setState({plants, successPlants});
+                resolve();
+              })
+              .catch((error) => {
+
+                // debugger;
+
+                this.setState({successPlants: false});
+                reject();
+              })
+              .finally(() => {
+                this.setState({inProgress: false});
+              })
     });
 
 
   }
 
   render() {
-    const { plants, successPlants, inProgress } = this.state;
+    const {plants, successPlants, inProgress} = this.state;
 
     return (
-      <Card className="mb-4">
-        <CardBody>
-          <InProgress inProgress={inProgress} />
-          {
-            successPlants === false &&
-            <p>Unable to fetch plants.</p>
-          }
-          {successPlants && (
-            <div className="plants">
-              <h1>Plants:</h1>
-              {plants.map((plant, index, arr) => (
-                <Plant plant={plant} key={index} />
-              ))}
-            </div>
-          )}
-        </CardBody>
-      </Card>
+            <Card className="mb-4">
+              <CardBody>
+                <InProgress inProgress={inProgress}/>
+                {
+                  successPlants === false &&
+                  <p>Unable to fetch plants.</p>
+                }
+                {successPlants && (
+                        <>
+
+                          <Table>
+                            <thead>
+                            <tr>
+                              <th>
+                                Id
+                              </th>
+                              <th>Name</th>
+                              <th>Difficulty</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                              plants.map(
+                                      (plant, index, arr) => (<Plant plant={plant} key={index}/>)
+                              )
+                            }
+                            </tbody>
+
+                          </Table>
+                        </>
+
+                )}
+              </CardBody>
+            </Card>
     );
   }
 }
