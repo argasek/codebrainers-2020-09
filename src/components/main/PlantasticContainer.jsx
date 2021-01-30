@@ -18,7 +18,9 @@ class PlantasticContainer extends React.PureComponent {
       plantName,
       someSelectField,
       userFullName,
-      handleUserFullNameChange
+      userFullNameDelayed,
+      handleUserFullNameChange,
+      handleUserFullNameBlur
     } = this.props;
 
     return (
@@ -44,7 +46,12 @@ class PlantasticContainer extends React.PureComponent {
                   <Rooms/>
                 </Route>
                 <Route path={ROUTE_PREFERENCES}>
-                  <Preferences userFullName={userFullName} handleUserFullNameChange={handleUserFullNameChange}/>
+                  <Preferences
+                      userFullName={userFullName}
+                      userFullNameDelayed={userFullNameDelayed}
+                      handleUserFullNameChange={handleUserFullNameChange}
+                      handleUserFullNameBlur={handleUserFullNameBlur}
+                  />
                 </Route>
               </Switch>
             </Container>
