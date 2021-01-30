@@ -6,7 +6,7 @@ import Plant from "components/plants/Plant";
 import InProgress from "components/shared/InProgress";
 
 
-const PLANTS_FETCH_DELAY = 2500;
+const PLANTS_FETCH_DELAY = 250;
 
 class Plants extends React.PureComponent {
   constructor(props) {

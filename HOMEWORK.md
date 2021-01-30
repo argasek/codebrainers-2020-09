@@ -2,6 +2,47 @@
 
 Comrade! In case of doubt, ASK. Always ask! <3 :-))
 
+### Homework 2021-01-30
+
+#### Task 1.
+
+Show as many fields of the object representing the plant in
+the `<Plants>` component. For starters, display it "as is".
+
+#### Task 2.
+Extend the `<Plant>` component with as much logic as you can!
+
+I.e. so fields like `blooming` are not displayed as "true", but
+instead render as "blooming" / "not blooming". Or use some
+awesome icon from FontAwesome! 
+
+Some fields are easier to map than others. Don't worry if you
+have no idea what to do with, example, `last_feritilized` field
+(which is a ISO 8601 string).
+
+Don't forget to map `required_exposure` and friends into something
+nice. `"low"` is not nice. I would rather prefer to read something
+like "Some shade" or "Indirect sunlight" (i.e. map `string` to
+another `string`).
+
+#### Task 3.
+
+You probably noticed the "Rooms" tab doesn't display anything.
+Take a look at both `Categories` and `Plants` components and
+modify `Rooms` in such way that it displays list of rooms.
+Make it a `<Table>`.
+
+#### Task 4**.
+
+As you probably noticed, the information on categories and room
+assignment in `<Plants>` table is rendered as numbers (i.e. `id`s).
+Think of a way of displaying data using string values. Eg. when
+you look into `http://localhost:3000/categories`, you will notice
+category `id === 2` belongs to "Tillandsia (airplants)". The
+expectation is that this exact string is displayed for particular
+plant having `category_id === 2`. 
+
+
 ### Homework 2021-01-21
 
 #### Task 1.
