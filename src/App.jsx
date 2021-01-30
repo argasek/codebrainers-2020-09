@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.scss';
-import { BrowserRouter as Router } from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 import PlantasticNavbar from "components/nav/navbar/PlantasticNavbar";
-import { someOtherArray } from "constants/PlantConstants";
+import {someOtherArray} from "constants/PlantConstants";
 import PlantasticContainer from "components/main/PlantasticContainer";
 
 class App extends React.PureComponent {
@@ -13,8 +13,17 @@ class App extends React.PureComponent {
     this.state = {
       plantName: '',
       someSelectField: '333',
-      fertilizingFrequency: someOtherArray[someOtherArray.length - 1].value
+      fertilizingFrequency: someOtherArray[someOtherArray.length - 1].value,
+      userFullName: ''
     };
+  }
+
+  handleUserFullNameChange = (event) => {
+    const userFullName = event.target.value;
+    console.log(userFullName);
+    this.setState({
+      userFullName: userFullName
+    })
   }
 
   delayFetch(ms, func) {
@@ -22,9 +31,9 @@ class App extends React.PureComponent {
   }
 
   inputOnChange = (event) => {
-    const { currentTarget } = event;
-    const { value, name } = currentTarget;
-    this.setState({ [name]: value });
+    const {currentTarget} = event;
+    const {value, name} = currentTarget;
+    this.setState({[name]: value});
   };
 
   render() {
@@ -35,16 +44,18 @@ class App extends React.PureComponent {
     } = this.state;
 
     return (
-      <Router>
-        <PlantasticNavbar/>
-        <PlantasticContainer
-          delayFetch={ this.delayFetch }
-          someSelectField={ someSelectField }
-          fertilizingFrequency={ fertilizingFrequency }
-          inputOnChange={ this.inputOnChange }
-          plantName={ plantName }
-        />
-      </Router>
+            <Router>
+              <PlantasticNavbar userFullName={this.state.userFullName}/>
+              <PlantasticContainer
+                      delayFetch={this.delayFetch}
+                      someSelectField={someSelectField}
+                      fertilizingFrequency={fertilizingFrequency}
+                      inputOnChange={this.inputOnChange}
+                      plantName={plantName}
+                      userFullName={this.state.userFullName}
+                      handleUserFullNameChange={this.handleUserFullNameChange}
+              />
+            </Router>
     )
   }
 }

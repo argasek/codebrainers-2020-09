@@ -17,6 +17,8 @@ class PlantasticContainer extends React.PureComponent {
       inputOnChange,
       plantName,
       someSelectField,
+      userFullName,
+      handleUserFullNameChange
     } = this.props;
 
     return (
@@ -42,7 +44,7 @@ class PlantasticContainer extends React.PureComponent {
                   <Rooms/>
                 </Route>
                 <Route path={ROUTE_PREFERENCES}>
-                  <Preferences/>
+                  <Preferences userFullName={userFullName} handleUserFullNameChange={handleUserFullNameChange}/>
                 </Route>
               </Switch>
             </Container>
