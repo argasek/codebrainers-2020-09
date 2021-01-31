@@ -1,3 +1,4 @@
+
 import React from "react";
 import {Container} from "reactstrap";
 import {Route, Switch} from "react-router-dom";
@@ -43,7 +44,7 @@ class PlantasticContainer extends React.PureComponent {
                   />
                 </Route>
                 <Route path={ROUTE_ROOMS}>
-                  <Rooms/>
+                  <Rooms delayFetch={delayFetch}/>
                 </Route>
                 <Route path={ROUTE_PREFERENCES}>
                   <Preferences
