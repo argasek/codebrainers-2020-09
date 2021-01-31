@@ -106,9 +106,9 @@ class Plants extends React.PureComponent {
                   <p>Unable to fetch plants.</p>
                 }
                 {successPlants && (
-                        <>
+                        <div style={{width:'100%', overflow:'auto'}}>
 
-                          <Table>
+                          <Table style={{width:'200%'}}>
                             <thead>
                             <tr>
                               <th>id</th>
@@ -136,7 +136,7 @@ class Plants extends React.PureComponent {
                             </tbody>
 
                           </Table>
-                        </>
+                        </div>
 
                 )}
               </CardBody>
