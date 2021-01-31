@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Plant from "components/plants/Plant";
 import InProgress from "components/shared/InProgress";
+import './App.scss';
 
 
 const PLANTS_FETCH_DELAY = 250;
@@ -106,25 +107,25 @@ class Plants extends React.PureComponent {
                   <p>Unable to fetch plants.</p>
                 }
                 {successPlants && (
-                        <div style={{width:'100%', overflow:'auto'}}>
+                        <div style={{ overflow:'auto', maxHeight:'60vh'}}>
 
-                          <Table style={{width:'200%'}}>
+                          <Table >
                             <thead>
                             <tr>
-                              <th>id</th>
-                              <th>name</th>
-                              <th>category</th>
-                              <th>category_slug</th>
-                              <th>watering_interval</th>
-                              <th>fertilizing_interval</th>
-                              <th>required_exposure</th>
-                              <th>required_humidity</th>
-                              <th>required_temperature</th>
-                              <th>blooming</th>
-                              <th>difficulty</th>
-                              <th>room</th>
-                              <th>last_watered</th>
-                              <th>last_fertilized</th>
+                              <th>ID</th>
+                              <th>Name</th>
+                              <th>Category ID</th>
+                              <th>Category name</th>
+                              <th>Watering interval</th>
+                              <th>Fertilizing interval</th>
+                              <th>Required exposure</th>
+                              <th>Required humidity</th>
+                              <th>Required temperature</th>
+                              <th>Blooming</th>
+                              <th>Difficulty</th>
+                              <th>Room</th>
+                              <th>Last watered</th>
+                              <th>Last fertilized</th>
                             </tr>
                             </thead>
                             <tbody>
