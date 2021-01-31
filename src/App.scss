@@ -1,2 +1,30 @@
 body {
+  .plantsTableContainer {
+    overflow: auto;
+    max-height: 55vh;
+
+    .plantsTable {
+      border-collapse: separate;
+
+      th, td {
+        border-bottom: none;
+      }
+
+      thead {
+        box-sizing: border-box;
+        position: sticky;
+        top: 0;
+        background: white;
+        margin: 0;
+        padding: 0;
+
+
+      }
+    }
+
+
+  }
+
+
 }
+

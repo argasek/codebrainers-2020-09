@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Plant from "components/plants/Plant";
 import InProgress from "components/shared/InProgress";
-import './App.scss';
+import 'App.scss';
 
 
 const PLANTS_FETCH_DELAY = 250;
@@ -107,9 +107,8 @@ class Plants extends React.PureComponent {
                   <p>Unable to fetch plants.</p>
                 }
                 {successPlants && (
-                        <div style={{ overflow:'auto', maxHeight:'60vh'}}>
-
-                          <Table >
+                        <div className='plantsTableContainer'>
+                          <Table className='plantsTable'>
                             <thead>
                             <tr>
                               <th>ID</th>
