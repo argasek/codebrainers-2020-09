@@ -57,6 +57,7 @@ export class Plant extends React.PureComponent {
               <td >{this.props.plant.category_slug}+{this.props.plant.category}</td>
               <td >{difficulties[this.props.plant.difficulty]}</td>
               <td >{this.props.plant.blooming? <GiFireFlower/> : <ImLeaf/>}</td>
+              <td >{this.props.plant.room}</td>
 
               <td className="table-mid-color">{Math.ceil(this.props.plant.fertilizing_interval / secToDays)}</td>
               <td className="table-mid-color">{Math.ceil(this.props.plant.watering_interval / secToDays)}</td>

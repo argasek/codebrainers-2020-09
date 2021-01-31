@@ -4,9 +4,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Room from "components/rooms/Room";
 import InProgress from "components/shared/InProgress";
-// import Plants from "components/plants/Plants";
-// import {RiCelsiusFill} from "react-icons/ri";
-// import moment from "moment";
+
 
 
 const ROOMS_FETCH_DELAY = 250;
@@ -28,25 +26,32 @@ class Rooms extends React.PureComponent {
   fetchRooms() {
     const requestUrl = "http://gentle-tor-07382.herokuapp.com/rooms/";
     this.setState({inProgress: true});
-
     return this.props.delayFetch(ROOMS_FETCH_DELAY, (resolve, reject) => {
-      axios.get(requestUrl)
-              .then((response)=>{
-                const data =response.data;
-                const rooms = data.map((item)=>({name: item.name, id: item.id}));
-                const  successRooms = true;
+      const promise = axios.get(requestUrl);
+
+      promise
+              .then((response) => {
+                const data = response.data;
+                const rooms = data.map((item) => {
+                  const {
+                    id, name,exposure,temperature,humidity} = item;
+
+                  return {
+                    id, name, exposure,temperature,humidity};
+                });
+
+                const successRooms = true;
                 this.setState({rooms, successRooms});
                 resolve();
               })
               .catch((error) => {
-                this.setState({successRooms:false});
+                this.setState({successRooms: false});
                 reject();
               })
-              .finally(()=>{
-                console.log("resolved");
-              })  ;
+              .finally(() => {
+                this.setState({inProgress: false});
+              })
     });
-
 
 
   }
@@ -57,6 +62,7 @@ class Rooms extends React.PureComponent {
     return (
             <Card>
               <CardBody>
+                this loading spinner is just an element added to this page it is not "real" loading action.
                 <InProgress inProgress={{inProgress}}/>
                 {
                   successRooms === false &&
@@ -72,7 +78,10 @@ class Rooms extends React.PureComponent {
                             </tr>
                             <tr>
                               <th >Id</th>
-                              <th className="table-mid-color" >Room Name</th>
+                              <th >Room Name</th>
+                              <th >Sun exposure</th>
+                              <th >Humidity</th>
+                              <th >Temperature</th>
                             </tr>
                             </thead>
 

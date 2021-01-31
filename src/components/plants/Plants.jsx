@@ -113,7 +113,7 @@ class Plants extends React.PureComponent {
                               <th  className="solid-data"  colSpan={"100%"}>Table 1 - solid data according to chosen plants</th>
                             </tr>
                             <tr>
-                              <th colSpan={5}>Plant information</th>
+                              <th colSpan={6}>Plant information</th>
                               <th className="table-mid-color" colSpan={5}>Requirements</th>
 
                             </tr>
@@ -123,6 +123,7 @@ class Plants extends React.PureComponent {
                               <th>Category+Slug</th>
                               <th>Difficulty</th>
                               <th>Blooming</th>
+                              <th>Room</th>
 
                               <th className="table-mid-color">Fertilizing Interval [days]</th>
                               <th className="table-mid-color">Watering Interval [days]</th>
