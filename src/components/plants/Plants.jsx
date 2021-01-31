@@ -68,7 +68,7 @@ class Plants extends React.PureComponent {
     const {plants, successPlants, inProgress} = this.state;
 
     return (
-            <Card className="mb-4">K
+            <Card className="mb-4">
               <CardBody>
                 <InProgress inProgress={inProgress}/>
                 {
@@ -84,7 +84,7 @@ class Plants extends React.PureComponent {
                               <th>
                                 Id
                               </th>
-                              <th>Name</th>
+                              <th>Name 1</th>
                               <th>Difficulty</th>
 
                             </tr>
