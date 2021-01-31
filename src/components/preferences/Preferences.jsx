@@ -17,8 +17,8 @@ const Preferences = ({
             id="userFullName"
             name="userFullName"
             type="text"
-            valid={ userFullName.length === 10 }
-            invalid={ userFullName.length > 0 && userFullName.length !== 10 }
+            // valid={ userFullName.length === 10 }
+            // invalid={ userFullName.length > 0 && userFullName.length !== 10 }
             onChange={ handleUserFullNameChange }
             onBlur={ handleUserFullNameBlur }
           />

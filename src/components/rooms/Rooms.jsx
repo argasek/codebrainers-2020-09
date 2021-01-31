@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Room from "components/rooms/Room";
 import InProgress from "components/shared/InProgress";
+import {RiCelsiusFill} from "react-icons/ri";
 
 
 
@@ -81,7 +82,7 @@ class Rooms extends React.PureComponent {
                               <th >Room Name</th>
                               <th >Sun exposure</th>
                               <th >Humidity</th>
-                              <th >Temperature</th>
+                              <th >Temperature [<RiCelsiusFill/>]</th>
                             </tr>
                             </thead>
 

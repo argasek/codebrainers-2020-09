@@ -2,10 +2,10 @@ import {Card, CardBody, Table} from "reactstrap";
 import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import {Plant,PlantSecondTable} from "components/plants/Plant";
+import {Plant, PlantSecondTable} from "components/plants/Plant";
 import InProgress from "components/shared/InProgress";
 import {RiCelsiusFill} from "react-icons/ri";
-// import moment from "moment";
+
 
 
 const PLANTS_FETCH_DELAY = 250;
@@ -30,8 +30,6 @@ class Plants extends React.PureComponent {
     const requestUrl = "http://gentle-tor-07382.herokuapp.com/plants/";
     this.setState({inProgress: true});
 
-    // debugger;
-
 
     return this.props.delayFetch(PLANTS_FETCH_DELAY, (resolve, reject) => {
       const promise = axios.get(requestUrl);
@@ -39,18 +37,13 @@ class Plants extends React.PureComponent {
       promise
               .then((response) => {
 
-                // debugger;
-
                 const data = response.data;
                 const plants = data.map((item) => {
                   const {
                     id, name, difficulty, blooming, category, category_slug, fertilizing_interval, last_fertilized,
                     last_watered, required_exposure, required_humidity, required_temperature, room, watering_interval
                   } = item;
-                  // console.log(item.last_watered);
-
-                  // this.lastWatered = item.last_watered;
-                  // console.log(this.lastWatered);
+                  ;
 
 
                   return {
@@ -58,9 +51,7 @@ class Plants extends React.PureComponent {
                     last_watered, required_exposure, required_humidity, required_temperature, room, watering_interval
                   };
 
-
                 });
-
 
                 const successPlants = true;
                 this.setState({plants, successPlants});
@@ -78,20 +69,10 @@ class Plants extends React.PureComponent {
               })
     });
 
-
   }
-
 
   render() {
     const {plants, successPlants, inProgress} = this.state;
-    // const dateWatered = this.lastWatered
-    // console.log(dateWatered);
-
-
-    // let date = new Date(lastWatered);
-    // let newDateFormat = date.toLocaleDateString();
-    // console.log(newDateFormat);
-
 
     return (
             <Card className="mb-4">
@@ -103,14 +84,12 @@ class Plants extends React.PureComponent {
                 }
                 {successPlants && (
                         <>
-                          {/*<div>*/}
-                          {/*  <p> timestamp: {dateWatered}</p>*/}
-                          {/*</div>*/}
-
                           <Table bordered>
                             <thead>
                             <tr>
-                              <th  className="solid-data"  colSpan={"100%"}>Table 1 - solid data according to chosen plants</th>
+                              <th className="solid-data" colSpan={"100%"}>Table 1 - solid data according to chosen
+                                plants
+                              </th>
                             </tr>
                             <tr>
                               <th colSpan={6}>Plant information</th>
@@ -118,6 +97,7 @@ class Plants extends React.PureComponent {
 
                             </tr>
                             <tr>
+                              <th>Ind</th>
                               <th>Id</th>
                               <th>Name</th>
                               <th>Category+Slug</th>
@@ -144,14 +124,15 @@ class Plants extends React.PureComponent {
                           </Table>
 
 
-
-                          <Table  bordered>
+                          <Table bordered>
                             <thead>
-                             <tr>
-                              <th className="taking-care-records" colSpan={"100%"}>Table 2 - taking care of your plants records </th>
+                            <tr>
+                              <th className="taking-care-records" colSpan={"100%"}>Table 2 - taking care of your plants
+                                records
+                              </th>
                             </tr>
                             <tr>
-                              <th className="table-mid-color"  colSpan={5}>Plant information</th>
+                              <th className="table-mid-color" colSpan={5}>Plant information</th>
                               <th colSpan={4}>Your actions</th>
                             </tr>
                             <tr>

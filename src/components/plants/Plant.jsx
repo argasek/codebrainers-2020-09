@@ -33,31 +33,28 @@ const humidity = {
 }
 
 
-// I take timestamps given in API as a seconds wise.
+// I take timestamps given in API as a seconds wise,
+// though it is probably milisec, just to get reasonable outcome.
 const secToDays = 84400;
 
 export class Plant extends React.PureComponent {
   constructor(props) {
     super(props);
-    // const dateFormat = this.props.dateWatered;
-    // console.log(dateFormat);
   }
 
   render() {
 
-
-    // const dateFormat = this.props.dateWatered;
-    // console.log(dateFormat);
-
-
     return (
             <tr>
-              <td >{this.props.plant.id} </td>
-              <td >{this.props.plant.name}</td>
-              <td >{this.props.plant.category_slug}+{this.props.plant.category}</td>
-              <td >{difficulties[this.props.plant.difficulty]}</td>
-              <td >{this.props.plant.blooming? <GiFireFlower/> : <ImLeaf/>}</td>
-              <td >{this.props.plant.room}</td>
+              <td>??? </td>
+              {/*jak wstawić nr porządkowy*/}
+
+              <td>{this.props.plant.id} </td>
+              <td>{this.props.plant.name}</td>
+              <td>{this.props.plant.category_slug}+{this.props.plant.category}</td>
+              <td>{difficulties[this.props.plant.difficulty]}</td>
+              <td>{this.props.plant.blooming ? <GiFireFlower/> : <ImLeaf/>}</td>
+              <td>{this.props.plant.room}</td>
 
               <td className="table-mid-color">{Math.ceil(this.props.plant.fertilizing_interval / secToDays)}</td>
               <td className="table-mid-color">{Math.ceil(this.props.plant.watering_interval / secToDays)}</td>
@@ -71,18 +68,19 @@ export class Plant extends React.PureComponent {
 
 }
 
-export class PlantSecondTable extends Plant{
-  constructor(props) {
-    super(props);
-  }
-  render(){
-    return(
+export class PlantSecondTable extends React.PureComponent {
+ constructor(props) {
+   super(props);
+ }
+
+  render() {
+    return (
             <tr>
               <td className="table-mid-color">{this.props.plant.id} </td>
               <td className="table-mid-color">{this.props.plant.name}</td>
               <td className="table-mid-color">{this.props.plant.category_slug}+{this.props.plant.category}</td>
               <td className="table-mid-color">{difficulties[this.props.plant.difficulty]}</td>
-              <td className="table-mid-color">{this.props.plant.blooming? <GiFireFlower/> : <ImLeaf/>}</td>
+              <td className="table-mid-color">{this.props.plant.blooming ? <GiFireFlower/> : <ImLeaf/>}</td>
 
 
               <td>{moment(this.props.plant.last_fertilized).format("MMM Do YY")}</td>
@@ -100,6 +98,4 @@ export class PlantSecondTable extends Plant{
 }
 
 
-// Plant.propTypes = {
-//   plant: PropTypes.instanceOf(Plant).isRequired,
-// };
+
