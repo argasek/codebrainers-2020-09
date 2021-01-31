@@ -62,8 +62,8 @@ class Rooms extends React.PureComponent {
     return (
             <Card>
               <CardBody>
-                this loading spinner is just an element added to this page it is not "real" loading action.
-                <InProgress inProgress={{inProgress}}/>
+
+                <InProgress inProgress={inProgress}/>
                 {
                   successRooms === false &&
                   <p>Unable to fetch Rooms</p>

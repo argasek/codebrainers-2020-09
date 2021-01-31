@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './CategoryItem.scss';
-import { ListGroupItem } from "reactstrap";
+import {ListGroupItem, Table} from "reactstrap";
 
 class CategoryItem extends React.PureComponent {
 
@@ -32,7 +32,7 @@ class CategoryItem extends React.PureComponent {
     if (prevState.index !== index) {
       console.log(`Index changed from ${prevState.index} to ${index}`);
       let className = `category-item active-${index}`;
-      this.setState({ className });
+      this.setState({className});
     }
   }
 
@@ -43,14 +43,28 @@ class CategoryItem extends React.PureComponent {
       if (this.props.isLastItem === true) {
         let index = this.state.index;
         index = ++index === 4 ? 0 : index;
-        this.setState({ index })
+        this.setState({index})
       }
     };
 
     return (
-      <ListGroupItem className={this.state.className} onClick={ onClick }>
-        {category.id} {' '} { category.name }
-      </ListGroupItem>
+            <tr>
+              <td>{category.id}</td>
+               <td> {category.name}</td>
+              <td className={this.state.className} onClick={onClick}>
+                {category.name}{"_id === "}{category.id}
+              </td>
+
+
+            </tr>
+
+              // <ListGroupItem className={this.state.className} onClick={onClick}>
+              //   {category.name}{"_id === "}{category.id}
+              //   {/*{category.id} {' '} { category.name }*/}
+              // </ListGroupItem>
+
+
+
     );
   }
 
