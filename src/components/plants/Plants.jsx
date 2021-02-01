@@ -7,7 +7,6 @@ import InProgress from "components/shared/InProgress";
 import {RiCelsiusFill} from "react-icons/ri";
 
 
-
 const PLANTS_FETCH_DELAY = 250;
 
 class Plants extends React.PureComponent {
@@ -97,13 +96,13 @@ class Plants extends React.PureComponent {
 
                             </tr>
                             <tr>
-                              <th>Ind</th>
+                              <th>Idx</th>
                               <th>Id</th>
                               <th>Name</th>
-                              <th>Category+Slug</th>
+                              <th>Category</th>
                               <th>Difficulty</th>
                               <th>Blooming</th>
-                              <th>Room</th>
+
 
                               <th className="table-mid-color">Fertilizing Interval [days]</th>
                               <th className="table-mid-color">Watering Interval [days]</th>
@@ -116,7 +115,7 @@ class Plants extends React.PureComponent {
                             <tbody>
                             {
                               plants.map(
-                                      (plant, index, arr) => (<Plant plant={plant} key={index}/>)
+                                      (plant, index, arr) => (<Plant plant={plant} key={index} index={index + 1}/>)
                               )
                             }
                             </tbody>
@@ -132,13 +131,14 @@ class Plants extends React.PureComponent {
                               </th>
                             </tr>
                             <tr>
-                              <th className="table-mid-color" colSpan={5}>Plant information</th>
+                              <th className="table-mid-color" colSpan={6}>Plant information</th>
                               <th colSpan={4}>Your actions</th>
                             </tr>
                             <tr>
+                              <th className="table-mid-color">Idx</th>
                               <th className="table-mid-color">Id</th>
                               <th className="table-mid-color">Name</th>
-                              <th className="table-mid-color"> Category+Slug</th>
+                              <th className="table-mid-color">Room</th>
                               <th className="table-mid-color">Difficulty</th>
                               <th className="table-mid-color">Blooming</th>
 
@@ -152,7 +152,8 @@ class Plants extends React.PureComponent {
                             <tbody>
                             {
                               plants.map(
-                                      (plant, index, arr) => (<PlantSecondTable plant={plant} key={index}/>)
+                                      (plant, index, arr) => (
+                                              <PlantSecondTable plant={plant} key={index} index={index + 1}/>)
                               )
                             }
                             </tbody>

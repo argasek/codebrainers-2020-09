@@ -31,6 +31,14 @@ const humidity = {
   "medium": " between 30%-60%",
   "high": "over 60%",
 }
+const rooms ={
+  1:"Living room",
+  2:"Bedroom",
+  3:"Dinning room",
+  4:"Kids bedroom",
+  5:"Bathroom",
+
+}
 
 
 // I take timestamps given in API as a seconds wise,
@@ -46,15 +54,12 @@ export class Plant extends React.PureComponent {
 
     return (
             <tr>
-              <td>??? </td>
-              {/*jak wstawić nr porządkowy*/}
-
+              <td>{this.props.index}</td>
               <td>{this.props.plant.id} </td>
               <td>{this.props.plant.name}</td>
-              <td>{this.props.plant.category_slug}+{this.props.plant.category}</td>
+              <td>{this.props.plant.category_slug}_id = {this.props.plant.category}</td>
               <td>{difficulties[this.props.plant.difficulty]}</td>
               <td>{this.props.plant.blooming ? <GiFireFlower/> : <ImLeaf/>}</td>
-              <td>{this.props.plant.room}</td>
 
               <td className="table-mid-color">{Math.ceil(this.props.plant.fertilizing_interval / secToDays)}</td>
               <td className="table-mid-color">{Math.ceil(this.props.plant.watering_interval / secToDays)}</td>
@@ -69,16 +74,17 @@ export class Plant extends React.PureComponent {
 }
 
 export class PlantSecondTable extends React.PureComponent {
- constructor(props) {
-   super(props);
- }
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     return (
             <tr>
+              <td className="table-mid-color">{this.props.index}</td>
               <td className="table-mid-color">{this.props.plant.id} </td>
               <td className="table-mid-color">{this.props.plant.name}</td>
-              <td className="table-mid-color">{this.props.plant.category_slug}+{this.props.plant.category}</td>
+              <td className="table-mid-color">{rooms[this.props.plant.room]}</td>
               <td className="table-mid-color">{difficulties[this.props.plant.difficulty]}</td>
               <td className="table-mid-color">{this.props.plant.blooming ? <GiFireFlower/> : <ImLeaf/>}</td>
 
