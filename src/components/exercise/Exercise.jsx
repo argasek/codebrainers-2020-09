@@ -12,6 +12,7 @@ class Exercise extends React.Component {
       isToggle2:true,
       isToggle3:false,
       content: 'this text will be changed after clicking a second button',
+      outcome:0,
     }
 
 
@@ -37,6 +38,14 @@ class Exercise extends React.Component {
   }
 
 
+  handleAdd = (event) => {
+    const outcome = event.target.value;
+    this.setState({
+      outcome: outcome,
+    });
+  };
+
+
   render() {
     const textInBox = this.state.textInBox;
     const isToggle = this.state.isToggle;
@@ -46,6 +55,7 @@ class Exercise extends React.Component {
     const longText = contentLongText;
     const toggleFirstOn = "Clicked ON";
     const toggleFirstOFF = "Clicked OFF";
+    const outcome = this.state.outcome;
 
 
 
@@ -71,7 +81,18 @@ class Exercise extends React.Component {
                     reloaded: {textInBox}</p>
                   <p> text from toggle : {isToggle ? toggleFirstOn : toggleFirstOFF}</p>
                 </div>
-                <div className='box second'>
+                <div className='input-box'>
+                  <label for="a">A</label>
+                  <input id='a' value=""/>
+                  <label for="b">B</label>
+                  <input id='b' value=""/>
+                  <div className='outcome'>
+                    wynik
+                  </div>
+
+
+                </div>
+                <div className={isToggle2 ? "box second":"box second color"}>
                   <i>{isToggle2 ? defContent : longText}</i>
                 </div>
 

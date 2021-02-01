@@ -9,10 +9,30 @@
     padding: 15px;
     &.spin{
       transform: rotate(360deg);
-      transition: 2s;
+      transition: 1s;
     }
     &.second{
       border: 2px solid red;
+      &.color{
+        background-color: #dbd0d2;
+      }
+    }
+  }
+  .input-box{
+    width: 150px;
+    height: 200px;
+    border:2px solid green;
+    padding:10px;
+    input{
+      width:20%;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .outcome{
+      width: 80px;
+      height: 40px;
+      border: 1px solid grey;
+      background-color: lightgrey;
     }
   }
 }
