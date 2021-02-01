@@ -89,15 +89,15 @@ class Plants extends React.PureComponent {
                               <th>Blooming</th>
                               <th>Category</th>
                               <th>Category Slug</th>
-                              <th>fertilizing_interval</th>
-                              <th>last_fertilized</th>
-                              <th>last_watered</th>
-                              <th>required_exposure</th>
-                              <th>required_humidity</th>
-                              <th>required_temperature</th>
-                              <th>room</th>
-                              <th>url</th>
-                              <th>watering_interval</th>
+                              <th>Fertilizing Interval</th>
+                              <th>Last Fertilized</th>
+                              <th>Last Watered</th>
+                              <th>Required Exposure</th>
+                              <th>Required Humidity</th>
+                              <th>Required Temperature</th>
+                              <th>Room</th>
+                              <th>Url</th>
+                              <th>Watering Interval</th>
 
                             </tr>
                             </thead>

@@ -2,7 +2,6 @@ import React from "react";
 import { Card, CardBody } from "reactstrap";
 
 const Rooms = ({}) => {
-
   return (
     <Card className="mb-4">
       <CardBody>
