@@ -116,7 +116,7 @@ class Plants extends React.PureComponent {
                             <tbody>
                             {
                               plants.map(
-                                      (plant, index, arr) => (<Plant plant={plant} key={index}/>)
+                                      (plant, index, arr) => (<Plant plant={plant} key={index} index={index+1}/>)
                               )
                             }
                             </tbody>
