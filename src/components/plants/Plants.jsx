@@ -44,6 +44,7 @@ class Plants extends React.PureComponent {
 
                 });
 
+
                 // console.log(plants);
                 const successPlants = true;
                 this.setState({plants, successPlants});
