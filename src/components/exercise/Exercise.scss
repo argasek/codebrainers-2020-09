@@ -1,0 +1,25 @@
+.wrapper{
+  display: flex;
+  justify-content: space-between;
+  .box{
+    border: 2px solid blue;
+    width:300px;
+    height: 300px;
+    margin-bottom: 50px;
+    padding: 15px;
+    &.spin{
+      transform: rotate(360deg);
+      transition: 2s;
+    }
+    &.second{
+      border: 2px solid red;
+    }
+  }
+}
+.btn-wrap{
+   display: flex;
+  justify-content: space-between;
+}
+.spin{
+  margin-top: 20px;
+}

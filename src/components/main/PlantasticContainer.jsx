@@ -2,12 +2,13 @@
 import React from "react";
 import {Container} from "reactstrap";
 import {Route, Switch} from "react-router-dom";
-import {ROUTE_CATEGORIES, ROUTE_PLANTS, ROUTE_PREFERENCES, ROUTE_ROOMS} from "constants/Routes";
+import {ROUTE_CATEGORIES, ROUTE_PLANTS, ROUTE_PREFERENCES, ROUTE_ROOMS,ROUTE_EXERCISE} from "constants/Routes";
 import Plants from "components/plants/Plants";
 import Categories from "components/categories/Categories";
 import Rooms from "components/rooms/Rooms";
 import PlantCreate from 'components/plants/PlantCreate';
 import Preferences from "components/preferences/Preferences";
+import Exercise from "components/exercise/Exercise"
 
 class PlantasticContainer extends React.PureComponent {
 
@@ -53,6 +54,9 @@ class PlantasticContainer extends React.PureComponent {
                       handleUserFullNameChange={handleUserFullNameChange}
                       handleUserFullNameBlur={handleUserFullNameBlur}
                   />
+                </Route >
+                <Route path={ROUTE_EXERCISE}>
+                  <Exercise/>
                 </Route>
               </Switch>
             </Container>
