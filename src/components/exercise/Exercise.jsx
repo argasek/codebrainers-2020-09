@@ -3,16 +3,20 @@ import './Exercise.scss';
 import {contentLongText} from "constants/PlantConstants";
 
 
+
+
 class Exercise extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       textInBox: "Default text",
       isToggle: false,
-      isToggle2:true,
-      isToggle3:false,
+      isToggle2: true,
+      isToggle3: false,
       content: 'this text will be changed after clicking a second button',
       outcome:0,
+      numA: 0,
+      numB: 0,
     }
 
 
@@ -31,19 +35,32 @@ class Exercise extends React.Component {
       isToggle: !this.state.isToggle,
     })
   }
-  handleSpin =()=>{
+  handleSpin = () => {
     this.setState({
       isToggle3: !this.state.isToggle3,
     })
   }
 
 
-  handleAdd = (event) => {
-    const outcome = event.target.value;
+  handleA = (event) => {
+    const numA = event.target.value;
     this.setState({
-      outcome: outcome,
+      numA: numA,
     });
   };
+  handleB = (event) => {
+    const numB = event.target.value;
+    this.setState({
+      numB: numB,
+    });
+  };
+  handleSum = (event)=>{
+    const numA = this.state.numA;
+    const numB =this.state.numB;
+    this.setState({
+      outcome:parseInt(numA)+parseInt(numB),
+    })
+  }
 
 
   render() {
@@ -55,9 +72,10 @@ class Exercise extends React.Component {
     const longText = contentLongText;
     const toggleFirstOn = "Clicked ON";
     const toggleFirstOFF = "Clicked OFF";
+    const numA = this.state.numA;
+    const numB = this.state.numB;
     const outcome = this.state.outcome;
-
-
+    // const outcome = this.state.outcome;
 
 
     return (
@@ -76,23 +94,27 @@ class Exercise extends React.Component {
                 <p>Below section displays just some of my code I practice... </p>
               </div>
               <div className='wrapper'>
-                <div className={isToggle3? "box":"box spin"}>
+                <div className={isToggle3 ? "box" : "box spin"}>
                   <p>this a text in box added by onclick handler and displays only when page is
                     reloaded: {textInBox}</p>
                   <p> text from toggle : {isToggle ? toggleFirstOn : toggleFirstOFF}</p>
                 </div>
                 <div className='input-box'>
                   <label for="a">A</label>
-                  <input id='a' value=""/>
+                  <input id='a' onChange={this.handleA}/>
                   <label for="b">B</label>
-                  <input id='b' value=""/>
+                  <input id='b' onChange={this.handleB}/>
+                  <button
+                          onClick={this.handleSum}
+                  >wynik:</button>
                   <div className='outcome'>
-                    wynik
+                    {/*{outcome}*/} {numA}+{numB}={outcome}
                   </div>
 
 
+
                 </div>
-                <div className={isToggle2 ? "box second":"box second color"}>
+                <div className={isToggle2 ? "box second" : "box second color"}>
                   <i>{isToggle2 ? defContent : longText}</i>
                 </div>
 
@@ -109,9 +131,10 @@ class Exercise extends React.Component {
                 </button>
               </div>
 
-                <button
-                        onClick={this.handleSpin}
-                        className='spin'>spin left box</button>
+              <button
+                      onClick={this.handleSpin}
+                      className='spin'>spin left box
+              </button>
 
             </>
 

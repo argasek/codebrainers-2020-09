@@ -47,8 +47,6 @@ export class Plant extends React.PureComponent {
     return (
             <tr>
               <td>{this.props.index} </td>
-              {/*jak wstawić nr porządkowy*/}
-
               <td>{this.props.plant.id} </td>
               <td>{this.props.plant.name}</td>
               <td>{this.props.plant.category_slug}+{this.props.plant.category}</td>
