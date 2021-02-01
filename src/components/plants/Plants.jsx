@@ -38,10 +38,9 @@ class Plants extends React.PureComponent {
 
                 const data = response.data;
                 const plants = data.map((item) => {
-                  const {id, name, difficulty} = item;
+                  const {id, name, difficulty, blooming, category, category_slug, fertilizing_interval, last_fertilized, last_watered, required_exposure, required_humidity, required_temperature, room, url, watering_interval} = item;
                   console.log(item);
-                  return {id, name, difficulty};
-
+                  return {id, name, difficulty, blooming, category, category_slug, fertilizing_interval, last_fertilized, last_watered, required_exposure, required_humidity, required_temperature, room, url, watering_interval}
                 });
 
 
@@ -87,6 +86,18 @@ class Plants extends React.PureComponent {
                               </th>
                               <th>Name</th>
                               <th>Difficulty</th>
+                              <th>Blooming</th>
+                              <th>Category</th>
+                              <th>Category Slug</th>
+                              <th>fertilizing_interval</th>
+                              <th>last_fertilized</th>
+                              <th>last_watered</th>
+                              <th>required_exposure</th>
+                              <th>required_humidity</th>
+                              <th>required_temperature</th>
+                              <th>room</th>
+                              <th>url</th>
+                              <th>watering_interval</th>
 
                             </tr>
                             </thead>
