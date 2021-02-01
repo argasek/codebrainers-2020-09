@@ -1,6 +1,9 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import './Plant.scss';
+import {faCog, faCheck, faBan} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
 
 
 const difficulties = {
@@ -12,9 +15,11 @@ const difficulties = {
 };
 const bloomings=
         {
-          true : 'Is blooming',
-          false : 'Not blooming'
-        }
+          true : <FontAwesomeIcon icon={faCheck}/>,
+          false : <FontAwesomeIcon icon={faBan}/>
+        };
+
+
 
 class Plant extends React.PureComponent {
 
