@@ -38,9 +38,39 @@ class Plants extends React.PureComponent {
 
                 const data = response.data;
                 const plants = data.map((item) => {
-                  const {id, name, difficulty} = item;
+                  const {
+                    id,
+                    name,
+                    category,
+                    category_slug,
+                    watering_interval,
+                    fertilizing_interval,
+                    required_exposure,
+                    required_humidity,
+                    required_temperature,
+                    blooming,
+                    difficulty,
+                    room,
+                    last_watered,
+                    last_fertilized
+                  } = item;
                   console.log(item);
-                  return {id, name, difficulty};
+                  return {
+                    id,
+                    name,
+                    category,
+                    category_slug,
+                    watering_interval,
+                    fertilizing_interval,
+                    required_exposure,
+                    required_humidity,
+                    required_temperature,
+                    blooming,
+                    difficulty,
+                    room,
+                    last_watered,
+                    last_fertilized
+                  };
 
                 });
 
@@ -81,11 +111,20 @@ class Plants extends React.PureComponent {
                           <Table>
                             <thead>
                             <tr>
-                              <th>
-                                Id
-                              </th>
+                              <th>Id</th>
                               <th>Name</th>
+                              <th>Category</th>
+                              <th>Category_slug</th>
+                              <th>Watering interval</th>
+                              <th>Fertilizing interval</th>
+                              <th>Required exposure</th>
+                              <th>Required humidity</th>
+                              <th>Required temperature</th>
+                              <th>Blooming</th>
                               <th>Difficulty</th>
+                              <th>Room</th>
+                              <th>Last watered</th>
+                              <th>Last fertilized</th>
 
                             </tr>
                             </thead>
