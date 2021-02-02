@@ -13,15 +13,15 @@ class CategoryItem extends React.PureComponent {
       className: "category-item"
     };
 
-    console.log('constructor(): ' + props.index);
+    // console.log('constructor(): ' + props.index);
   }
 
   componentDidMount() {
-    console.log('componentDidMount(): ' + this.props.index);
+    // console.log('componentDidMount(): ' + this.props.index);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log('componentDidUpdate()');
+    // console.log('componentDidUpdate()');
 
     this.updateClassNameWhenIndexChanged(prevState);
   }
@@ -30,7 +30,7 @@ class CategoryItem extends React.PureComponent {
     const index = this.state.index;
 
     if (prevState.index !== index) {
-      console.log(`Index changed from ${prevState.index} to ${index}`);
+      // console.log(`Index changed from ${prevState.index} to ${index}`);
       let className = `category-item active-${index}`;
       this.setState({ className });
     }

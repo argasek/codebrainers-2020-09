@@ -7,26 +7,59 @@ import PlantRow from "components/plants/PlantRow";
 import InProgress from "components/shared/InProgress";
 import Plant from 'models/Plant';
 
-
-const PLANTS_FETCH_DELAY = 250;
+const CATEGORIES_FETCH_DELAY = 5000;
+const ROOMS_FETCH_DELAY = 100;
+const PLANTS_FETCH_DELAY = 100;
 
 class Plants extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      categories: [],
+      categoriesInProgress: false,
+      categoriesSuccess: undefined,
+
       plants: [],
-      successPlants: undefined,
-      inProgress: false,
+      plantsSuccess: undefined,
+      plantsInProgress: false,
+
+      rooms: [],
+      roomsSuccess: undefined,
+      roomsInProgress: false,
     };
   }
 
   componentDidMount() {
     this.fetchPlants();
+    this.fetchRooms();
+    this.fetchCategories();
+  }
+
+  fetchCategories() {
+    const requestUrl = 'http://gentle-tor-07382.herokuapp.com/categories/';
+    this.setState({ categoriesInProgress: true });
+    return this.props.delayFetch(CATEGORIES_FETCH_DELAY, (resolve, reject) => {
+      axios.get(requestUrl)
+              .then((response) => {
+                const data = response.data;
+                const categories = data.map((item) => ({ name: item.name, id: item.id }));
+                const categoriesSuccess = true;
+                this.setState({ categories, categoriesSuccess });
+                resolve();
+              })
+              .catch((error) => {
+                this.setState({ categoriesSuccess: false });
+                reject();
+              })
+              .finally(() => {
+                this.setState({ categoriesInProgress: false });
+              });
+    });
   }
 
   fetchPlants() {
     const requestUrl = "http://gentle-tor-07382.herokuapp.com/plants/";
-    this.setState({ inProgress: true });
+    this.setState({ plantsInProgress: true });
 
     return this.props.delayFetch(PLANTS_FETCH_DELAY, (resolve, reject) => {
       const promise = axios.get(requestUrl);
@@ -34,9 +67,52 @@ class Plants extends React.PureComponent {
       promise
         .then((response) => this.fetchPlantsSuccess(response, resolve))
         .catch((error) => this.fetchPlantsError(error, reject))
-        .finally(() => this.setState({ inProgress: false }));
+        .finally(() => this.setState({ plantsInProgress: false }));
     });
   }
+
+  fetchRooms() {
+    const requestUrl = "http://gentle-tor-07382.herokuapp.com/rooms/";
+    this.setState({roomsInProgress: true});
+
+    return this.props.delayFetch(ROOMS_FETCH_DELAY, (resolve, reject) => {
+      const promise = axios.get(requestUrl);
+
+      promise
+              .then((response) => {
+                const data = response.data;
+                const rooms = data.map((item) => {
+                  const {
+                    id,
+                    name,
+                    exposure,
+                    temperature,
+                    humidity,
+                    draft,
+                  } = item;
+                  return {
+                    id,
+                    name,
+                    exposure,
+                    temperature,
+                    humidity,
+                    draft,
+                  }
+                });
+                const roomsSuccess = true;
+                this.setState({rooms, roomsSuccess});
+                resolve();
+              })
+              .catch((error) => {
+                this.setState({roomsSuccess: false});
+                reject();
+              })
+              .finally(() => {
+                this.setState({roomsInProgress: false});
+              })
+    });
+  }
+  
 
   fetchPlantsSuccess(response, resolve) {
     const data = response.data;
@@ -44,29 +120,43 @@ class Plants extends React.PureComponent {
       const plant = new Plant();
       return plant.fromPlain(item);
     });
-    const successPlants = true;
-    this.setState({ plants, successPlants });
+    const plantsSuccess = true;
+    this.setState({ plants, plantsSuccess });
     resolve();
   }
 
   fetchPlantsError(error, reject)  {
-    this.setState({ successPlants: false });
+    this.setState({ plantsSuccess: false });
     reject();
   }
 
   render() {
-    const { plants, successPlants, inProgress } = this.state;
+    const {
+      rooms,
+      roomsInProgress,
+      roomsSuccess,
+      categories,
+      categoriesInProgress,
+      categoriesSuccess,
+      plants,
+      plantsSuccess,
+      plantsInProgress
+    } = this.state;
+
+    console.log({
+      plantsSuccess, categoriesSuccess, roomsSuccess
+    });
 
     return (
             <Card className="mb-4">
               <CardBody>
-                <InProgress inProgress={ inProgress } />
+                <InProgress inProgress={ plantsInProgress || categoriesInProgress || roomsInProgress } />
                 {
-                  successPlants === false &&
+                  plantsSuccess === false &&
                   <p>Unable to fetch plants.</p>
                 }
                 {
-                  successPlants && (
+                  plantsSuccess && categoriesSuccess && roomsSuccess && (
                           <div className="plants-container">
                             <Table>
                               <thead className="plants-container-header">
@@ -91,8 +181,14 @@ class Plants extends React.PureComponent {
                               <tbody>
                               {
                                 plants.map((plant, index, arr) => (
-                                        <PlantRow plant={ plant } key={ index } index={index + 1} />)
-                                )
+                                    <PlantRow
+                                      categories={categories}
+                                      rooms={rooms}
+                                      plant={ plant }
+                                      key={ index }
+                                      index={index + 1}
+                                    />
+                                ))
                               }
                               </tbody>
                             </Table>

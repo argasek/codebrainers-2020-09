@@ -31,7 +31,6 @@ class Rooms extends React.PureComponent {
       promise
         .then((response) => {
           const data = response.data;
-          console.log(data);
           const rooms = data.map((item) => {
             const {
               id,

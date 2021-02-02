@@ -1,6 +1,6 @@
 class Plant {
     blooming = false;
-    category = undefined;
+    categoryId = undefined;
     categorySlug = '';
     difficulty = 0;
     fertilizingInterval = undefined;
@@ -11,7 +11,7 @@ class Plant {
     requiredExposure = '';
     requiredHumidity = '';
     requiredTemperature = '';
-    room = undefined;
+    roomId = undefined;
     wateringInterval = undefined;
  
     fromPlain(plain) {
@@ -33,7 +33,7 @@ class Plant {
         } = plain;
 
         this.blooming = blooming;
-        this.category = category;
+        this.categoryId = category;
         this.categorySlug = category_slug;
         this.difficulty = difficulty;
         this.fertilizingInterval = fertilizing_interval;
@@ -44,7 +44,7 @@ class Plant {
         this.requiredExposure = required_exposure;
         this.requiredHumidity = required_humidity;
         this.requiredTemperature = required_temperature;
-        this.room = room;
+        this.roomId = room;
         this.wateringInterval = watering_interval;
 
         return this;

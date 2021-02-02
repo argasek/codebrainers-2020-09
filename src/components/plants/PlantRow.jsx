@@ -81,14 +81,29 @@ function formatDate(dateString) {
   }
 }
 
+const getCategoryName = (categories, categoryId) => {
+  const index = categories.findIndex((category) => category.id === categoryId);
+  if (index < 0) {
+    return '¯\\_(ツ)_/¯';
+  }
+  return categories[index].name;
+}
+
+const getRoomName = (rooms, roomId) => {
+  const index = rooms.findIndex((room) => room.id === roomId);
+  if (index < 0) {
+    return '¯\\_(ツ)_/¯';
+  }
+  return rooms[index].name;
+}
 
 class PlantRow extends React.PureComponent {
 
   render() {
-    const { index, plant } = this.props;
+    const { categories, index, plant, rooms } = this.props;
     const {
       blooming,
-      category,
+      categoryId,
       categorySlug,
       difficulty,
       fertilizingInterval,
@@ -99,16 +114,18 @@ class PlantRow extends React.PureComponent {
       requiredExposure,
       requiredHumidity,
       requiredTemperature,
-      room,
+      roomId,
       wateringInterval
     } = plant;
+
+    console.log(categoryId, categories);
 
     return (
       <tr>
         <td>{ index } </td>
         <td>{ id } </td>
         <td>{ name }</td>
-        <td>{ category }</td>
+        <td>{ getCategoryName(categories, categoryId) }</td>
         <td>{ categorySlug }</td>
         <td>{ secondsToDays(wateringInterval) }</td>
         <td>{ secondsToDays(fertilizingInterval) }</td>
@@ -117,7 +134,7 @@ class PlantRow extends React.PureComponent {
         <td>{ temperatures[requiredTemperature] }</td>
         <td>{ appearances[blooming] }</td>
         <td>{ difficulties[difficulty] }</td>
-        <td>{ room }</td>
+        <td>{ getRoomName(rooms, roomId) }</td>
         <td>{ formatDate(lastWatered) }</td>
         <td>{ formatDate(lastFertilized) }</td>
       </tr>
@@ -129,6 +146,14 @@ class PlantRow extends React.PureComponent {
 
 PlantRow.propTypes = {
   plant: PropTypes.instanceOf(Plant).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  })).isRequired,
+  rooms: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  })).isRequired,
   index: PropTypes.number.isRequired,
 };
 

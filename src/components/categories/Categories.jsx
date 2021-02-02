@@ -41,7 +41,7 @@ class Categories extends React.PureComponent {
           reject();
         })
         .finally(() => {
-          console.log('Resolved');
+          // console.log('Resolved');
         });
     });
   }
