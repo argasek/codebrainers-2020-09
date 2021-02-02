@@ -3,7 +3,7 @@ import React from 'react';
 import './Plant.scss';
 import {faCog, faCheck, faBan} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
+import moment from "moment";
 
 
 const difficulties = {
@@ -32,16 +32,16 @@ class Plant extends React.PureComponent {
               <td>{this.props.plant.name}</td>
               <td>{this.props.plant.category}</td>
               <td>{this.props.plant.category_slug}</td>
-              <td>{this.props.plant.watering_interval}</td>
-              <td>{this.props.plant.fertilizing_interval}</td>
+              <td>{Math.ceil(this.props.plant.watering_interval / 86400)}</td>
+              <td>{Math.ceil(this.props.plant.fertilizing_interval / 86400)}</td>
               <td>{this.props.plant.required_exposure}</td>
               <td>{this.props.plant.required_humidity}</td>
               <td>{this.props.plant.required_temperature}</td>
               <td>{bloomings[this.props.plant.blooming]}</td>
               <td>{difficulties[this.props.plant.difficulty]}</td>
               <td>{this.props.plant.room}</td>
-              <td>{this.props.plant.last_watered}</td>
-              <td>{this.props.plant.last_fertilized}</td>
+              <td>{moment(this.props.plant.last_watered).format("YYYY-MM-DD")}</td>
+              <td>{moment(this.props.plant.last_fertilized).format("YYYY-MM-DD")}</td>
             </tr>
     )
   }
