@@ -19,19 +19,19 @@ const difficulties = {
   5: 'high',
 }
 
-const bloom_appear = {
+const appearances = {
   true:   <FontAwesomeIcon icon={faCheckCircle}/>,
   false:  <FontAwesomeIcon icon={faTimesCircle}/>,
 }
 
-const exposure = {
+const exposures = {
   dark:     <FontAwesomeIcon icon={faMoon}/>,
   shade:    <FontAwesomeIcon icon={faCloud}/>,
   partsun:  <FontAwesomeIcon icon={faCloudSun}/>,
   fullsun:  <FontAwesomeIcon icon={faSun}/>,
 }
 
-const humidity = {
+const humidities = {
   low:    <div>
             <FontAwesomeIcon icon={faTint}/>
           </div>,
@@ -46,7 +46,7 @@ const humidity = {
           </div>,
 }
 
-const temperature = {
+const temperatures = {
   cold:   <FontAwesomeIcon icon={faThermometerEmpty}/>,
   medium: <FontAwesomeIcon icon={faThermometerHalf}/>,
   warm:   <FontAwesomeIcon icon={faThermometerFull}/>,
@@ -84,10 +84,10 @@ class Plant extends React.PureComponent {
         <td>{ this.props.plant.category_slug }</td>
         <td>{ secondsToDays(this.props.plant.watering_interval) }</td>
         <td>{ secondsToDays(this.props.plant.fertilizing_interval) }</td>
-        <td>{ exposure[this.props.plant.required_exposure] }</td>
-        <td>{ humidity[this.props.plant.required_humidity] }</td>
-        <td>{ temperature[this.props.plant.required_temperature] }</td>
-        <td>{ bloom_appear[this.props.plant.blooming] }</td>
+        <td>{ exposures[this.props.plant.required_exposure] }</td>
+        <td>{ humidities[this.props.plant.required_humidity] }</td>
+        <td>{ temperatures[this.props.plant.required_temperature] }</td>
+        <td>{ appearances[this.props.plant.blooming] }</td>
         <td>{ difficulties[this.props.plant.difficulty] }</td>
         <td>{ this.props.plant.room }</td>
         <td>{ formatDate(this.props.plant.last_watered) }</td>
@@ -103,5 +103,5 @@ class Plant extends React.PureComponent {
 // Plant.propTypes = {
 //   plant: PropTypes.instanceOf(Plant).isRequired,
 // };
-
+export { exposures, humidities, temperatures, appearances };
 export default Plant;
