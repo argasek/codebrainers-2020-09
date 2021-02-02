@@ -24,37 +24,39 @@ class PlantasticContainer extends React.PureComponent {
     } = this.props;
 
     return (
-            <Container>
-              <Switch>
-                <Route exact path={ROUTE_PLANTS}>
-                  <PlantCreate
-                          fertilizingFrequency={fertilizingFrequency}
-                          inputOnChange={inputOnChange}
-                          plantName={plantName}
-                          someSelectField={someSelectField}
-                  />
-                  <Plants
-                          delayFetch={delayFetch}
-                  />
-                </Route>
-                <Route path={ROUTE_CATEGORIES}>
-                  <Categories
-                          delayFetch={delayFetch}
-                  />
-                </Route>
-                <Route path={ROUTE_ROOMS}>
-                  <Rooms/>
-                </Route>
-                <Route path={ROUTE_PREFERENCES}>
-                  <Preferences
-                      userFullName={userFullName}
-                      userFullNameDelayed={userFullNameDelayed}
-                      handleUserFullNameChange={handleUserFullNameChange}
-                      handleUserFullNameBlur={handleUserFullNameBlur}
-                  />
-                </Route>
-              </Switch>
-            </Container>
+      <Container>
+        <Switch>
+          <Route exact path={ROUTE_PLANTS}>
+            <PlantCreate
+              fertilizingFrequency={fertilizingFrequency}
+              inputOnChange={inputOnChange}
+              plantName={plantName}
+              someSelectField={someSelectField}
+            />
+            <Plants
+              delayFetch={delayFetch}
+            />
+          </Route>
+          <Route path={ROUTE_CATEGORIES}>
+            <Categories
+              delayFetch={delayFetch}
+            />
+          </Route>
+          <Route path={ROUTE_ROOMS}>
+            <Rooms
+              delayFetch={delayFetch}
+            />
+          </Route>
+          <Route path={ROUTE_PREFERENCES}>
+            <Preferences
+              userFullName={userFullName}
+              userFullNameDelayed={userFullNameDelayed}
+              handleUserFullNameChange={handleUserFullNameChange}
+              handleUserFullNameBlur={handleUserFullNameBlur}
+            />
+          </Route>
+        </Switch>
+      </Container>
     )
   }
 }

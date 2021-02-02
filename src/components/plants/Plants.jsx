@@ -50,7 +50,7 @@ class Plants extends React.PureComponent {
               last_watered,
               last_fertilized,
             } = item;
-            console.log(blooming);
+            console.log(required_exposure);
             return {
               id,
               name,
@@ -93,7 +93,8 @@ class Plants extends React.PureComponent {
             successPlants === false &&
             <p>Unable to fetch plants.</p>
           }
-          {successPlants && (
+          {
+            successPlants && (
             <div className="plants-container">
               <Table>
                 <thead className="plants-container-header">
