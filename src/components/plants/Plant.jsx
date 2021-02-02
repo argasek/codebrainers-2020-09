@@ -68,7 +68,6 @@ class Plant extends React.PureComponent {
         <td>{ required_humidity[this.props.plant.required_humidity]}</td>
         <td>{ required_temperature[this.props.plant.required_temperature] }</td>
         <td>{ this.props.plant.room }</td>
-        <td>{ this.props.plant.url}</td>
         <td>{ this.props.plant.watering_interval }</td>
 
       </tr>
