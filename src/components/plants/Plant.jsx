@@ -102,6 +102,6 @@ export class PlantSecondTable extends React.PureComponent {
   }
 
 }
-
+export {temp,humidity,exposure};
 
 
