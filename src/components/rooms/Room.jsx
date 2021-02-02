@@ -1,5 +1,5 @@
 import React from "react";
-import {exposures, humidities, temperatures, appearances} from "components/plants/Plant";
+import {exposures, humidities, temperatures, appearances} from "components/plants/PlantRow";
 
 
 class Room extends React.PureComponent {
