@@ -1,14 +1,12 @@
 import React from "react";
+import Plant from "components/plants/Plant"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faQuestion} from "@fortawesome/free-solid-svg-icons";
+import {faCheckCircle, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 
 
-function dataExist(isData) {
-  if (isData === null) {
-    return <FontAwesomeIcon icon={faQuestion}/>;
-  } else {
-    return isData;
-  }
+const draft_appear = {
+  true:   <FontAwesomeIcon icon={faCheckCircle}/>,
+  false:  <FontAwesomeIcon icon={faTimesCircle}/>,
 }
 
 
@@ -18,7 +16,12 @@ class Room extends React.PureComponent {
 
     return (
       <tr>
-        <td>{ dataExist(this.props.room.room) }</td>
+        <td>{ this.props.room.id }</td>
+        <td>{ this.props.room.name }</td>
+        <td>{ this.props.room.exposure }</td>
+        <td>{ this.props.room.humidity }</td>
+        <td>{ this.props.room.temperature }</td>
+        <td>{ draft_appear[this.props.room.draft] }</td>
       </tr>
     )
   }

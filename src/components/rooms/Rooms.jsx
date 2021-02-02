@@ -22,7 +22,7 @@ class Rooms extends React.PureComponent {
   }
 
   fetchRooms() {
-    const requestUrl = "http://gentle-tor-07382.herokuapp.com/plants/";
+    const requestUrl = "http://gentle-tor-07382.herokuapp.com/rooms/";
     this.setState({inProgress: true});
 
     return this.props.delayFetch(ROOMS_FETCH_DELAY, (resolve, reject) => {
@@ -32,7 +32,24 @@ class Rooms extends React.PureComponent {
         .then((response) => {
           const data = response.data;
           console.log(data);
-          const rooms = data.map((item) => ({ room: item.room }));
+          const rooms = data.map((item) => {
+            const {
+              id,
+              name,
+              exposure,
+              temperature,
+              humidity,
+              draft,
+            } = item;
+            return {
+              id,
+              name,
+              exposure,
+              temperature,
+              humidity,
+              draft,
+            }
+          });
           const successRooms = true;
           this.setState({rooms, successRooms});
           resolve();
@@ -64,7 +81,12 @@ class Rooms extends React.PureComponent {
               <Table>
                 <thead>
                 <tr>
-                  <th>Room Id</th>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Exposure</th>
+                  <th>Humidity</th>
+                  <th>Temperature</th>
+                  <th>Draft</th>
                 </tr>
                 </thead>
                 <tbody>
