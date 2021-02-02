@@ -45,7 +45,7 @@ const rooms ={
 // though it is probably milisec, just to get reasonable outcome.
 const secToDays = 84400;
 
-export class Plant extends React.PureComponent {
+export class PlantRow extends React.PureComponent {
   constructor(props) {
     super(props);
   }

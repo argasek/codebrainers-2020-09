@@ -2,9 +2,10 @@ import {Card, CardBody, Table} from "reactstrap";
 import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import {Plant, PlantSecondTable} from "components/plants/Plant";
+import {PlantRow, PlantSecondTable} from "components/plants/PlantRow";
 import InProgress from "components/shared/InProgress";
 import {RiCelsiusFill} from "react-icons/ri";
+import Plant from "models/Plant";
 
 
 const PLANTS_FETCH_DELAY = 250;
@@ -24,33 +25,26 @@ class Plants extends React.PureComponent {
     this.fetchPlants();
   }
 
+  fetchPlantSuccess(response, resolve){
+    const data = response.data;
+    const plants = data.map((item)=>{
+      const plant = new Plant();
+      return plant.fromPlain(item)
+    });
+    const plantSuccess = true;
+    this.setState({plants,plantSuccess});
+    resolve();
+  }
+
 
   fetchPlants() {
     const requestUrl = "http://gentle-tor-07382.herokuapp.com/plants/";
     this.setState({inProgress: true});
-
-
     return this.props.delayFetch(PLANTS_FETCH_DELAY, (resolve, reject) => {
       const promise = axios.get(requestUrl);
 
       promise
-              .then((response) => {
-
-                const data = response.data;
-                const plants = data.map((item) => {
-                  const {
-                    id, name, difficulty, blooming, category, category_slug, fertilizing_interval, last_fertilized,
-                    last_watered, required_exposure, required_humidity, required_temperature, room, watering_interval
-                  } = item;
-                  ;
-
-
-                  return {
-                    id, name, difficulty, blooming, category, category_slug, fertilizing_interval, last_fertilized,
-                    last_watered, required_exposure, required_humidity, required_temperature, room, watering_interval
-                  };
-
-                });
+              .then((response) => this.fetchPlantSuccess(response, resolve))
 
                 const successPlants = true;
                 this.setState({plants, successPlants});
@@ -115,7 +109,7 @@ class Plants extends React.PureComponent {
                             <tbody>
                             {
                               plants.map(
-                                      (plant, index, arr) => (<Plant plant={plant} key={index} index={index + 1}/>)
+                                      (plant, index, arr) => (<PlantRow plant={plant} key={index} index={index + 1}/>)
                               )
                             }
                             </tbody>
