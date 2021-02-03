@@ -1,5 +1,6 @@
 import React from "react";
 import './Exercise.scss';
+import {DropdownItem,DropdownMenu} from "reactstrap/es";
 import {contentLongText} from "constants/PlantConstants";
 import {Route, Switch} from "react-router-dom";
 import Calculator from "components/exercise/Calculator";
@@ -8,6 +9,7 @@ import {ROUTE_CALCULATOR} from "constants/Routes";
 // import {faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 // import {Nav} from "reactstrap";
 import {Link} from 'react-router-dom';
+import {Container} from "reactstrap";
 
 
 class Exercise extends React.Component {
@@ -45,9 +47,6 @@ class Exercise extends React.Component {
   }
 
 
-
-
-
   render() {
     const textInBox = this.state.textInBox;
     const isToggle = this.state.isToggle;
@@ -59,10 +58,9 @@ class Exercise extends React.Component {
     const toggleFirstOFF = "Clicked OFF";
 
 
-
     return (
-            <>
 
+            <>
                   <div>
                     <p> This is a page created just for practice.</p>
                     <p>It has been created with following steps</p>
@@ -75,6 +73,7 @@ class Exercise extends React.Component {
                     </ol>
                     <p>Below section displays just some of my code I practice... </p>
                   </div>
+
                   <div className='wrapper'>
                     <div className={isToggle3 ? "box" : "box spin"}>
                       <p>this a text in box added by onclick handler and displays only when page is
@@ -85,9 +84,8 @@ class Exercise extends React.Component {
                     <div className={isToggle2 ? "box second" : "box second color"}>
                       <i>{isToggle2 ? defContent : longText}</i>
                     </div>
-
-
                   </div>
+
                   <div className='btn-wrap'>
                     <button
                             onClick={this.handlerTextChange}
@@ -103,19 +101,22 @@ class Exercise extends React.Component {
                           onClick={this.handleSpin}
                           className='spin'>spin left box
                   </button>
-              {/*<div className='calc'>*/}
-              {/*                <Calculator/>*/}
+                  {/*<div className='calc'>*/}
+                  {/*                <Calculator/>*/}
 
-              {/*</div>*/}
+                  {/*</div>*/}
+                  <DropdownMenu>
+                    <DropdownItem tag={Link} to={ROUTE_CALCULATOR}/>
+                      switch
+                  </DropdownMenu>
+                <Link to='/calculator'>
+                  <button>switch to calc</button>
+                </Link>
 
 
-
-
-              </>
-
+            </>
 
     )
   }
 }
-
 export default Exercise;
