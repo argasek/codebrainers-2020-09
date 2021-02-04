@@ -11,6 +11,7 @@ import RoomPlain from "models/RoomPlain";
 
 const PLANTS_FETCH_DELAY = 250;
 const ROOMS_FETCH_DELAY = 250;
+const CATEGORIES_FETCH_DELAY = 500;
 
 class Plants extends React.PureComponent {
   constructor(props) {
@@ -23,6 +24,10 @@ class Plants extends React.PureComponent {
       rooms: [],
       roomsSuccess: undefined,
       roomsInProgress: false,
+
+      categoriesInProgress: false,
+      successCategories: undefined,
+      categories: [],
     };
   }
 
@@ -30,6 +35,7 @@ class Plants extends React.PureComponent {
   componentDidMount() {
     this.fetchPlants();
     this.fetchRooms();
+    this.fetchCategories();
 
   }
 
@@ -48,43 +54,43 @@ class Plants extends React.PureComponent {
     });
 
   }
-  fetchRooms() {
-    const requestUrl = "http://gentle-tor-07382.herokuapp.com/rooms/";
-    this.setState({roomsInProgress: true});
 
-    return this.props.delayFetch(ROOMS_FETCH_DELAY, (resolve, reject) => {
-      const promise = axios.get(requestUrl);
+  // fetchRooms() {
+  //   const requestUrl = "http://gentle-tor-07382.herokuapp.com/rooms/";
+  //   this.setState({roomsInProgress: true});
+  //
+  //   return this.props.delayFetch(ROOMS_FETCH_DELAY, (resolve, reject) => {
+  //     const promise = axios.get(requestUrl);
+  //
+  //     promise
+  //             .then((response) => this.fetchRoomsSuccess(response,resolve))
+  //             .catch((error) => this.fetchRoomsError(error, reject))
+  //             .finally(() => {
+  //               this.setState({roomsInProgress: false});
+  //             })
+  //   });
+  //
+  //
+  // }
 
-      promise
-              .then((response) => this.fetchRoomsSuccess(response,resolve))
-              .catch((error) => this.fetchRoomsError(error, reject))
-              .finally(() => {
-                this.setState({roomsInProgress: false});
-              })
-    });
-
-
-  }
-
-  fetchRoomsSuccess(response, resolve){
-    const data = response.data;
-    const rooms = data.map((item) => {
-      const room = new RoomPlain();
-      return room.fromPlain(item)
-    });
-    const roomsSuccess = true;
-    this.setState({
-      rooms,roomsSuccess
-    });
-    resolve();
-  }
-  fetchRoomsError(error, reject){
-    this.setState({
-      roomsSuccess: false
-    });
-    reject();
-  }
-
+  // fetchRoomsSuccess(response, resolve){
+  //   const data = response.data;
+  //   const rooms = data.map((item) => {
+  //     const room = new RoomPlain();
+  //     return room.fromPlain(item)
+  //   });
+  //   const roomsSuccess = true;
+  //   this.setState({
+  //     rooms,roomsSuccess
+  //   });
+  //   resolve();
+  // }
+  // fetchRoomsError(error, reject){
+  //   this.setState({
+  //     roomsSuccess: false
+  //   });
+  //   reject();
+  // }
 
 
   fetchPlantsSuccess(response, resolve) {
@@ -105,8 +111,75 @@ class Plants extends React.PureComponent {
     reject();
   }
 
+  fetchRooms() {
+    const requestUrl = "http://gentle-tor-07382.herokuapp.com/rooms/";
+    this.setState({roomsInProgress: true});
+
+    return this.props.delayFetch(ROOMS_FETCH_DELAY, (resolve, reject) => {
+      const promise = axios.get(requestUrl);
+
+      promise
+              .then((response) => {
+                const data = response.data;
+                const rooms = data.map((item) => {
+                  const {
+                    id,
+                    name,
+                    exposure,
+                    temperature,
+                    humidity,
+                    draft,
+                  } = item;
+                  return {
+                    id,
+                    name,
+                    exposure,
+                    temperature,
+                    humidity,
+                    draft,
+                  }
+                });
+                const roomsSuccess = true;
+                this.setState({rooms, roomsSuccess});
+                resolve();
+              })
+              .catch((error) => {
+                this.setState({roomsSuccess: false});
+                reject();
+              })
+              .finally(() => {
+                this.setState({roomsInProgress: false});
+              })
+    });
+  }
+
+  fetchCategories() {
+
+    const requestUrl = 'http://gentle-tor-07382.herokuapp.com/categories/';
+    this.setState({categoriesInProgress: true});
+    return this.props.delayFetch(CATEGORIES_FETCH_DELAY, (resolve, reject) => {
+      axios.get(requestUrl)
+              .then((response) => {
+                const data = response.data;
+                const categories = data.map((item) => ({name: item.name, id: item.id}));
+                const successCategories = true;
+                this.setState({categories, successCategories});
+                resolve();
+              })
+              .catch((error) => {
+                this.setState({successCategories: false});
+                reject();
+              })
+              .finally(() => {
+                this.setState({categoriesInProgress: false});
+              })
+    });
+  }
+
+
   render() {
-    const {plants, plantsSuccess, plantsInProgress, rooms, roomsInProgress, roomsSuccess} = this.state;
+    const {plants, plantsSuccess, plantsInProgress, rooms, roomsInProgress,
+      roomsSuccess,successCategories,categoriesInProgress,categories, } = this.state;
 
     return (
             <Card className="mb-4">
@@ -150,7 +223,8 @@ class Plants extends React.PureComponent {
                             <tbody>
                             {
                               plants.map(
-                                      (plant, index,arr) => (<PlantRow plant={plant} key={index} rooms={rooms} index={index + 1}/>)
+                                      (plant, index, arr) => (
+                                              <PlantRow plant={plant} categories={categories} key={index} rooms={rooms} index={index + 1}/>)
                               )
                             }
                             </tbody>
@@ -187,8 +261,9 @@ class Plants extends React.PureComponent {
                             <tbody>
                             {
                               plants.map(
-                                      (plant, index,arr) => (
-                                              <PlantSecondTable plant={plant} key={index} rooms={rooms} index={index + 1}/>)
+                                      (plant, index, arr) => (
+                                              <PlantSecondTable plant={plant} key={index} rooms={rooms}
+                                                                index={index + 1}/>)
                               )
                             }
                             </tbody>

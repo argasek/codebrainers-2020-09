@@ -42,9 +42,16 @@ const secToDays = 84400;
 const getRoomName =(rooms, roomId)=>{
   const index = rooms.findIndex((room)=>room.id === roomId);
   if(index < 0){
-    return "loading..."
+    return "no rooms assigned"
   }
   return rooms[index].name;
+}
+const getCategoryName = ( categories, categoryID)=>{
+  const index = categories.findIndex((category=>category.id === categoryID));
+  if(index < 0){
+     return "no matching category"
+  }
+  return categories[index].name;
 }
 
 
@@ -54,7 +61,7 @@ export class PlantRow extends React.PureComponent {
   }
 
   render() {
-    const {index, plant, rooms} = this.props;
+    const {index, plant, rooms, categories} = this.props;
     const {
       blooming,
       categoryId,
@@ -76,7 +83,7 @@ export class PlantRow extends React.PureComponent {
               <td>{index}</td>
               <td>{id} </td>
               <td>{name}</td>
-              <td>{categorySlug}_id = {categoryId}</td>
+              <td>{getCategoryName(categories, categoryId)}</td>
               <td>{difficulties[difficulty]}</td>
               <td>{blooming ? <GiFireFlower/> : <ImLeaf/>}</td>
 
@@ -136,18 +143,18 @@ export class PlantSecondTable extends React.PureComponent {
 PlantRow.propTypes = {
   plant: PropTypes.instanceOf(Plant).isRequired,
   index: PropTypes.number.isRequired,
-  rooms: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
+  // rooms: PropTypes.arrayOf(PropTypes.shape({
+  //   // id: PropTypes.number.isRequired,
+  //   name: PropTypes.string.isRequired,
+  // })).isRequired,
 }
 PlantSecondTable.propTypes = {
   plant: PropTypes.instanceOf(Plant).isRequired,
   index: PropTypes.number.isRequired,
-  rooms: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
+  // rooms: PropTypes.arrayOf(PropTypes.shape({
+  //   // id: PropTypes.number.isRequired,
+  //   name: PropTypes.string.isRequired,
+  // })).isRequired,
 
 }
 export {temp, humidity, exposure};
