@@ -24,11 +24,13 @@ class Categories extends React.PureComponent {
   }
 
   fetchCategories() {
-
     const requestUrl = 'http://gentle-tor-07382.herokuapp.com/categories/';
     this.setState({ inProgress: true });
+
     return this.props.delayFetch(CATEGORIES_FETCH_DELAY, (resolve, reject) => {
-      axios.get(requestUrl)
+      const promise = axios.get(requestUrl);
+
+      promise
         .then((response) => {
           const data = response.data;
           const categories = data.map((item) => ({ name: item.name, id: item.id }));

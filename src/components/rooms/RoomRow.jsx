@@ -1,8 +1,8 @@
 import React from "react";
-import {exposures, humidities, temperatures, appearances} from "components/plants/Plant";
+import {exposures, humidities, temperatures, appearances} from "components/plants/PlantRow";
 
 
-class Room extends React.PureComponent {
+class RoomRow extends React.PureComponent {
 
   render() {
 
@@ -19,4 +19,4 @@ class Room extends React.PureComponent {
   }
 }
 
-export default Room;
+export default RoomRow;

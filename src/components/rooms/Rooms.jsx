@@ -1,8 +1,9 @@
 import React from "react";
 import { Card, CardBody, Table } from "reactstrap";
 import axios from "axios";
-import Room from "components/rooms/Room";
 import InProgress from "components/shared/InProgress";
+import RoomRow from "components/rooms/RoomRow";
+import Room from "models/Room";
 
 
 const ROOMS_FETCH_DELAY = 250;
@@ -12,8 +13,8 @@ class Rooms extends React.PureComponent {
     super(props);
     this.state = {
       rooms: [],
-      successRooms: undefined,
-      inProgress: false,
+      roomsSuccess: undefined,
+      roomsInProgress: false,
     };
   }
 
@@ -23,60 +24,50 @@ class Rooms extends React.PureComponent {
 
   fetchRooms() {
     const requestUrl = "http://gentle-tor-07382.herokuapp.com/rooms/";
-    this.setState({inProgress: true});
+    this.setState({roomsInProgress: true});
 
     return this.props.delayFetch(ROOMS_FETCH_DELAY, (resolve, reject) => {
       const promise = axios.get(requestUrl);
 
       promise
-        .then((response) => {
-          const data = response.data;
-          console.log(data);
-          const rooms = data.map((item) => {
-            const {
-              id,
-              name,
-              exposure,
-              temperature,
-              humidity,
-              draft,
-            } = item;
-            return {
-              id,
-              name,
-              exposure,
-              temperature,
-              humidity,
-              draft,
-            }
-          });
-          const successRooms = true;
-          this.setState({rooms, successRooms});
-          resolve();
-        })
-        .catch((error) => {
-          this.setState({successRooms: false});
-          reject();
-        })
+        .then((response) => this.fetchRoomsSuccess(response, resolve))
+        .catch((error) => this.fetchRoomsError(error, reject))
         .finally(() => {
-          this.setState({inProgress: false});
+          this.setState({roomsInProgress: false});
         })
     });
   }
 
+  fetchRoomsSuccess(response, resolve) {
+    const data = response.data;
+    console.log(data);
+    const rooms = data.map((item) => {
+      const room = new Room();
+      return room.fromPlain(item);
+    });
+    const roomsSuccess = true;
+    this.setState({rooms, roomsSuccess});
+    resolve();
+  }
+
+  fetchRoomsError(error, reject) {
+    this.setState({roomsSuccess: false});
+    reject();
+  }
+
   render() {
-    const {rooms, successRooms, inProgress} = this.state;
+    const {rooms, roomsSuccess, roomsInProgress} = this.state;
 
     return (
       <Card className="mb-4">
         <CardBody>
-          <InProgress inProgress={inProgress}/>
+          <InProgress inProgress={roomsInProgress}/>
           {
-            successRooms === false &&
+            roomsSuccess === false &&
             <p>Unable to fetch rooms.</p>
           }
           {
-            successRooms && (
+            roomsSuccess && (
               <>
               <Table>
                 <thead>
@@ -92,7 +83,7 @@ class Rooms extends React.PureComponent {
                 <tbody>
                 {
                   rooms.map((room, index, arr) => (
-                          <Room room={room} key={index} index={index}/>)
+                          <RoomRow room={room} key={index} index={index}/>)
                   )
                 }
                 </tbody>
