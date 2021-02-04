@@ -5,6 +5,7 @@ import axios from "axios";
 import Room from "components/rooms/Room";
 import InProgress from "components/shared/InProgress";
 import {RiCelsiusFill} from "react-icons/ri";
+import RoomPlain from "models/RoomPlain";
 
 
 
@@ -27,34 +28,37 @@ class Rooms extends React.PureComponent {
   fetchRooms() {
     const requestUrl = "http://gentle-tor-07382.herokuapp.com/rooms/";
     this.setState({inProgress: true});
+
     return this.props.delayFetch(ROOMS_FETCH_DELAY, (resolve, reject) => {
       const promise = axios.get(requestUrl);
 
       promise
-              .then((response) => {
-                const data = response.data;
-                const rooms = data.map((item) => {
-                  const {
-                    id, name,exposure,temperature,humidity} = item;
-
-                  return {
-                    id, name, exposure,temperature,humidity};
-                });
-
-                const successRooms = true;
-                this.setState({rooms, successRooms});
-                resolve();
-              })
-              .catch((error) => {
-                this.setState({successRooms: false});
-                reject();
-              })
+              .then((response) => this.fetchSuccessRooms(response,resolve))
+              .catch((error) => this.fetchErrorRooms(error, reject))
               .finally(() => {
                 this.setState({inProgress: false});
               })
     });
 
 
+  }
+  fetchSuccessRooms(response, resolve){
+    const data = response.data;
+    const rooms = data.map((item) => {
+      const room = new RoomPlain();
+      return room.fromPlain(item)
+    });
+    const successRooms = true;
+    this.setState({
+      rooms,successRooms
+    });
+    resolve();
+  }
+  fetchErrorRooms(error, reject){
+    this.setState({
+      successRooms: false
+    });
+    reject();
   }
 
   render() {
