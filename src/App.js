@@ -34,8 +34,8 @@ class App extends React.Component {
                     sortDirection= {sortDirection}
                     // sortHandler={this.sortHandlerFunc}
                 />
-                <StudentList students={codebrainersStudents} sortBy="participationCount" sortDirection={sortDirection} />
-                <StudentList students={codebrainersStudents} sortBy="numberOfBeers" sortDirection={sortDirection}  s/>
+                {/*<StudentList students={codebrainersStudents} sortBy="participationCount" sortDirection={sortDirection} />*/}
+                {/*<StudentList students={codebrainersStudents} sortBy="numberOfBeers" sortDirection={sortDirection}  s/>*/}
             </div>
         );
     }

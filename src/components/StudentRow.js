@@ -12,7 +12,7 @@ export default function StudentRow(props) {
     let backgroundStyleCellsBeers;
     let backgroundStyleCellsAttendance;
     let iterationCount = codebrainersStudents.length;
-    console.log(sortDirection);
+    // console.log(sortDirection);
 
     let rgba = "rgba";
     let r = 136;

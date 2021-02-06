@@ -13,11 +13,20 @@ class StudentList extends React.Component {
             students: props.students,
             sortBy: props.sortBy,
             sortDirection: props.sortDirection,
+
         }
 
     }
 
+    handleClass = () => {
+        this.setState({
+            classActive: !this.state.classActive ? "active" : ""
+        });
+    }
+
+
     render() {
+        const classActive = this.state.classActive;
 
         const students = this.state.students;
         let sortBy = this.state.sortBy;
@@ -30,6 +39,11 @@ class StudentList extends React.Component {
             this.setState({sortDirection: !this.state.sortDirection});
         }
 
+        const triggerSort = (target) => {
+            // console.log("sprawdzam");
+            sortingBy()
+        }
+
 
         const descending = <FaAngleDoubleDown
             onClick={sortHandler}/>;
@@ -37,7 +51,6 @@ class StudentList extends React.Component {
             onClick={sortHandler}/>;
 
         const directionValue = sortDirection ? descending : ascending;
-
 
 
         let backgroundStyleName;
@@ -61,6 +74,12 @@ class StudentList extends React.Component {
         } else {
             sortingTitle = "earned beers";
             backgroundStyleBeer = checkedLabelBackground;
+
+        }
+
+        function sortingBy() {
+
+                console.log("wywowłałeś funkcję Sorting by poprzez ttriiger");
 
         }
 
@@ -97,7 +116,11 @@ class StudentList extends React.Component {
                     </th>
                 </tr>
                 <tr>
-                    <th style={backgroundStyleName}>Full name</th>
+                    <th className={classActive} style={backgroundStyleName}
+
+                        onClick={triggerSort}
+                    >Full name
+                    </th>
                     <th style={backgroundStyleBeer}>Number of beers</th>
                     <th style={backgroundStyleAttend}>Participation</th>
                 </tr>
