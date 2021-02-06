@@ -6,12 +6,12 @@ import {PlantRow, PlantSecondTable} from "components/plants/PlantRow";
 import InProgress from "components/shared/InProgress";
 import {RiCelsiusFill} from "react-icons/ri";
 import Plant from "models/Plant";
-import RoomPlain from "models/RoomPlain";
+import {FaAngleDoubleUp, FaAngleDoubleDown} from "react-icons/fa";
 
 
-const PLANTS_FETCH_DELAY = 250;
-const ROOMS_FETCH_DELAY = 250;
-const CATEGORIES_FETCH_DELAY = 500;
+const PLANTS_FETCH_DELAY = 100;
+const ROOMS_FETCH_DELAY = 100;
+const CATEGORIES_FETCH_DELAY = 100;
 
 class Plants extends React.PureComponent {
   constructor(props) {
@@ -28,7 +28,16 @@ class Plants extends React.PureComponent {
       categoriesInProgress: false,
       successCategories: undefined,
       categories: [],
+
+      sortBy: "name",
+      sortDirection: true,
     };
+  }
+
+  handleSort = () => {
+    this.setState({
+      sortDirection: !this.state.sortDirection,
+    });
   }
 
 
@@ -54,43 +63,6 @@ class Plants extends React.PureComponent {
     });
 
   }
-
-  // fetchRooms() {
-  //   const requestUrl = "http://gentle-tor-07382.herokuapp.com/rooms/";
-  //   this.setState({roomsInProgress: true});
-  //
-  //   return this.props.delayFetch(ROOMS_FETCH_DELAY, (resolve, reject) => {
-  //     const promise = axios.get(requestUrl);
-  //
-  //     promise
-  //             .then((response) => this.fetchRoomsSuccess(response,resolve))
-  //             .catch((error) => this.fetchRoomsError(error, reject))
-  //             .finally(() => {
-  //               this.setState({roomsInProgress: false});
-  //             })
-  //   });
-  //
-  //
-  // }
-
-  // fetchRoomsSuccess(response, resolve){
-  //   const data = response.data;
-  //   const rooms = data.map((item) => {
-  //     const room = new RoomPlain();
-  //     return room.fromPlain(item)
-  //   });
-  //   const roomsSuccess = true;
-  //   this.setState({
-  //     rooms,roomsSuccess
-  //   });
-  //   resolve();
-  // }
-  // fetchRoomsError(error, reject){
-  //   this.setState({
-  //     roomsSuccess: false
-  //   });
-  //   reject();
-  // }
 
 
   fetchPlantsSuccess(response, resolve) {
@@ -178,18 +150,38 @@ class Plants extends React.PureComponent {
 
 
   render() {
-    const {plants, plantsSuccess, plantsInProgress, rooms, roomsInProgress,
-      roomsSuccess,successCategories,categoriesInProgress,categories, } = this.state;
+    const {
+      plants, plantsSuccess, plantsInProgress, rooms, roomsInProgress,
+      roomsSuccess, successCategories, categoriesInProgress, categories, sortBy, sortDirection,
+    } = this.state;
+
+
+    const multiplier = sortDirection ? 1 : -1;
+    const ascending = <FaAngleDoubleDown onClick={this.handleSort}/>;
+    const descending = <FaAngleDoubleUp onClick={this.handleSort}/>;
+    const directionValue = sortDirection ? ascending : descending;
+
+    const sortedPlants = plants.sort((plant1, plant2) => {
+      const a = plant1[sortBy];
+      const b = plant2[sortBy];
+      if (a > b) {
+        return 1 * multiplier;
+      }
+      if (b > a) {
+        return -1 * multiplier;
+      }
+      return 0;
+    })
 
     return (
             <Card className="mb-4">
               <CardBody>
-                <InProgress inProgress={plantsInProgress}/>
+                <InProgress inProgress={plantsInProgress || roomsInProgress || categoriesInProgress}/>
                 {
                   plantsSuccess === false &&
                   <p>Unable to fetch plants.</p>
                 }
-                {plantsSuccess && (
+                {plantsSuccess && successCategories && roomsSuccess && (
                         <>
                           <Table bordered>
                             <thead>
@@ -206,7 +198,7 @@ class Plants extends React.PureComponent {
                             <tr>
                               <th>Idx</th>
                               <th>Id</th>
-                              <th>Name</th>
+                              <th>Name {directionValue}</th>
                               <th>Category</th>
                               <th>Difficulty</th>
                               <th>Blooming</th>
@@ -222,9 +214,10 @@ class Plants extends React.PureComponent {
                             </thead>
                             <tbody>
                             {
-                              plants.map(
+                              sortedPlants.map(
                                       (plant, index, arr) => (
-                                              <PlantRow plant={plant} categories={categories} key={index} rooms={rooms} index={index + 1}/>)
+                                              <PlantRow plant={plant} categories={categories} key={index} rooms={rooms}
+                                                        index={index + 1}/>)
                               )
                             }
                             </tbody>
@@ -246,7 +239,7 @@ class Plants extends React.PureComponent {
                             <tr>
                               <th className="table-mid-color">Idx</th>
                               <th className="table-mid-color">Id</th>
-                              <th className="table-mid-color">Name</th>
+                              <th className="table-mid-color">Name {directionValue}</th>
                               <th className="table-mid-color">Rooms from rooms</th>
                               <th className="table-mid-color">Difficulty</th>
                               <th className="table-mid-color">Blooming</th>
@@ -260,7 +253,7 @@ class Plants extends React.PureComponent {
                             </thead>
                             <tbody>
                             {
-                              plants.map(
+                              sortedPlants.map(
                                       (plant, index, arr) => (
                                               <PlantSecondTable plant={plant} key={index} rooms={rooms}
                                                                 index={index + 1}/>)

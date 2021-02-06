@@ -1,4 +1,3 @@
-
 import React from "react";
 import {Container} from "reactstrap";
 import {Route, Switch} from "react-router-dom";
@@ -21,7 +20,8 @@ class PlantasticContainer extends React.PureComponent {
       userFullName,
       userFullNameDelayed,
       handleUserFullNameChange,
-      handleUserFullNameBlur
+      handleUserFullNameBlur,
+
     } = this.props;
 
     return (
@@ -36,6 +36,7 @@ class PlantasticContainer extends React.PureComponent {
                   />
                   <Plants
                           delayFetch={delayFetch}
+
                   />
                 </Route>
                 <Route path={ROUTE_CATEGORIES}>
@@ -48,10 +49,10 @@ class PlantasticContainer extends React.PureComponent {
                 </Route>
                 <Route path={ROUTE_PREFERENCES}>
                   <Preferences
-                      userFullName={userFullName}
-                      userFullNameDelayed={userFullNameDelayed}
-                      handleUserFullNameChange={handleUserFullNameChange}
-                      handleUserFullNameBlur={handleUserFullNameBlur}
+                          userFullName={userFullName}
+                          userFullNameDelayed={userFullNameDelayed}
+                          handleUserFullNameChange={handleUserFullNameChange}
+                          handleUserFullNameBlur={handleUserFullNameBlur}
                   />
                 </Route>
               </Switch>
