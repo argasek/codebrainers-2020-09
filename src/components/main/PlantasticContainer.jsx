@@ -7,7 +7,7 @@ import {
   ROUTE_PLANTS,
   ROUTE_PREFERENCES,
   ROUTE_ROOMS,
-  ROUTE_CALCULATOR, ROUTE_EXERCISE
+  ROUTE_CALCULATOR, ROUTE_EXERCISE, ROUTE_ITEM1, ROUTE_ITEM2
 } from "constants/Routes";
 import Plants from "components/plants/Plants";
 import Categories from "components/categories/Categories";
@@ -16,6 +16,8 @@ import PlantCreate from 'components/plants/PlantCreate';
 import Preferences from "components/preferences/Preferences";
 import Exercise from "components/exercise/Exercise"
 import Calculator from "components/exercise/Calculator";
+import {Item1} from "components/exercise/Item1";
+import {Item2} from "components/exercise/Item2";
 
 class PlantasticContainer extends React.PureComponent {
 
@@ -67,6 +69,12 @@ class PlantasticContainer extends React.PureComponent {
                 </Route>
                 <Route path={ROUTE_CALCULATOR}>
                   <Calculator/>
+                </Route>
+                 <Route path={ROUTE_ITEM1}>
+                  <Item1/>
+                </Route>
+                 <Route path={ROUTE_ITEM2}>
+                  <Item2/>
                 </Route>
 
               </Switch>

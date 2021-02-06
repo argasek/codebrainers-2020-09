@@ -16,9 +16,11 @@ import {
   ROUTE_ROOMS,
   ROUTE_PREFERENCES,
   ROUTE_EXERCISE,
- ROUTE_CALCULATOR
+  ROUTE_CALCULATOR,
+  ROUTE_ITEM2,
+  ROUTE_ITEM1,
 } from "constants/Routes";
-import {faCog, faCogs, faHome, faLeaf, faSeedling,faCodeBranch} from "@fortawesome/free-solid-svg-icons";
+import {faCog, faCogs, faHome, faLeaf, faSeedling, faCodeBranch, faBars} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React from "react";
 import {Link} from 'react-router-dom'
@@ -51,6 +53,22 @@ class PlantasticNavbar extends React.PureComponent {
                     <PlantasticNavItem path={ROUTE_ROOMS} icon={faHome} name='Rooms'/>
                     <PlantasticNavItem path={ROUTE_PREFERENCES} icon={faCogs} name='Preferences'/>
                     <PlantasticNavItem path={ROUTE_EXERCISE} icon={faCodeBranch} name='Exercise'/>
+                    <UncontrolledDropdown nav inNavbar>
+                      <DropdownToggle nav caret>
+                        <FontAwesomeIcon icon={faBars}/>
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem tag={Link} to={ROUTE_ITEM1}>
+                          item 1
+                        </DropdownItem>
+                        <DropdownItem divider/>
+                        <DropdownItem  tag={Link} to={ROUTE_ITEM2}>
+                          item2
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+
+
                   </Nav>
                   <Nav navbar>
                     <UncontrolledDropdown nav inNavbar>
