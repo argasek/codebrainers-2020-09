@@ -5,6 +5,7 @@ import axios from "axios";
 import {Plant, PlantSecondTable} from "components/plants/Plant";
 import InProgress from "components/shared/InProgress";
 import {RiCelsiusFill} from "react-icons/ri";
+import {FaAngleDoubleUp, FaAngleDoubleDown} from "react-icons/fa";
 
 
 
@@ -17,7 +18,14 @@ class Plants extends React.PureComponent {
       plants: [],
       successPlants: undefined,
       inProgress: false,
+      sortBy:"name",
+      sortDirection:false,
     };
+  }
+  handleSort = () => {
+    this.setState({
+      sortDirection: !this.state.sortDirection,
+    })
   }
 
 
@@ -71,8 +79,32 @@ class Plants extends React.PureComponent {
 
   }
 
+
   render() {
-    const {plants, successPlants, inProgress} = this.state;
+    const {plants, successPlants, inProgress,sortBy, sortDirection} = this.state;
+    const multiplier = sortDirection ? 1 : -1;
+    const ascending = <FaAngleDoubleDown
+    onClick = {this.handleSort}
+    />;
+    const descending = <FaAngleDoubleUp
+    onClick = {this.handleSort}
+    />;
+
+    const directionValue =  sortDirection ? ascending: descending;
+
+    const sortedPlants = plants.sort((plant1, plant2)=>{
+      const a =plant1[sortBy];
+      const b =plant2[sortBy];
+      if(a>b){
+        return 1 * multiplier;
+      }
+      if(b>a){
+        return -1 * multiplier;
+      }
+      return 0;
+    });
+
+
 
     return (
             <Card className="mb-4">
@@ -99,7 +131,7 @@ class Plants extends React.PureComponent {
                             <tr>
                               <th>Ind</th>
                               <th>Id</th>
-                              <th>Name</th>
+                              <th>Name {directionValue}</th>
                               <th>Category+Slug</th>
                               <th>Difficulty</th>
                               <th>Blooming</th>
@@ -115,7 +147,7 @@ class Plants extends React.PureComponent {
                             </thead>
                             <tbody>
                             {
-                              plants.map(
+                              sortedPlants.map(
                                       (plant, index, arr) => (<Plant plant={plant} key={index} index={index+1}/>)
                               )
                             }

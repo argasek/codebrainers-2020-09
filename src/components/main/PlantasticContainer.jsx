@@ -1,4 +1,3 @@
-
 import React from "react";
 import {Container} from "reactstrap";
 import {Route, Switch} from "react-router-dom";
@@ -31,7 +30,9 @@ class PlantasticContainer extends React.PureComponent {
       userFullName,
       userFullNameDelayed,
       handleUserFullNameChange,
-      handleUserFullNameBlur
+      handleUserFullNameBlur,
+      sortBy,
+      sortDirection,
     } = this.props;
 
     return (
@@ -46,6 +47,8 @@ class PlantasticContainer extends React.PureComponent {
                   />
                   <Plants
                           delayFetch={delayFetch}
+                          sortBy={sortBy}
+                          sortDirection={sortDirection}
                   />
                 </Route>
                 <Route path={ROUTE_CATEGORIES}>
@@ -58,22 +61,22 @@ class PlantasticContainer extends React.PureComponent {
                 </Route>
                 <Route path={ROUTE_PREFERENCES}>
                   <Preferences
-                      userFullName={userFullName}
-                      userFullNameDelayed={userFullNameDelayed}
-                      handleUserFullNameChange={handleUserFullNameChange}
-                      handleUserFullNameBlur={handleUserFullNameBlur}
+                          userFullName={userFullName}
+                          userFullNameDelayed={userFullNameDelayed}
+                          handleUserFullNameChange={handleUserFullNameChange}
+                          handleUserFullNameBlur={handleUserFullNameBlur}
                   />
-                </Route >
+                </Route>
                 <Route path={ROUTE_EXERCISE}>
                   <Exercise/>
                 </Route>
                 <Route path={ROUTE_CALCULATOR}>
                   <Calculator/>
                 </Route>
-                 <Route path={ROUTE_ITEM1}>
+                <Route path={ROUTE_ITEM1}>
                   <Item1/>
                 </Route>
-                 <Route path={ROUTE_ITEM2}>
+                <Route path={ROUTE_ITEM2}>
                   <Item2/>
                 </Route>
 
