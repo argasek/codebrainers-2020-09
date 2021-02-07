@@ -13,3 +13,21 @@
     padding: 0;
   }
 }
+
+th {
+  &.sortable {
+    cursor: pointer;
+  }
+  &.active {
+    background-color: #666;
+  }
+}
+
+th {
+  &.sortable {
+    cursor: pointer;
+  }
+  &.active {
+    background-color: #666;
+  }
+}

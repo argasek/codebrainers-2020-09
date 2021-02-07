@@ -9,7 +9,7 @@ Comrade! In case of doubt, ASK. Always ask! <3 :-))
 Remove "Category slug" column.
 
 Implement client-side sorting of the columns mentioned below in Plants
-table: when  user clicks on column header, the table rows (rows! not
+table: when user clicks on column header, the table rows (rows! not
 just this column!) should be sorted in the following way:
 * columns **No., Id, Name, Category, Room** in _lexicographical_ order of **displayed** values.
 * column Difficulty, Watering Interval, Fertilizing Interval in _lexicographical_ order of **received** values.
