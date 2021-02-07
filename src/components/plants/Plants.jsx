@@ -8,6 +8,8 @@ import InProgress from 'components/shared/InProgress';
 import Plant from 'models/Plant';
 import PlantsTableHeaderCell from 'components/plants/PlantsTableHeaderCell';
 import {
+  exposureMapping,
+  humidityMapping,
   PLANT_SORT_KEY_BLOOMING,
   PLANT_SORT_KEY_CATEGORY_ID,
   PLANT_SORT_KEY_DIFFICULTY,
@@ -18,7 +20,8 @@ import {
   PLANT_SORT_KEY_REQUIRED_HUMIDITY,
   PLANT_SORT_KEY_REQUIRED_TEMPERATURE,
   PLANT_SORT_KEY_ROOM_ID,
-  PLANT_SORT_KEY_WATERING_INTERVAL
+  PLANT_SORT_KEY_WATERING_INTERVAL,
+  temperatureMapping
 } from 'constants/PlantConstants';
 
 const CATEGORIES_FETCH_DELAY = 100;
@@ -158,16 +161,24 @@ class Plants extends React.PureComponent {
 
   fieldExtractor = (key) => (plant) => plant[key];
 
-  mappedFieldExtractor = (plantKey, source, sourceKey, mappedKey) => (plant) => {
+  mappedFieldExtractor = (plantKey, source, sourceKey, mappedKey, notFoundValue = '') => (plant) => {
     const value = plant[plantKey];
     const foundSourceItem = source.find(sourceItem => sourceItem[sourceKey] === value);
-    return foundSourceItem[mappedKey];
+    return foundSourceItem !== undefined ? foundSourceItem[mappedKey] : notFoundValue;
   };
 
   getSortComparator = (sortKey) => {
     const lexicalFieldComparator = this.comparator(this.fieldExtractor(sortKey));
+
     const categoryComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.state.categories, 'id', 'name'));
     const roomComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.state.rooms, 'id', 'name'));
+
+    const staticMappedFieldExtractor = (mappingArray) => this.comparator(this.mappedFieldExtractor(sortKey, mappingArray, 'id', 'value'));
+
+    const humidityComparator = staticMappedFieldExtractor(humidityMapping);
+    const exposureComparator = staticMappedFieldExtractor(exposureMapping);
+    const temperatureComparator = staticMappedFieldExtractor(temperatureMapping);
+
     const comparators = {
       [PLANT_SORT_KEY_ID]: lexicalFieldComparator,
       [PLANT_SORT_KEY_NAME]: lexicalFieldComparator,
@@ -177,6 +188,9 @@ class Plants extends React.PureComponent {
       [PLANT_SORT_KEY_DIFFICULTY]: lexicalFieldComparator,
       [PLANT_SORT_KEY_CATEGORY_ID]: categoryComparator,
       [PLANT_SORT_KEY_ROOM_ID]: roomComparator,
+      [PLANT_SORT_KEY_REQUIRED_EXPOSURE]: exposureComparator,
+      [PLANT_SORT_KEY_REQUIRED_HUMIDITY]: humidityComparator,
+      [PLANT_SORT_KEY_REQUIRED_TEMPERATURE]: temperatureComparator,
     };
 
     return comparators[sortKey];

@@ -10,6 +10,24 @@ const someOtherArray = [
   { label: 'Co tydzień', value: '7' },
 ];
 
+export const exposureMapping = [
+  { id: 'dark', value: 0 },
+  { id: 'shade', value: 1 },
+  { id: 'partsun', value: 2 },
+  { id: 'fullsun', value: 3 },
+];
+
+export const humidityMapping = [
+  { id: 'low', value: 0 },
+  { id: 'medium', value: 1 },
+  { id: 'high', value: 2 },
+];
+
+export const temperatureMapping = [
+  { id: 'cold', value: 0 },
+  { id: 'medium', value: 1 },
+  { id: 'warm', value: 2 },
+];
 
 export const PLANT_SORT_KEY_BLOOMING = 'blooming';
 export const PLANT_SORT_KEY_CATEGORY_ID = 'categoryId';
