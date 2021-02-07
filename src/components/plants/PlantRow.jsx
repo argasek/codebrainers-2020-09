@@ -46,6 +46,7 @@ const getRoomName =(rooms, roomId)=>{
   }
   return rooms[index].name;
 }
+
 const getCategoryName = ( categories, categoryID)=>{
   const index = categories.findIndex((category=>category.id === categoryID));
   if(index < 0){
@@ -86,8 +87,8 @@ export class PlantRow extends React.PureComponent {
 
     return (
             <tr>
-              <td>{index}</td>
-              <td>{id} </td>
+              <td >{index}</td>
+              <td >{id} </td>
               <td>{name}</td>
               <td >{getCategoryName(categories, categoryId)}</td>
               <td>{difficulties[difficulty]}</td>

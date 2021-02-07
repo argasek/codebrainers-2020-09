@@ -29,11 +29,8 @@ class Plants extends React.PureComponent {
       successCategories: undefined,
       categories: [],
 
-      sortBy: "getRoomName(rooms, roomId)",
+      sortBy: "",
       sortDirection: true,
-      index: undefined,
-      sortIndexDirection: false,
-      sortByIndex: "",
 
 
     };
@@ -151,7 +148,7 @@ class Plants extends React.PureComponent {
 
 
   handlePlantColumnNameAsc = (event) => {
-    const sortBy = event.target.value;
+    const sortBy = event.target.id;
     console.log(event.target)
     this.setState({
       sortBy: sortBy,
@@ -250,15 +247,51 @@ class Plants extends React.PureComponent {
                                   onDoubleClick={this.handlePlantColumnNameDesc}
                               >Category
                               </th>
-                              <th>Difficulty</th>
-                              <th>Blooming</th>
+                              <th
+                                      id="difficulty"
+                                      onClick={this.handlePlantColumnNameAsc}
+                                      onDoubleClick={this.handlePlantColumnNameDesc}
+
+                              >Difficulty
+                              </th>
+                              <th id='blooming'
+                                  onClick={this.handlePlantColumnNameAsc}
+                                  onDoubleClick={this.handlePlantColumnNameDesc}
+
+                              >Blooming
+                              </th>
 
 
-                              <th className="table-mid-color">Fertilizing Interval [days]</th>
-                              <th className="table-mid-color">Watering Interval [days]</th>
-                              <th className="table-mid-color">Sun Exposure</th>
-                              <th className="table-mid-color">Required Temperature [ <RiCelsiusFill/> ]</th>
-                              <th className="table-mid-color"> Required Humidity</th>
+                              <th id="fertilizingInterval"
+                                  onClick={this.handlePlantColumnNameAsc}
+                                  onDoubleClick={this.handlePlantColumnNameDesc}
+
+                                  className="table-mid-color">Fertilizing Interval [days]
+                              </th>
+                              <th id="wateringInterval"
+                                  onClick={this.handlePlantColumnNameAsc}
+                                  onDoubleClick={this.handlePlantColumnNameDesc}
+                                  className="table-mid-color">Watering Interval [days]
+                              </th>
+                              <th id="requiredExposure"
+                                  onClick={this.handlePlantColumnNameAsc}
+                                  onDoubleClick={this.handlePlantColumnNameDesc}
+
+                                  className="table-mid-color">Sun Exposure
+                              </th>
+                              <th id="requiredTemperature"
+                                  onClick={this.handlePlantColumnNameAsc}
+                                  onDoubleClick={this.handlePlantColumnNameDesc}
+
+                                  className="table-mid-color">Required Temperature [ <RiCelsiusFill/> ]
+                              </th>
+                              <th
+
+                                      id="requiredHumidity"
+                                      onClick={this.handlePlantColumnNameAsc}
+                                      onDoubleClick={this.handlePlantColumnNameDesc}
+                                      className="table-mid-color"> Required Humidity
+                              </th>
 
                             </tr>
                             </thead>
@@ -285,14 +318,19 @@ class Plants extends React.PureComponent {
                               <th className="table-mid-color" colSpan={6}>Plant information</th>
                               <th colSpan={4}>Your actions</th>
                             </tr>
+
                             <tr>
                               <th className="table-mid-color">Idx</th>
-                              <th className="table-mid-color">Id</th>
-                              <th className="table-mid-color">Name</th>
-                              <th className="table-mid-color"
+                              <th id="id"
                                   onClick={this.handlePlantColumnNameAsc}
                                   onDoubleClick={this.handlePlantColumnNameDesc}
-
+                                      className="table-mid-color">Id
+                              </th>
+                              <th
+                                      className="table-mid-color">Name
+                              </th>
+                              <th
+                                      className="table-mid-color"
                               >Rooms from rooms
                               </th>
                               <th className="table-mid-color">Difficulty</th>
