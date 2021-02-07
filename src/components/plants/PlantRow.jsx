@@ -60,12 +60,17 @@ export class PlantRow extends React.PureComponent {
     super(props);
   }
 
+  handleValueCheck =(event)=>{
+    console.log(event.target, event.target.value)
+  }
+
+
+
   render() {
     const {index, plant, rooms, categories} = this.props;
     const {
       blooming,
       categoryId,
-      categorySlug,
       difficulty,
       fertilizingInterval,
       id,
@@ -78,12 +83,13 @@ export class PlantRow extends React.PureComponent {
 
     } = plant;
 
+
     return (
             <tr>
               <td>{index}</td>
               <td>{id} </td>
               <td>{name}</td>
-              <td>{getCategoryName(categories, categoryId)}</td>
+              <td >{getCategoryName(categories, categoryId)}</td>
               <td>{difficulties[difficulty]}</td>
               <td>{blooming ? <GiFireFlower/> : <ImLeaf/>}</td>
 
@@ -122,7 +128,10 @@ export class PlantSecondTable extends React.PureComponent {
               <td className="table-mid-color">{index}</td>
               <td className="table-mid-color">{id} </td>
               <td className="table-mid-color">{name}</td>
-              <td className="table-mid-color">{getRoomName(rooms, roomId)}</td>
+              <td
+                      onClick={this.handleValueCheck}
+
+                      className="table-mid-color">{getRoomName(rooms, roomId)}</td>
               <td className="table-mid-color">{difficulties[difficulty]}</td>
               <td className="table-mid-color">{blooming ? <GiFireFlower/> : <ImLeaf/>}</td>
 

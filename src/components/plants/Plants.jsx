@@ -29,9 +29,11 @@ class Plants extends React.PureComponent {
       successCategories: undefined,
       categories: [],
 
-      sortBy: 'id',
+      sortBy: "getRoomName(rooms, roomId)",
       sortDirection: true,
-
+      index: undefined,
+      sortIndexDirection: false,
+      sortByIndex: "",
 
 
     };
@@ -148,77 +150,66 @@ class Plants extends React.PureComponent {
   }
 
 
-  handleColumnNameAsc = (event) => {
-    const sortBy = event.target.id;
+  handlePlantColumnNameAsc = (event) => {
+    const sortBy = event.target.value;
+    console.log(event.target)
     this.setState({
       sortBy: sortBy,
       sortDirection: true,
     });
   }
-  handleColumnNameDesc = (event) => {
+  handlePlantColumnNameDesc = (event) => {
     const sortBy = event.target.id;
     this.setState({
       sortBy: sortBy,
       sortDirection: false,
     });
   }
-  //   const sortedPlantsA = this.plants.sort((plant1, plant2) => {
-  //     const a = plant1[sortBy];
-  //     const b = plant2[sortBy];
-  //
-  //     if (a > b) {
-  //       return 1;
-  //     }
-  //     if (b > a) {
-  //       return -1;
-  //     }
-  //     return 0;
-  //
-  //   });
-  //   this.setState({
-  //     sortedPlantsA: sortedPlantsA,
-  //   });
-  // }
 
 
   render() {
     const {
       plants, plantsSuccess, plantsInProgress, rooms, roomsInProgress,
-      roomsSuccess, successCategories, categoriesInProgress, categories, sortedPlantsA, sortDirection, sortBy
+      roomsSuccess, successCategories, categoriesInProgress, categories, sortDirection, sortBy
     } = this.state;
     // console.log(plants);
 
-    console.log(sortedPlantsA);
+    console.log(plants);
 
+    const sortedAsc = plants.sort((item1, item2) => {
+      const a = item1[sortBy];
+      const b = item2[sortBy];
+      if (a > b) {
+        return 1;
+      }
+      if (b > a) {
+        return -1;
+      }
+      return 0;
 
-    // plants.sort((plant1, plant2) => {
-    //   const a = plant1['name'];
-    //   const b = plant2["name"];
-    //   if (a > b) {
-    //     return 1;
-    //   }
-    //   if (b > a) {
-    //     return -1;
-    //   }
-    //   return 0;
-    //
-    // });
-    //
-    // const sortedPlantsB = plants.sort((plant1, plant2) => {
-    //   const a = plant1[sortBy];
-    //   const b = plant2[sortBy];
-    //   if (a < b) {
-    //     return 1;
-    //   }
-    //   if (b < a) {
-    //     return -1;
-    //   }
-    //   return 0;
-    //
-    // });
+    }).map(
+            (plant, index, arr) => (
+                    <PlantRow plant={plant} categories={categories} key={index}
+                              rooms={rooms}
+                              index={index + 1}/>)
+    );
+    const sortedDesc = plants.sort((item1, item2) => {
+      const a = item1[sortBy];
+      const b = item2[sortBy];
+      if (a < b) {
+        return 1;
+      }
+      if (b < a) {
+        return -1;
+      }
+      return 0;
 
-    //
-    // const sortedPlants = sortDirection ? sortedPlantsA : sortedPlantsB;
+    }).map(
+            (plant, index, arr) => (
+                    <PlantRow plant={plant} categories={categories} key={index}
+                              rooms={rooms}
+                              index={index + 1}/>)
+    );
 
 
     return (
@@ -245,17 +236,20 @@ class Plants extends React.PureComponent {
                             <tr>
                               <th>Idx</th>
                               <th id='id'
-
-                                      onClick={this.handleColumnNameAsc}
-                                  onDoubleClick={this.handleColumnNameDesc}
+                                  onClick={this.handlePlantColumnNameAsc}
+                                  onDoubleClick={this.handlePlantColumnNameDesc}
                               >Id
                               </th>
                               <th id="name"
-                                      onClick={this.handleColumnNameAsc}
-                                  onDoubleClick={this.handleColumnNameDesc}
+                                  onClick={this.handlePlantColumnNameAsc}
+                                  onDoubleClick={this.handlePlantColumnNameDesc}
                               >Name
                               </th>
-                              <th>Category</th>
+                              <th id="categorySlug"
+                                  onClick={this.handlePlantColumnNameAsc}
+                                  onDoubleClick={this.handlePlantColumnNameDesc}
+                              >Category
+                              </th>
                               <th>Difficulty</th>
                               <th>Blooming</th>
 
@@ -270,44 +264,7 @@ class Plants extends React.PureComponent {
                             </thead>
                             <tbody>
                             {
-                              sortDirection ?
-
-                                      plants.sort((plant1, plant2) => {
-                                        const a = plant1[sortBy];
-                                        const b = plant2[sortBy];
-                                        if (a > b) {
-                                          return 1;
-                                        }
-                                        if (b > a) {
-                                          return -1;
-                                        }
-                                        return 0;
-
-                                      }).map(
-                                              (plant, index, arr) => (
-                                                      <PlantRow plant={plant} categories={categories} key={index}
-                                                                rooms={rooms}
-                                                                index={index + 1}/>)
-                                      )
-                                      :
-                                      plants.sort((plant1, plant2) => {
-                                        const a = plant1[sortBy];
-                                        const b = plant2[sortBy];
-                                        if (a < b) {
-                                          return 1;
-                                        }
-                                        if (b < a) {
-                                          return -1;
-                                        }
-                                        return 0;
-
-                                      }).map(
-                                              (plant, index, arr) => (
-                                                      <PlantRow plant={plant} categories={categories} key={index}
-                                                                rooms={rooms}
-                                                                index={index + 1}/>)
-                                      )
-
+                              sortDirection ? sortedAsc : sortedDesc
 
                             }
 
@@ -332,7 +289,12 @@ class Plants extends React.PureComponent {
                               <th className="table-mid-color">Idx</th>
                               <th className="table-mid-color">Id</th>
                               <th className="table-mid-color">Name</th>
-                              <th className="table-mid-color">Rooms from rooms</th>
+                              <th className="table-mid-color"
+                                  onClick={this.handlePlantColumnNameAsc}
+                                  onDoubleClick={this.handlePlantColumnNameDesc}
+
+                              >Rooms from rooms
+                              </th>
                               <th className="table-mid-color">Difficulty</th>
                               <th className="table-mid-color">Blooming</th>
 
