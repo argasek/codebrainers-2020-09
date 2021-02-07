@@ -6,10 +6,12 @@ import axios from "axios";
 import PlantRow from "components/plants/PlantRow";
 import InProgress from "components/shared/InProgress";
 import Plant from 'models/Plant';
+import Room from "models/Room";
 
-const CATEGORIES_FETCH_DELAY = 5000;
-const ROOMS_FETCH_DELAY = 100;
+const CATEGORIES_FETCH_DELAY = 500;
 const PLANTS_FETCH_DELAY = 100;
+const ROOMS_FETCH_DELAY = 100;
+
 
 class Plants extends React.PureComponent {
   constructor(props) {
@@ -29,31 +31,25 @@ class Plants extends React.PureComponent {
     };
   }
 
+
   componentDidMount() {
+    this.fetchCategories();
     this.fetchPlants();
     this.fetchRooms();
-    this.fetchCategories();
   }
+
 
   fetchCategories() {
     const requestUrl = 'http://gentle-tor-07382.herokuapp.com/categories/';
     this.setState({ categoriesInProgress: true });
+
     return this.props.delayFetch(CATEGORIES_FETCH_DELAY, (resolve, reject) => {
-      axios.get(requestUrl)
-              .then((response) => {
-                const data = response.data;
-                const categories = data.map((item) => ({ name: item.name, id: item.id }));
-                const categoriesSuccess = true;
-                this.setState({ categories, categoriesSuccess });
-                resolve();
-              })
-              .catch((error) => {
-                this.setState({ categoriesSuccess: false });
-                reject();
-              })
-              .finally(() => {
-                this.setState({ categoriesInProgress: false });
-              });
+      const promise = axios.get(requestUrl);
+
+      promise
+        .then((response) => this.fetchCategoriesSuccess(response, resolve))
+        .catch((error) => this.fetchCategoriesError(error, reject))
+        .finally(() => this.setState({ categoriesInProgress: false }));
     });
   }
 
@@ -79,40 +75,20 @@ class Plants extends React.PureComponent {
       const promise = axios.get(requestUrl);
 
       promise
-              .then((response) => {
-                const data = response.data;
-                const rooms = data.map((item) => {
-                  const {
-                    id,
-                    name,
-                    exposure,
-                    temperature,
-                    humidity,
-                    draft,
-                  } = item;
-                  return {
-                    id,
-                    name,
-                    exposure,
-                    temperature,
-                    humidity,
-                    draft,
-                  }
-                });
-                const roomsSuccess = true;
-                this.setState({rooms, roomsSuccess});
-                resolve();
-              })
-              .catch((error) => {
-                this.setState({roomsSuccess: false});
-                reject();
-              })
-              .finally(() => {
-                this.setState({roomsInProgress: false});
-              })
+        .then((response) => this.fetchRoomsSuccess(response, resolve))
+        .catch((error) => this.fetchRoomsError(error, reject))
+        .finally(() => this.setState({roomsInProgress: false}));
     });
   }
-  
+
+
+  fetchCategoriesSuccess(response, resolve) {
+    const data = response.data;
+    const categories = data.map((item) => ({ name: item.name, id: item.id }));
+    const categoriesSuccess = true;
+    this.setState({ categories, categoriesSuccess });
+    resolve();
+  }
 
   fetchPlantsSuccess(response, resolve) {
     const data = response.data;
@@ -125,10 +101,33 @@ class Plants extends React.PureComponent {
     resolve();
   }
 
+  fetchRoomsSuccess(response, resolve) {
+    const data = response.data;
+    const rooms = data.map((item) =>{
+      const room = new Room();
+      return room.fromPlain(item);
+    });
+    const roomsSuccess = true;
+    this.setState({rooms, roomsSuccess});
+    resolve();
+  }
+
+
   fetchPlantsError(error, reject)  {
     this.setState({ plantsSuccess: false });
     reject();
   }
+
+  fetchCategoriesError(erroor, reject) {
+    this.setState({ categoriesSuccess: false });
+    reject();
+  }
+
+  fetchRoomsError(error, reject) {
+    this.setState({roomsSuccess: false});
+    reject();
+  }
+
 
   render() {
     const {

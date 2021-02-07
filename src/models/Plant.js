@@ -38,8 +38,8 @@ class Plant {
         this.difficulty = difficulty;
         this.fertilizingInterval = fertilizing_interval;
         this.id = id;
-        this.lastFertilized = last_watered;
-        this.lastWatered = last_fertilized;
+        this.lastFertilized = last_fertilized;
+        this.lastWatered = last_watered;
         this.name = name;
         this.requiredExposure = required_exposure;
         this.requiredHumidity = required_humidity;

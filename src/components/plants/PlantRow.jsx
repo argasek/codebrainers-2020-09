@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+import Plant from 'models/Plant';
 
 import 'components/plants/PlantRow.scss';
 import {
@@ -18,7 +19,6 @@ import {
   faTintSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Plant from 'models/Plant';
 
 
 const difficulties = {
