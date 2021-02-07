@@ -28,14 +28,16 @@ class Plants extends React.PureComponent {
       categoriesInProgress: false,
       successCategories: undefined,
       categories: [],
+      sortBy: '',
 
+
+      sortDirection: undefined,
 
 
     };
+
+
   }
-
-
-
 
 
   componentDidMount() {
@@ -145,34 +147,54 @@ class Plants extends React.PureComponent {
     });
   }
 
- compareBy(key,ascending) {
-    return function (a, b) {
-      let reverse = ascending? 1 : -1;
-      if (a[key] < b[key]) return -1 * reverse;
-      if (a[key] > b[key]) return 1 *reverse;
-      return 0;
-    };
-  }
 
-  sortBy(key) {
-    let arrayCopy = [...this.state.plants ];
-    arrayCopy.sort(this.compareBy(key));
-    this.setState({plants: arrayCopy});
+  handleColumnNameAsc = (event) => {
+    const sortBy = event.target.id;
+    this.setState({
+      sortBy: sortBy,
+      sortDirection: true,
+    });
   }
-
+  handleColumnNameDesc = (event) => {
+    const sortBy = event.target.id;
+    this.setState({
+      sortBy: sortBy,
+      sortDirection: false,
+    });
+  }
 
 
   render() {
     const {
       plants, plantsSuccess, plantsInProgress, rooms, roomsInProgress,
-      roomsSuccess, successCategories, categoriesInProgress, categories
+      roomsSuccess, successCategories, categoriesInProgress, categories, sortDirection, sortBy
     } = this.state;
 
 
+    const sortedPlantsB = plants.sort((plant1, plant2) => {
+      const a = plant1[sortBy];
+      const b = plant2[sortBy];
+      if (a > b) {
+        return -1;
+      }
+      if (b > a) {
+        return 1;
+      }
+      return 0;
 
+    });
+    const sortedPlantsA = plants.sort((plant1, plant2) => {
+      const a = plant1[sortBy];
+      const b = plant2[sortBy];
+      if (a > b) {
+        return 1;
+      }
+      if (b > a) {
+        return -1;
+      }
+      return 0;
 
-
-
+    });
 
 
     return (
@@ -198,13 +220,17 @@ class Plants extends React.PureComponent {
                             </tr>
                             <tr>
                               <th>Idx</th>
-                              <th onClick={() =>{  this.sortBy("id", true )}}
-                                  onDoubleClick={() => {this.sortBy("id", false)}}
-                              >
-                                Id
+                              <th id='id'
 
+                                  onClick={this.handleColumnNameAsc}
+                                  onDoubleClick={this.handleColumnNameDesc}
+                              >Id
                               </th>
-                              <th>Name</th>
+                              <th id="name"
+                                  onClick={this.handleColumnNameAsc}
+                                  onDoubleClick={this.handleColumnNameDesc}
+                              >Name
+                              </th>
                               <th>Category</th>
                               <th>Difficulty</th>
                               <th>Blooming</th>
@@ -220,12 +246,25 @@ class Plants extends React.PureComponent {
                             </thead>
                             <tbody>
                             {
-                              plants.map(
-                                      (plant, index, arr) => (
-                                              <PlantRow plant={plant} categories={categories} key={index} rooms={rooms}
-                                                        index={index + 1}/>)
-                              )
+                              sortDirection ?
+                                      sortedPlantsA.map(
+                                              (plant, index, arr) => (
+                                                      <PlantRow plant={plant} categories={categories} key={index}
+                                                                rooms={rooms}
+                                                                index={index + 1}/>)
+                                      )
+                                      :
+                                      sortedPlantsB.map(
+                                              (plant, index, arr) => (
+                                                      <PlantRow plant={plant} categories={categories} key={index}
+                                                                rooms={rooms}
+                                                                index={index + 1}/>)
+                                      )
+
+
                             }
+
+
                             </tbody>
 
                           </Table>
