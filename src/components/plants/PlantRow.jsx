@@ -34,44 +34,40 @@ const humidity = {
 }
 
 
-
 // I take timestamps given in API as a seconds wise,
 // though it is probably milisec, just to get reasonable outcome.
 const secToDays = 84400;
 
-const getRoomName =(rooms, roomId)=>{
-  const index = rooms.findIndex((room)=>room.id === roomId);
-  if(index < 0){
+const getRoomName = (rooms, roomId) => {
+  const index = rooms.findIndex((room) => room.id === roomId);
+  if (index < 0) {
     return "no rooms assigned"
   }
   return rooms[index].name;
 }
 
-const getCategoryName = ( categories, categoryID)=>{
-  const index = categories.findIndex((category=>category.id === categoryID));
-  if(index < 0){
-     return "no matching category"
+const getCategoryName = (categories, categoryID) => {
+  const index = categories.findIndex((category => category.id === categoryID));
+  if (index < 0) {
+    return "no matching category"
   }
   return categories[index].name;
 }
 
 
-export class PlantRow extends React.PureComponent {
+class PlantRow extends React.PureComponent {
   constructor(props) {
     super(props);
   }
 
-  handleValueCheck =(event)=>{
-    console.log(event.target, event.target.value)
-  }
-
-
 
   render() {
     const {index, plant, rooms, categories} = this.props;
+
     const {
       blooming,
       categoryId,
+      roomId,
       difficulty,
       fertilizingInterval,
       id,
@@ -80,6 +76,8 @@ export class PlantRow extends React.PureComponent {
       requiredHumidity,
       requiredTemperature,
       wateringInterval,
+      lastFertilized,
+      lastWatered,
 
 
     } = plant;
@@ -88,60 +86,20 @@ export class PlantRow extends React.PureComponent {
     return (
             <tr>
               <td >{index}</td>
-              <td >{id} </td>
+              <td>{id} </td>
               <td>{name}</td>
-              <td >{getCategoryName(categories, categoryId)}</td>
+              <td>{getCategoryName(categories, categoryId)}</td>
               <td>{difficulties[difficulty]}</td>
               <td>{blooming ? <GiFireFlower/> : <ImLeaf/>}</td>
+              <td>{getRoomName(rooms, roomId)}</td>
 
               <td className="table-mid-color">{Math.ceil(fertilizingInterval / secToDays)}</td>
               <td className="table-mid-color">{Math.ceil(wateringInterval / secToDays)}</td>
               <td className="table-mid-color">{exposure[requiredExposure]}</td>
               <td className="table-mid-color">{temp[requiredTemperature]}</td>
               <td className="table-mid-color">{humidity[requiredHumidity]}</td>
-
-            </tr>
-    )
-  }
-
-}
-
-export class PlantSecondTable extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const {index, plant, rooms} = this.props;
-    const {
-      blooming,
-      difficulty,
-      id,
-      roomId,
-      lastFertilized,
-      lastWatered,
-      name,
-
-    } = plant;
-
-    return (
-            <tr>
-              <td className="table-mid-color">{index}</td>
-              <td className="table-mid-color">{id} </td>
-              <td className="table-mid-color">{name}</td>
-              <td
-                      onClick={this.handleValueCheck}
-
-                      className="table-mid-color">{getRoomName(rooms, roomId)}</td>
-              <td className="table-mid-color">{difficulties[difficulty]}</td>
-              <td className="table-mid-color">{blooming ? <GiFireFlower/> : <ImLeaf/>}</td>
-
-
-              <td>{moment(lastFertilized).format("MMM Do YY")}</td>
-              <td>{moment(lastFertilized).startOf("day").fromNow()}</td>
-
-              <td>{moment(lastWatered).format("MMM Do YY")}</td>
-              <td>{moment(lastWatered).startOf("day").fromNow()}</td>
+              <td className="table-mid-color">{moment(lastFertilized).format("MMM Do YY")}</td>
+              <td className="table-mid-color">{moment(lastWatered).format("MMM Do YY")}</td>
 
 
             </tr>
@@ -149,6 +107,7 @@ export class PlantSecondTable extends React.PureComponent {
   }
 
 }
+
 
 PlantRow.propTypes = {
   plant: PropTypes.instanceOf(Plant).isRequired,
@@ -158,15 +117,7 @@ PlantRow.propTypes = {
   //   name: PropTypes.string.isRequired,
   // })).isRequired,
 }
-PlantSecondTable.propTypes = {
-  plant: PropTypes.instanceOf(Plant).isRequired,
-  index: PropTypes.number.isRequired,
-  // rooms: PropTypes.arrayOf(PropTypes.shape({
-  //   // id: PropTypes.number.isRequired,
-  //   name: PropTypes.string.isRequired,
-  // })).isRequired,
 
-}
 export {temp, humidity, exposure};
-
+export default PlantRow;
 

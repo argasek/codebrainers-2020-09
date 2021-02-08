@@ -15,3 +15,8 @@ table{
   background-color: rgba(188, 220, 179, 0.51);
   font-size: 1.5rem;
 }
+
+.plants-container {
+  overflow: auto;
+  max-height: 50vh;
+}
