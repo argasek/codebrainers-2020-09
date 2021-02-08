@@ -34,6 +34,8 @@ const humidity = {
 }
 
 
+
+
 // I take timestamps given in API as a seconds wise,
 // though it is probably milisec, just to get reasonable outcome.
 const secToDays = 84400;

@@ -9,7 +9,7 @@ class PlantsTable extends React.Component {
     this.state = {
 
       sortDirection: true,
-      sortBy: '',
+      sortBy: 'id',
     };
 
   }
@@ -19,6 +19,13 @@ class PlantsTable extends React.Component {
     this.setState({
       sortBy: sortBy,
       sortDirection: !this.state.sortDirection,
+
+    });
+  }
+  handleReset = () => {
+    this.setState({
+      sortDirection:undefined,
+      sortBy:"id",
 
     });
   }
@@ -64,18 +71,35 @@ class PlantsTable extends React.Component {
                               index={index + 1}/>)
     );
 
+
+
+
+    let sorted;
+    if(sortDirection===false){
+       sorted = sortedDesc;
+    } else {
+      sorted = sortedAsc;
+    }
+
+
+
     return (
             <div className="plants-container">
+              <button onClick ={this.handleReset}
+              >reset</button>
               <Table bordered>
                 <PlantsThead
                         handlePlantColumnSort={this.handlePlantColumnSort}
 
                 />
                 <tbody>
-                {
-                  sortDirection ? sortedAsc : sortedDesc
 
-                }
+                {/*{sortDirection ? sortedAsc : sortedDesc}*/}
+                {sorted}
+
+
+
+
 
 
                 </tbody>
