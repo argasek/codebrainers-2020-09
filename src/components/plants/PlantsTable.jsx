@@ -1,5 +1,5 @@
 import React from "react";
-import {Table} from "reactstrap";
+import {Table, Button} from "reactstrap";
 import PlantRow from "components/plants/PlantRow";
 import PlantsThead from "components/plants/PlantsThead";
 
@@ -85,11 +85,11 @@ class PlantsTable extends React.Component {
 
     return (
             <div className="plants-container">
-              <button onClick ={this.handleReset}
-              >reset</button>
+
               <Table bordered>
                 <PlantsThead
                         handlePlantColumnSort={this.handlePlantColumnSort}
+                        handleReset ={this.handleReset}
 
                 />
                 <tbody>
