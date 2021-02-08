@@ -27,7 +27,6 @@ class PlantsTable extends React.Component {
   render() {
     const {plants, categories, rooms, } = this.props;
     const {sortDirection, sortBy} = this.state;
-    console.log(plants);
 
     const sortedAsc = plants.sort((item1, item2) => {
       const a = item1[sortBy];
