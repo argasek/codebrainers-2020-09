@@ -1,6 +1,38 @@
 # Homework
 
 Comrade! In case of doubt, ASK. Always ask! <3 :-))
+### Homework 2021-02-02
+
+#### Task 1.
+
+Remove "Category slug" column.
+
+Implement client-side sorting of the columns mentioned below in Plants
+table: when user clicks on column header, the table rows (rows! not
+just this column!) should be sorted in the following way:
+* columns **No., Id, Name, Category, Room** in _lexicographical_ order of **displayed** values.
+* column Difficulty, Watering Interval, Fertilizing Interval in _lexicographical_ order of **received** values.
+
+Odd number of clicks on the column header should make results sorted
+in ascending order; even number – in descending order.
+
+#### Task 2.
+Same requirements as above, but now add sorting to the following
+columns:
+* columns Humidity, Exposure, Temperature: ordered by the
+human-understood descriptive values received from server. (It is
+NOT a lexicographical or alphabetical order!).
+    
+It means that:
+* `dark < shade < partsun < fullsun`  
+* `low < medium < high`
+* `cold < medium < warm`
+
+#### Task 3.*
+
+Add a button with label "Reset" just above the table. Clicking it
+should reset any sorting applied to the Plants table. Do NOT fetch
+the data from server once again!
 
 ### Homework 2021-01-30
 
