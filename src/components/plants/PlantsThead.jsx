@@ -4,26 +4,10 @@ import {RiCelsiusFill} from "react-icons/ri";
 class PlantsThead extends React.Component {
   constructor(props) {
     super(props);
-    this.state = ({
-      plants: [],
-    })
 
 
   }
 
-  compareBy(key) {
-    return function (a, b) {
-      if (a[key] < b[key]) return -1;
-      if (a[key] > b[key]) return 1;
-      return 0;
-    };
-  }
-  clonePlants = () => this.state.plants.map(plant => plant);
-
- sortBy(key){
-    const plants = this.clonePlants();
-    plants.sort
- }
 
   render() {
     return (
@@ -37,26 +21,63 @@ class PlantsThead extends React.Component {
               <th className="table-mid-color" colSpan={8}>Requirements</th>
             </tr>
             <tr>
-              <th
-                      onClick={()=>this.sortBy(index)}
-              >Idx</th>
-              <th>Id
+              <th>Idx</th>
+              <th id='id'
+                  onClick={this.props.handlePlantColumnSort}
+              >Id
               </th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Difficulty</th>
-              <th>Blooming</th>
-              <th>Room</th>
+              <th id="name"
+                  onClick={this.props.handlePlantColumnSort}
+              >Name
+              </th>
+              <th id="categorySlug"
+                  onClick={this.props.handlePlantColumnSort}
+              >Category
+              </th>
+              <th id="difficulty"
+                  onClick={this.props.handlePlantColumnSort}
+              >Difficulty
+              </th>
+              <th id="blooming"
+                  onClick={this.props.handlePlantColumnSort}
+              >Blooming
+              </th>
+              <th id="roomId"
+                  onClick={this.props.handlePlantColumnSort}
+              >Room
+              </th>
 
 
-              <th className="table-mid-color">Fertilizing Interval [days]</th>
-              <th className="table-mid-color">Watering Interval [days]</th>
-              <th className="table-mid-color">Sun Exposure</th>
-              <th className="table-mid-color">Required Temperature [ <RiCelsiusFill/> ]</th>
-              <th className="table-mid-color"> Required Humidity</th>
+              <th id="fertilizingInterval"
+                  onClick={this.props.handlePlantColumnSort}
+                  className="table-mid-color">Fertilizing Interval [days]
+              </th>
+              <th id="wateringInterval"
+                  onClick={this.props.handlePlantColumnSort}
+                  className="table-mid-color">Watering Interval [days]
+              </th>
+              <th id="requiredExposure"
+                  onClick={this.props.handlePlantColumnSort}
+                  className="table-mid-color">Sun Exposure
+              </th>
+              <th id="requiredTemperature"
+                  onClick={this.props.handlePlantColumnSort}
+                  className="table-mid-color">Required Temperature [ <RiCelsiusFill/> ]
+              </th>
+              <th id="requiredExposure"
+                  onClick={this.props.handlePlantColumnSort}
+                  className="table-mid-color"> Required Humidity
+              </th>
 
-              <th>Last Fertilized</th>
-              <th>Days since last fertilizing</th>
+              <th id="lastFertilized"
+                      onClick={this.props.handlePlantColumnSort}
+                      className="table-mid-color"
+              >Last Fertilized
+              </th>
+              <th id="lastWatered"
+                      onClick={this.props.handlePlantColumnSort}
+                      className="table-mid-color"
+              >Days since last fertilizing</th>
             </tr>
             </thead>
     )

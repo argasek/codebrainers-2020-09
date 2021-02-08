@@ -6,33 +6,77 @@ import PlantsThead from "components/plants/PlantsThead";
 class PlantsTable extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
 
+      sortDirection: true,
+      sortBy: '',
+    };
 
   }
 
+  handlePlantColumnSort= (event) => {
+    const sortBy = event.target.id;
+    this.setState({
+      sortBy: sortBy,
+      sortDirection: !this.state.sortDirection,
 
-
+    });
+  }
 
 
   render() {
-    const {plants, categories, rooms, } = this.props
-
+    const {plants, categories, rooms, } = this.props;
+    const {sortDirection, sortBy} = this.state;
     console.log(plants);
+
+    const sortedAsc = plants.sort((item1, item2) => {
+      const a = item1[sortBy];
+      const b = item2[sortBy];
+      if (a > b) {
+        return 1;
+      }
+      if (b > a) {
+        return -1;
+      }
+      return 0;
+
+    }).map(
+            (plant, index, arr) => (
+                    <PlantRow plant={plant} categories={categories} key={index}
+                              rooms={rooms}
+                              index={index + 1}/>)
+    );
+
+    const sortedDesc = plants.sort((item1, item2) => {
+      const a = item1[sortBy];
+      const b = item2[sortBy];
+      if (a < b) {
+        return 1;
+      }
+      if (b < a) {
+        return -1;
+      }
+      return 0;
+
+    }).map(
+            (plant, index, arr) => (
+                    <PlantRow plant={plant} categories={categories} key={index}
+                              rooms={rooms}
+                              index={index + 1}/>)
+    );
+
     return (
             <div className="plants-container">
               <Table bordered>
-                <PlantsThead/>
+                <PlantsThead
+                        handlePlantColumnSort={this.handlePlantColumnSort}
+
+                />
                 <tbody>
                 {
-                  plants.map(
-                          (plant, index, arr) => (
-                                  <PlantRow plant={plant} categories={categories} key={index}
-                                            rooms={rooms}
-                                            index={index + 1}/>)
+                  sortDirection ? sortedAsc : sortedDesc
 
-
-
-                  )}
+                }
 
 
                 </tbody>
