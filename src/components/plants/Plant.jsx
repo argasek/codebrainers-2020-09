@@ -32,7 +32,6 @@ class Plant extends React.PureComponent {
               <td>{this.props.plant.room}</td>
               <td>{this.props.plant.last_watered}</td>
               <td>{this.props.plant.last_fertilized}</td>
-
             </tr>
     )
   }

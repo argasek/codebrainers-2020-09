@@ -56,7 +56,7 @@ class Plants extends React.PureComponent {
                   } = item;
                   console.log(item);
                   return {
-                  id,
+                    id,
                     name,
                     category,
                     category_slug,
@@ -111,12 +111,20 @@ class Plants extends React.PureComponent {
                           <Table>
                             <thead>
                             <tr>
-                              <th>
-                                Id
-                              </th>
+                              <th>Id</th>
                               <th>Name</th>
+                              <th>Category</th>
+                              <th>Category Slug</th>
+                              <th>Watering Interval</th>
+                              <th>Fertilizing Interval</th>
+                              <th>Required Exposure</th>
+                              <th>Required Humidity</th>
+                              <th>Required Temperature</th>
+                              <th>Blooming</th>
                               <th>Difficulty</th>
-
+                              <th>Room</th>
+                              <th>Last Watered</th>
+                              <th>Last Fertilized</th>
                             </tr>
                             </thead>
                             <tbody>
