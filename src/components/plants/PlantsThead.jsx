@@ -17,6 +17,7 @@ class PlantsThead extends React.Component {
               <th className="solid-data" colSpan={"100%"}>
                 <Button outline color="secondary" size="lg" onClick={this.props.handleReset}
                 >reset sort criteria</Button>
+                <div className='alert-info'>Sorting doesn't work properly.Sorts data based on criteria "beneath", instead displayed values</div>
                 Plants Table
               </th>
             </tr>
@@ -25,7 +26,8 @@ class PlantsThead extends React.Component {
               <th className="table-mid-color" colSpan={8}>Requirements</th>
             </tr>
             <tr>
-              <th>Idx</th>
+              <th className="alert"
+              >Idx</th>
               <th id='id'
                   onClick={this.props.handlePlantColumnSort}
               >Id
@@ -34,7 +36,7 @@ class PlantsThead extends React.Component {
                   onClick={this.props.handlePlantColumnSort}
               >Name
               </th>
-              <th id="categorySlug"
+              <th className="alert" id="categorySlug"
                   onClick={this.props.handlePlantColumnSort}
               >Category
               </th>
@@ -46,7 +48,7 @@ class PlantsThead extends React.Component {
                   onClick={this.props.handlePlantColumnSort}
               >Blooming
               </th>
-              <th id="roomId"
+              <th className="alert" id="roomId"
                   onClick={this.props.handlePlantColumnSort}
               >Room
               </th>
@@ -60,17 +62,18 @@ class PlantsThead extends React.Component {
                   onClick={this.props.handlePlantColumnSort}
                   className="table-mid-color">Watering Interval [days]
               </th>
-              <th id="requiredExposure"
+              <th
+                      id="requiredExposure"
                   onClick={this.props.handlePlantColumnSort}
-                  className="table-mid-color">Sun Exposure
+                  className="table-mid-color alert">Sun Exposure
               </th>
               <th id="requiredTemperature"
                   onClick={this.props.handlePlantColumnSort}
-                  className="table-mid-color">Required Temperature [ <RiCelsiusFill/> ]
+                  className="table-mid-color alert" >Required Temperature [ <RiCelsiusFill/> ]
               </th>
               <th id="requiredHumidity"
                   onClick={this.props.handlePlantColumnSort}
-                  className="table-mid-color"> Required Humidity
+                  className="table-mid-color alert"> Required Humidity
               </th>
 
               <th id="lastFertilized"
