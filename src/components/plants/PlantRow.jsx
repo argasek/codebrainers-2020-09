@@ -114,10 +114,10 @@ class PlantRow extends React.PureComponent {
 PlantRow.propTypes = {
   plant: PropTypes.instanceOf(Plant).isRequired,
   index: PropTypes.number.isRequired,
-  // rooms: PropTypes.arrayOf(PropTypes.shape({
-  //   // id: PropTypes.number.isRequired,
-  //   name: PropTypes.string.isRequired,
-  // })).isRequired,
+  rooms: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  })).isRequired,
 }
 
 export {temp, humidity, exposure};
