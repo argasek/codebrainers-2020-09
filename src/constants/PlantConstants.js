@@ -1,46 +1,43 @@
-const someArray = [
-  { label: 'Jeszcze inne coś', value: '132', size: 1 },
-  { label: 'Inne', value: '333' },
-  { label: 'Coś', value: '13232' },
+import PlantExposure from 'models/PlantExposure';
+import PlantHumidity from 'models/PlantHumidity';
+import PlantDifficulty from 'models/PlantDifficulty';
+
+const plantExposureOptions = [
+  new PlantExposure('dark', 'Full shade', '\u2601'),
+  new PlantExposure('shade', 'Partial shade', '\u26C5'),
+  new PlantExposure('partsun', 'Light shade', '\u{1F324}'),
+  new PlantExposure('fullsun', 'Full sun', '\u2600'),
 ];
 
-const someOtherArray = [
-  { label: 'Codziennie', value: '1' },
-  { label: 'Co dwa dni', value: '2' },
-  { label: 'Co tydzień', value: '7' },
+const plantExposureUnknown = new PlantExposure('unknown', 'Unknown', '\u{1F937}');
+
+const plantTemperatureOptions = [
+  { id: 'cold', name: 'Cold' },
+  { id: 'medium', name: 'Moderate' },
+  { id: 'warm', name: 'Warm' },
 ];
 
-export const exposureMapping = [
-  { id: 'dark', value: 0 },
-  { id: 'shade', value: 1 },
-  { id: 'partsun', value: 2 },
-  { id: 'fullsun', value: 3 },
+const plantHumidityOptions = [
+  new PlantHumidity('low', 'Dry', 1),
+  new PlantHumidity('medium', 'Standard', 2),
+  new PlantHumidity('high', 'Moist', 3),
 ];
 
-export const humidityMapping = [
-  { id: 'low', value: 0 },
-  { id: 'medium', value: 1 },
-  { id: 'high', value: 2 },
+const plantHumidityUnknown = new PlantHumidity('unknown', 'Unknown', 0);
+
+const plantDifficultyOptions = [
+  new PlantDifficulty(1, 'Very easy', 1, 'You won\'t be able to kill this plant no matter what'),
+  new PlantDifficulty(2, 'Easy', 2, 'Well, to keep this one alive one has to water it once in a while'),
+  new PlantDifficulty(3, 'Medium', 3, 'A regular flower with moderate care requirements'),
+  new PlantDifficulty(4, 'Hard', 4, 'This plant will require a lot of love and regular care'),
+  new PlantDifficulty(5, 'Very hard', 5, 'Damn princess. Will find thousand of reasons to die'),
 ];
 
-export const temperatureMapping = [
-  { id: 'cold', value: 0 },
-  { id: 'medium', value: 1 },
-  { id: 'warm', value: 2 },
-];
-
-export const PLANT_SORT_KEY_BLOOMING = 'blooming';
-export const PLANT_SORT_KEY_CATEGORY_ID = 'categoryId';
-export const PLANT_SORT_KEY_DIFFICULTY = 'difficulty';
-export const PLANT_SORT_KEY_FERTILIZING_INTERVAL = 'fertilizingInterval';
-export const PLANT_SORT_KEY_ID = 'id';
-export const PLANT_SORT_KEY_LAST_FERTILIZED = 'lastFertilized';
-export const PLANT_SORT_KEY_LAST_WATERED = 'lastWatered';
-export const PLANT_SORT_KEY_NAME = 'name';
-export const PLANT_SORT_KEY_REQUIRED_EXPOSURE = 'requiredExposure';
-export const PLANT_SORT_KEY_REQUIRED_HUMIDITY = 'requiredHumidity';
-export const PLANT_SORT_KEY_REQUIRED_TEMPERATURE = 'requiredTemperature';
-export const PLANT_SORT_KEY_ROOM_ID = 'roomId';
-export const PLANT_SORT_KEY_WATERING_INTERVAL = 'wateringInterval';
-
-export { someArray, someOtherArray };
+export {
+  plantExposureOptions,
+  plantExposureUnknown,
+  plantTemperatureOptions,
+  plantHumidityOptions,
+  plantHumidityUnknown,
+  plantDifficultyOptions,
+};
