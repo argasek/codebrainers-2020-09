@@ -1,7 +1,7 @@
 class Plant {
     blooming = false;
     categoryId = undefined;
-    categorySlug = '';
+    categorySlug = undefined;
     difficulty = 0;
     fertilizingInterval = undefined;
     id = undefined;

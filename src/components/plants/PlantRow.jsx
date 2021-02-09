@@ -104,7 +104,6 @@ class PlantRow extends React.PureComponent {
     const {
       blooming,
       categoryId,
-      categorySlug,
       difficulty,
       fertilizingInterval,
       id,
@@ -118,7 +117,7 @@ class PlantRow extends React.PureComponent {
       wateringInterval
     } = plant;
 
-    console.log(categoryId, categories);
+    // console.log(categoryId, categories);
 
     return (
       <tr>
@@ -126,7 +125,6 @@ class PlantRow extends React.PureComponent {
         <td>{ id } </td>
         <td>{ name }</td>
         <td>{ getCategoryName(categories, categoryId) }</td>
-        <td>{ categorySlug }</td>
         <td>{ secondsToDays(wateringInterval) }</td>
         <td>{ secondsToDays(fertilizingInterval) }</td>
         <td>{ exposures[requiredExposure] }</td>

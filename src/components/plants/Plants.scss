@@ -13,3 +13,11 @@
     padding: 0;
   }
 }
+th {
+  &.sort-up {
+    cursor: pointer;
+  }
+  &.sort-down {
+    cursor: pointer;
+  }
+}
