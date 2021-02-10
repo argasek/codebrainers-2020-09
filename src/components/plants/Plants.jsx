@@ -7,6 +7,7 @@ import PlantRow from "components/plants/PlantRow";
 import InProgress from "components/shared/InProgress";
 import Plant from 'models/Plant';
 import Room from "models/Room";
+import {exposureMapping, humidityMapping, temperatureMapping} from "constants/PlantConstants";
 
 const CATEGORIES_FETCH_DELAY = 500;
 const PLANTS_FETCH_DELAY = 100;
@@ -162,81 +163,113 @@ class Plants extends React.PureComponent {
     } = this.state;
 
 
+    const getIndex = (exposure, itemToCompare) => exposure.findIndex((item) => item.id === itemToCompare[sortBy]);
+
+    const findExposure = (itemToCompare) => {
+      if (sortBy === 'requiredExposure') return getIndex(exposureMapping, itemToCompare);
+      if (sortBy === 'requiredHumidity') return getIndex(humidityMapping, itemToCompare);
+      if (sortBy === 'requiredTemperature') return getIndex(temperatureMapping, itemToCompare);
+    }
+
     const sortTypes = {
       up: {
         class: 'sort-up',
         compareFunc: (a, b) => {
-          if (a[sortBy] > b[sortBy]) return 1;
-          if (a[sortBy] < b[sortBy]) return -1;
-          return 0;
-        }
+          if (sortBy === 'requiredExposure' || sortBy === 'requiredHumidity' || sortBy === 'requiredTemperature') {
+            const aMapped = findExposure(a);
+            const bMapped = findExposure(b);
+
+            if (aMapped > bMapped) return 1;
+            if (aMapped < bMapped) return -1;
+            return 0;
+
+          } else {
+            if (a[sortBy] > b[sortBy]) return 1;
+            if (a[sortBy] < b[sortBy]) return -1;
+            return 0;
+          }
+        },
       },
       down: {
         class: 'sort-down',
         compareFunc: (a, b) => {
-          if (a[sortBy] < b[sortBy]) return 1;
-          if (a[sortBy] > b[sortBy]) return -1;
-          return 0;
-        }
+          if (sortBy === 'requiredExposure' || sortBy === 'requiredHumidity' || sortBy === 'requiredTemperature') {
+            const aMapped = findExposure(a);
+            const bMapped = findExposure(b);
+
+            if (aMapped < bMapped) return 1;
+            if (aMapped > bMapped) return -1;
+            return 0;
+
+          } else {
+            if (a[sortBy] < b[sortBy]) return 1;
+            if (a[sortBy] > b[sortBy]) return -1;
+            return 0;
+          }
+        },
       },
     };
 
 
+
     return (
-            <Card className="mb-4">
-              <CardBody>
-                <InProgress inProgress={ plantsInProgress || categoriesInProgress || roomsInProgress } />
-                {
-                  plantsSuccess === false &&
-                  <p>Unable to fetch plants.</p>
-                }
-                {
-                  plantsSuccess && categoriesSuccess && roomsSuccess && (
-                          <div className="plants-container">
-                            <Table>
-                              <thead className="plants-container-header">
-                              <tr>
-                                <th>No.</th>
-                                <th onClick={() => this.onSortChange('id')}
-                                    className={sortTypes[currentSort].class}>Id</th>
-                                <th onClick={() => this.onSortChange('name')}
-                                    className={sortTypes[currentSort].class}>Name</th>
-                                <th onClick={() => this.onSortChange('categorySlug')}
-                                    className={sortTypes[currentSort].class}>Category</th>
-                                <th onClick={() => this.onSortChange('wateringInterval')}
-                                    className={sortTypes[currentSort].class}>Watering Interval</th>
-                                <th onClick={() => this.onSortChange('fertilizingInterval')}
-                                    className={sortTypes[currentSort].class}>Fertilizing Interval</th>
-                                <th>Required Exposure</th>
-                                <th>Required Humidity</th>
-                                <th>Required Temperature</th>
-                                <th>Blooming</th>
-                                <th onClick={() => this.onSortChange('difficulty')}
-                                    className={sortTypes[currentSort].class}>Difficulty</th>
-                                <th onClick={() => this.onSortChange('roomId')}
-                                    className={sortTypes[currentSort].class}>Room</th>
-                                <th>Last Watered</th>
-                                <th>Last Fertilized</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              {
-                                [...plants].sort(sortTypes[currentSort].compareFunc).map((plant, index, arr) => (
-                                    <PlantRow
-                                      categories={categories}
-                                      rooms={rooms}
-                                      plant={ plant }
-                                      key={ index }
-                                      index={index + 1}
-                                    />
-                                ))
-                              }
-                              </tbody>
-                            </Table>
-                          </div>
-                  ) }
-              </CardBody>
-            </Card>
+      <Card className="mb-4">
+        <CardBody>
+          <InProgress inProgress={ plantsInProgress || categoriesInProgress || roomsInProgress } />
+          {
+            plantsSuccess === false &&
+            <p>Unable to fetch plants.</p>
+          }
+          {
+            plantsSuccess && categoriesSuccess && roomsSuccess && (
+              <div className="plants-container">
+                <Table>
+                  <thead className="plants-container-header">
+                    <tr>
+                      <th>No.</th>
+                      <th onClick={() => this.onSortChange('id')}
+                          className={sortTypes[currentSort].class}>Id</th>
+                      <th onClick={() => this.onSortChange('name')}
+                          className={sortTypes[currentSort].class}>Name</th>
+                      <th onClick={() => this.onSortChange('categorySlug')}
+                          className={sortTypes[currentSort].class}>Category</th>
+                      <th onClick={() => this.onSortChange('wateringInterval')}
+                          className={sortTypes[currentSort].class}>Watering Interval</th>
+                      <th onClick={() => this.onSortChange('fertilizingInterval')}
+                          className={sortTypes[currentSort].class}>Fertilizing Interval</th>
+                      <th onClick={() => this.onSortChange('requiredExposure')}
+                          className={sortTypes[currentSort].class}>Required Exposure</th>
+                      <th onClick={() => this.onSortChange('requiredHumidity')}
+                          className={sortTypes[currentSort].class}>Required Humidity</th>
+                      <th onClick={() => this.onSortChange('requiredTemperature')}
+                          className={sortTypes[currentSort].class}>Required Temperature</th>
+                      <th>Blooming</th>
+                      <th onClick={() => this.onSortChange('difficulty')}
+                          className={sortTypes[currentSort].class}>Difficulty</th>
+                      <th onClick={() => this.onSortChange('roomId')}
+                          className={sortTypes[currentSort].class}>Room</th>
+                      <th>Last Watered</th>
+                      <th>Last Fertilized</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {
+                    [...plants].sort(sortTypes[currentSort].compareFunc).map((plant, index, arr) => (
+                        <PlantRow
+                          categories={categories}
+                          rooms={rooms}
+                          plant={ plant }
+                          key={ index }
+                          index={index + 1}
+                        />
+                    ))
+                  }
+                  </tbody>
+                </Table>
+              </div>
+            ) }
+        </CardBody>
+      </Card>
     );
   }
 }
