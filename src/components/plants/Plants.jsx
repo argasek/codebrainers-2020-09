@@ -168,7 +168,7 @@ class Plants extends React.PureComponent {
     } = this.state;
 
 
-    const getIndex = (exposure, itemToCompare) => exposure.findIndex((item) => item.id === itemToCompare[sortBy]);
+    const getIndex = (tableMapping, itemToCompare) => tableMapping.findIndex((item) => item.id === itemToCompare[sortBy]);
 
     const findExposure = (itemToCompare) => {
       if (sortBy === 'requiredExposure') return getIndex(exposureMapping, itemToCompare);
