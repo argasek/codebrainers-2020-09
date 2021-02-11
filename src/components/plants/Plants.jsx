@@ -8,6 +8,7 @@ import InProgress from "components/shared/InProgress";
 import Plant from 'models/Plant';
 import Room from "models/Room";
 import {exposureMapping, humidityMapping, temperatureMapping} from "constants/PlantConstants";
+import {Button} from "reactstrap/es";
 
 const CATEGORIES_FETCH_DELAY = 500;
 const PLANTS_FETCH_DELAY = 100;
@@ -30,8 +31,8 @@ class Plants extends React.PureComponent {
       roomsSuccess: undefined,
       roomsInProgress: false,
 
-      sortBy: 'name',
-      currentSort: 'up',
+      sortBy: '',
+      currentSort: 'default',
     };
   }
 
@@ -139,25 +140,29 @@ class Plants extends React.PureComponent {
 
 		if (currentSort === 'down') nextSort = 'up';
 		else if (currentSort === 'up') nextSort = 'down';
+		else if (currentSort === 'default') nextSort = 'up';
 
 		this.setState({
 			currentSort: nextSort,
       sortBy: sortBy
 		});
-	};
+	}
 
+  onSortReset = (defaultSort) => {
+    this.setState({ currentSort: defaultSort })
+  }
 
   render() {
     const {
-      rooms,
-      roomsInProgress,
-      roomsSuccess,
       categories,
       categoriesInProgress,
       categoriesSuccess,
       plants,
-      plantsSuccess,
       plantsInProgress,
+      plantsSuccess,
+      rooms,
+      roomsInProgress,
+      roomsSuccess,
       currentSort,
       sortBy,
     } = this.state;
@@ -174,42 +179,43 @@ class Plants extends React.PureComponent {
     const sortTypes = {
       up: {
         class: 'sort-up',
-        compareFunc: (a, b) => {
+        compareFunc: (firstItem, secondItem) => {
           if (sortBy === 'requiredExposure' || sortBy === 'requiredHumidity' || sortBy === 'requiredTemperature') {
-            const aMapped = findExposure(a);
-            const bMapped = findExposure(b);
-
-            if (aMapped > bMapped) return 1;
-            if (aMapped < bMapped) return -1;
+            const [a, b] = [findExposure(firstItem), findExposure(secondItem)];
+            if (a > b) return 1;
+            if (a < b) return -1;
             return 0;
 
           } else {
-            if (a[sortBy] > b[sortBy]) return 1;
-            if (a[sortBy] < b[sortBy]) return -1;
+            const [a, b] = [firstItem[sortBy], secondItem[sortBy]]
+            if (a > b) return 1;
+            if (a < b) return -1;
             return 0;
           }
         },
       },
       down: {
         class: 'sort-down',
-        compareFunc: (a, b) => {
+        compareFunc: (firstItem, secondItem) => {
           if (sortBy === 'requiredExposure' || sortBy === 'requiredHumidity' || sortBy === 'requiredTemperature') {
-            const aMapped = findExposure(a);
-            const bMapped = findExposure(b);
-
-            if (aMapped < bMapped) return 1;
-            if (aMapped > bMapped) return -1;
+            const [a, b] = [findExposure(firstItem), findExposure(secondItem)];
+            if (a < b) return 1;
+            if (a > b) return -1;
             return 0;
 
           } else {
-            if (a[sortBy] < b[sortBy]) return 1;
-            if (a[sortBy] > b[sortBy]) return -1;
+            const [a, b] = [firstItem[sortBy], secondItem[sortBy]]
+            if (a < b) return 1;
+            if (a > b) return -1;
             return 0;
           }
         },
       },
+      default: {
+        class: 'default',
+        compareFunc: (a, b) => a,
+      },
     };
-
 
 
     return (
@@ -222,51 +228,56 @@ class Plants extends React.PureComponent {
           }
           {
             plantsSuccess && categoriesSuccess && roomsSuccess && (
-              <div className="plants-container">
-                <Table>
-                  <thead className="plants-container-header">
-                    <tr>
-                      <th>No.</th>
-                      <th onClick={() => this.onSortChange('id')}
-                          className={sortTypes[currentSort].class}>Id</th>
-                      <th onClick={() => this.onSortChange('name')}
-                          className={sortTypes[currentSort].class}>Name</th>
-                      <th onClick={() => this.onSortChange('categorySlug')}
-                          className={sortTypes[currentSort].class}>Category</th>
-                      <th onClick={() => this.onSortChange('wateringInterval')}
-                          className={sortTypes[currentSort].class}>Watering Interval</th>
-                      <th onClick={() => this.onSortChange('fertilizingInterval')}
-                          className={sortTypes[currentSort].class}>Fertilizing Interval</th>
-                      <th onClick={() => this.onSortChange('requiredExposure')}
-                          className={sortTypes[currentSort].class}>Required Exposure</th>
-                      <th onClick={() => this.onSortChange('requiredHumidity')}
-                          className={sortTypes[currentSort].class}>Required Humidity</th>
-                      <th onClick={() => this.onSortChange('requiredTemperature')}
-                          className={sortTypes[currentSort].class}>Required Temperature</th>
-                      <th>Blooming</th>
-                      <th onClick={() => this.onSortChange('difficulty')}
-                          className={sortTypes[currentSort].class}>Difficulty</th>
-                      <th onClick={() => this.onSortChange('roomId')}
-                          className={sortTypes[currentSort].class}>Room</th>
-                      <th>Last Watered</th>
-                      <th>Last Fertilized</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {
-                    [...plants].sort(sortTypes[currentSort].compareFunc).map((plant, index, arr) => (
-                        <PlantRow
-                          categories={categories}
-                          rooms={rooms}
-                          plant={ plant }
-                          key={ index }
-                          index={index + 1}
-                        />
-                    ))
-                  }
-                  </tbody>
-                </Table>
-              </div>
+              <>
+                <Button onClick={() => this.onSortReset('default')}
+                        style={{marginBottom: '20px'}} block size="lg"
+                >Sort Reset</Button>
+                <div className="plants-container">
+                  <Table>
+                    <thead className="plants-container-header">
+                      <tr>
+                        <th>No.</th>
+                        <th onClick={() => this.onSortChange('id')}
+                            className={sortTypes[currentSort].class}>Id</th>
+                        <th onClick={() => this.onSortChange('name')}
+                            className={sortTypes[currentSort].class}>Name</th>
+                        <th onClick={() => this.onSortChange('categorySlug')}
+                            className={sortTypes[currentSort].class}>Category</th>
+                        <th onClick={() => this.onSortChange('wateringInterval')}
+                            className={sortTypes[currentSort].class}>Watering Interval</th>
+                        <th onClick={() => this.onSortChange('fertilizingInterval')}
+                            className={sortTypes[currentSort].class}>Fertilizing Interval</th>
+                        <th onClick={() => this.onSortChange('requiredExposure')}
+                            className={sortTypes[currentSort].class}>Required Exposure</th>
+                        <th onClick={() => this.onSortChange('requiredHumidity')}
+                            className={sortTypes[currentSort].class}>Required Humidity</th>
+                        <th onClick={() => this.onSortChange('requiredTemperature')}
+                            className={sortTypes[currentSort].class}>Required Temperature</th>
+                        <th>Blooming</th>
+                        <th onClick={() => this.onSortChange('difficulty')}
+                            className={sortTypes[currentSort].class}>Difficulty</th>
+                        <th onClick={() => this.onSortChange('roomId')}
+                            className={sortTypes[currentSort].class}>Room</th>
+                        <th>Last Watered</th>
+                        <th>Last Fertilized</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {
+                      [...plants].sort(sortTypes[currentSort].compareFunc).map((plant, index, arr) => (
+                          <PlantRow
+                            categories={categories}
+                            rooms={rooms}
+                            plant={ plant }
+                            key={ index }
+                            index={index + 1}
+                          />
+                      ))
+                    }
+                    </tbody>
+                  </Table>
+                </div>
+              </>
             ) }
         </CardBody>
       </Card>
