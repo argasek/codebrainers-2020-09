@@ -12,4 +12,14 @@
     margin: 0;
     padding: 0;
   }
+
+  th {
+    &.up {
+      cursor: pointer;
+    }
+
+    &.down {
+      cursor: pointer;
+    }
+  }
 }
