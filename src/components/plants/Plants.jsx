@@ -6,6 +6,8 @@ import axios from "axios";
 import PlantRow from "components/plants/PlantRow";
 import InProgress from "components/shared/InProgress";
 import Plant from 'models/Plant';
+import {exposureMapping, humidityMapping, temperatureMapping} from "constants/PlantConstants";
+
 
 const CATEGORIES_FETCH_DELAY = 100;
 const ROOMS_FETCH_DELAY = 100;
@@ -161,28 +163,50 @@ class Plants extends React.PureComponent {
       sortBy,
     } = this.state;
 
+    const getIndex = (value, itemCompare) => value.findIndex((item) => item.id === itemCompare[sortBy]);
 
-    console.log({
-      plantsSuccess, categoriesSuccess, roomsSuccess
-    });
+    const findValue = (itemCompare) => {
+      // return (sortBy === 'requiredExposure') ? getIndex(exposureMapping, itemCompare) :
+      //         (sortBy === 'requiredHumidity') ? getIndex(humidityMapping, itemCompare) :
+      //                 (sortBy === 'temperatureMapping') ? getIndex(temperatureMapping, itemCompare) : 0;
+      // Somehow this method works only partly :/
+      if (sortBy === 'requiredExposure') return getIndex(exposureMapping, itemCompare);
+      if (sortBy === 'requiredHumidity') return getIndex(humidityMapping, itemCompare);
+      if (sortBy === 'requiredTemperature') return getIndex(temperatureMapping, itemCompare);
+    }
 
     const sortDirections = {
       asc: {
-        class: 'up',
-        compareFunc: (a, b) => {
-          if (a[sortBy] > b[sortBy]) return 1;
-          if (a[sortBy] < b[sortBy]) return -1;
-          return 0;
+        class : 'up',
+        compareFunc: (a,b) => { if (sortBy === 'requiredExposure' || sortBy === 'requiredHumidity' || sortBy === 'requiredTemperature') {
+            const aValue = findValue(a);
+            const bValue = findValue(b);
+
+            if (aValue > bValue) return 1;
+            if (aValue < bValue) return -1;
+            return 0;
+          } else {
+          return (a[sortBy] > b[sortBy]) ? 1 : -1;
+            return 0;
         }
+        },
       },
       desc: {
-        class: 'down',
-        compareFunc: (a, b) => {
-          if (a[sortBy] < b[sortBy]) return 1;
-          if (a[sortBy] > b[sortBy]) return -1;
-          return 0;
+        class : 'down',
+        compareFunc: (a,b) => {
+        if (sortBy === 'requiredExposure' || sortBy === 'requiredHumidity' || sortBy === 'requiredTemperature') {
+            const aValue = findValue(a);
+            const bValue = findValue(b);
+
+            if (aValue < bValue) return 1;
+            if (aValue > bValue) return -1;
+            return 0;
+          } else {
+          return (a[sortBy] < b[sortBy]) ? 1 : -1;
+            return 0;
         }
       },
+    },
     };
 
     return (
@@ -216,10 +240,17 @@ class Plants extends React.PureComponent {
                                 <th onClick={() => this.onSort('fertilizingInterval')}
                                     className={sortDirections[sorted].class}>Fertilizing Interval
                                 </th>
-                                <th>Required Exposure</th>
-                                <th>Required Humidity</th>
-                                <th>Required Temperature</th>
-                                <th>Blooming</th>
+                                <th onClick={() => this.onSort('requiredExposure')}
+                                    className={sortDirections[sorted].class}>Required Exposure
+                                </th>
+                                <th onClick={() => this.onSort('requiredHumidity')}
+                                    className={sortDirections[sorted].class}>Required Humidity
+                                </th>
+                                <th onClick={() => this.onSort('requiredTemperature')}
+                                    className={sortDirections[sorted].class}>Required Temperature
+                                </th>
+                                <th >Blooming
+                                </th>
                                 <th onClick={() => this.onSort('difficulty')}
                                     className={sortDirections[sorted].class}>Difficulty
                                 </th>
