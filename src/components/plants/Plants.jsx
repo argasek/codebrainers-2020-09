@@ -7,7 +7,7 @@ import PlantRow from "components/plants/PlantRow";
 import InProgress from "components/shared/InProgress";
 import Plant from 'models/Plant';
 
-const CATEGORIES_FETCH_DELAY = 5000;
+const CATEGORIES_FETCH_DELAY = 50;
 const ROOMS_FETCH_DELAY = 100;
 const PLANTS_FETCH_DELAY = 100;
 
@@ -26,6 +26,7 @@ class Plants extends React.PureComponent {
       rooms: [],
       roomsSuccess: undefined,
       roomsInProgress: false,
+      sortType: 'desc',
     };
   }
 
@@ -37,37 +38,37 @@ class Plants extends React.PureComponent {
 
   fetchCategories() {
     const requestUrl = 'http://gentle-tor-07382.herokuapp.com/categories/';
-    this.setState({ categoriesInProgress: true });
+    this.setState({categoriesInProgress: true});
     return this.props.delayFetch(CATEGORIES_FETCH_DELAY, (resolve, reject) => {
       axios.get(requestUrl)
               .then((response) => {
                 const data = response.data;
-                const categories = data.map((item) => ({ name: item.name, id: item.id }));
+                const categories = data.map((item) => ({name: item.name, id: item.id}));
                 const categoriesSuccess = true;
-                this.setState({ categories, categoriesSuccess });
+                this.setState({categories, categoriesSuccess});
                 resolve();
               })
               .catch((error) => {
-                this.setState({ categoriesSuccess: false });
+                this.setState({categoriesSuccess: false});
                 reject();
               })
               .finally(() => {
-                this.setState({ categoriesInProgress: false });
+                this.setState({categoriesInProgress: false});
               });
     });
   }
 
   fetchPlants() {
     const requestUrl = "http://gentle-tor-07382.herokuapp.com/plants/";
-    this.setState({ plantsInProgress: true });
+    this.setState({plantsInProgress: true});
 
     return this.props.delayFetch(PLANTS_FETCH_DELAY, (resolve, reject) => {
       const promise = axios.get(requestUrl);
 
       promise
-        .then((response) => this.fetchPlantsSuccess(response, resolve))
-        .catch((error) => this.fetchPlantsError(error, reject))
-        .finally(() => this.setState({ plantsInProgress: false }));
+              .then((response) => this.fetchPlantsSuccess(response, resolve))
+              .catch((error) => this.fetchPlantsError(error, reject))
+              .finally(() => this.setState({plantsInProgress: false}));
     });
   }
 
@@ -112,7 +113,7 @@ class Plants extends React.PureComponent {
               })
     });
   }
-  
+
 
   fetchPlantsSuccess(response, resolve) {
     const data = response.data;
@@ -121,17 +122,21 @@ class Plants extends React.PureComponent {
       return plant.fromPlain(item);
     });
     const plantsSuccess = true;
-    this.setState({ plants, plantsSuccess });
+    this.setState({plants, plantsSuccess});
     resolve();
   }
 
-  fetchPlantsError(error, reject)  {
-    this.setState({ plantsSuccess: false });
+  fetchPlantsError(error, reject) {
+    this.setState({plantsSuccess: false});
     reject();
+  }
+  onSort= sortType =>{
+    this.setState({sortType});
   }
 
   render() {
     const {
+      sortType,
       rooms,
       roomsInProgress,
       roomsSuccess,
@@ -140,17 +145,19 @@ class Plants extends React.PureComponent {
       categoriesSuccess,
       plants,
       plantsSuccess,
-      plantsInProgress
-    } = this.state;
+      plantsInProgress,
 
-    console.log({
-      plantsSuccess, categoriesSuccess, roomsSuccess
+    } = this.state;
+    const sorted = plants.sort((a, b) => {
+      const isReversed = (sortType === 'asc') ? 1 : -1;
+      return isReversed  * a.name.localeCompare(b.name);
     });
+
 
     return (
             <Card className="mb-4">
               <CardBody>
-                <InProgress inProgress={ plantsInProgress || categoriesInProgress || roomsInProgress } />
+                <InProgress inProgress={plantsInProgress || categoriesInProgress || roomsInProgress}/>
                 {
                   plantsSuccess === false &&
                   <p>Unable to fetch plants.</p>
@@ -163,7 +170,7 @@ class Plants extends React.PureComponent {
                               <tr>
                                 <th>No.</th>
                                 <th>Id</th>
-                                <th>Name</th>
+                                <th><button className="button" onClick={()=>this.onSort('asc')}>Sort By Asc</button><button className="button" onClick={()=>this.onSort('desc')}>Sort By Desc</button>Name</th>
                                 <th>Category</th>
                                 <th>Category Slug</th>
                                 <th>Watering Interval</th>
@@ -181,19 +188,19 @@ class Plants extends React.PureComponent {
                               <tbody>
                               {
                                 plants.map((plant, index, arr) => (
-                                    <PlantRow
-                                      categories={categories}
-                                      rooms={rooms}
-                                      plant={ plant }
-                                      key={ index }
-                                      index={index + 1}
-                                    />
+                                        <PlantRow
+                                                categories={categories}
+                                                rooms={rooms}
+                                                plant={plant}
+                                                key={index}
+                                                index={index + 1}
+                                        />
                                 ))
                               }
                               </tbody>
                             </Table>
                           </div>
-                  ) }
+                  )}
               </CardBody>
             </Card>
     );
