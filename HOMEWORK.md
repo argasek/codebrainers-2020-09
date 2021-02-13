@@ -2,6 +2,22 @@
 
 Comrade! In case of doubt, ASK. Always ask! <3 :-))
 
+### Homework 2021-02-13
+
+#### Task 1.
+
+Switch to branch `exercise-11` and refactor the code by
+introducing `withRooms()` High Order Component and then
+utilize in `Rooms` and `Plants` component in a similar
+fashion to what we did using `withCategories()` during
+the exercises. Put `withRooms()` in a separate file.
+
+Tip: in order to wrap a component in 2 various HOCs, do
+it like this:
+```js
+export default withRooms(withCategories(Plants));
+```
+
 ### Homework 2021-02-02
 
 #### Task 1.
