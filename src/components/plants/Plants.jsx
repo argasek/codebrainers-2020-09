@@ -203,6 +203,7 @@ class Plants extends React.PureComponent {
       sortKey
     } = this.state;
 
+
     const {
       categories,
       categoriesInProgress,
