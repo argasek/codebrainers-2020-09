@@ -84,6 +84,7 @@ class PlantsPage extends React.PureComponent {
     return axios.get(Api.PLANTS)
       .then((response) => {
         const data = response.data;
+
         const plants = data
           .map(item => plainToClass(Plant, item));
 
@@ -127,14 +128,6 @@ class PlantsPage extends React.PureComponent {
   onSubmitPlantCreate = (plant) => {
     console.warn('Created plant:');
     console.log(plant);
-    // const plants = [ ...this.state.plants ];
-    // plants.unshift(plant);
-    // this.setState({ plants });
-
-    const data = classToPlain(plant);
-    return axios.post(Api.PLANTS, data)
-      .then(this.onSubmitPlantCreateSuccess)
-      .catch(this.onSubmitPlantCreateError)
 
   };
 
@@ -226,3 +219,12 @@ PlantsPage.propTypes = {
 };
 
 export default withRooms(withCategories(withRouter(PlantsPage)));
+
+// const plants = [ ...this.state.plants ];
+// plants.unshift(plant);
+// this.setState({ plants });
+
+// const data = classToPlain(plant);
+// return axios.post(Api.PLANTS, data)
+//   .then(this.onSubmitPlantCreateSuccess)
+//   .catch(this.onSubmitPlantCreateError)
