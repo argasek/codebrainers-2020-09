@@ -3,6 +3,10 @@ import axios from "axios";
 
 const CATEGORIES_FETCH_DELAY = 500;
 
+const delayFetch = (ms, func) => {
+  return new Promise((resolve, reject) => setTimeout(() => func(resolve, reject), ms));
+}
+
 const withCategories = (WrappedComponent) => {
   return class extends React.Component {
     constructor(props) {
@@ -17,24 +21,24 @@ const withCategories = (WrappedComponent) => {
     fetchCategories() {
 
       const requestUrl = 'http://gentle-tor-07382.herokuapp.com/categories/';
-      this.setState({inProgress: true});
-      return this.props.delayFetch(CATEGORIES_FETCH_DELAY, (resolve, reject) => {
-        axios.get(requestUrl)
+      this.setState({categoriesInProgress: true});
+
+      return delayFetch(CATEGORIES_FETCH_DELAY, (resolve, reject) => {
+        return axios.get(requestUrl)
           .then((response) => {
             const data = response.data;
             const categories = data.map((item) => ({name: item.name, id: item.id}));
-            const successCategories = true;
-            this.setState({categories, successCategories});
+            const categoriesSuccess = true;
+            this.setState({categories, categoriesSuccess});
             resolve();
           })
           .catch((error) => {
-            this.setState({successCategories: false});
+            this.setState({categoriesSuccess: false});
             reject();
           })
-          .finally(() => {
-            // console.log('Resolved');
-          });
-      });
+      }).finally(() => {
+        this.setState({categoriesInProgress: false});
+      })
     }
 
   }
