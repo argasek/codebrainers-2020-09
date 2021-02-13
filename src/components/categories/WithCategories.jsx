@@ -41,5 +41,13 @@ const withCategories = (WrappedComponent) => {
       })
     }
 
+    render() {
+      return (
+        <WrappedComponent/>
+
+
+      )
+    }
   }
+
 }
