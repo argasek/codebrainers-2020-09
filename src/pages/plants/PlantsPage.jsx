@@ -1,16 +1,16 @@
 import React from "react";
 import axios from "axios";
-import { delay, PLANTS_FETCH_DELAY } from "shared/Debug";
+import {delay, PLANTS_FETCH_DELAY} from "shared/Debug";
 import Plant from 'models/Plant';
-import { classToPlain, plainToClass } from 'serializers/Serializer';
+import {classToPlain, plainToClass} from 'serializers/Serializer';
 import withCategories from 'components/categories/Categories';
 import withRooms from 'components/rooms/Rooms';
-import { withRoomsPropTypes } from 'proptypes/RoomsPropTypes';
-import { withCategoriesPropTypes } from 'proptypes/CategoriesPropTypes';
+import {withRoomsPropTypes} from 'proptypes/RoomsPropTypes';
+import {withCategoriesPropTypes} from 'proptypes/CategoriesPropTypes';
 import PlantFormCard from 'components/plants/PlantFormCard';
-import { Api } from 'services/Api';
+import {Api} from 'services/Api';
 import PlantFormFields from 'components/plants/plant-form/constants/PlantFormFields';
-import { generatePath, matchPath, Route, Switch, withRouter } from 'react-router-dom';
+import {generatePath, matchPath, Route, Switch, withRouter} from 'react-router-dom';
 import Routes from 'constants/Routes';
 import PlantList from 'components/plants/PlantList';
 import memoize from 'lodash-es/memoize';
@@ -31,7 +31,7 @@ class PlantsPage extends React.PureComponent {
     plantsPromise
       .then(() => this.updateInitialValuesFromLocation(this.props.location));
 
-    this.setState({ plantsInProgress: true });
+    this.setState({plantsInProgress: true});
 
     const additionalPromises = Promise.all([
       roomsPromise,
@@ -40,12 +40,12 @@ class PlantsPage extends React.PureComponent {
     ]);
 
     additionalPromises
-      .finally(() => this.setState({ plantsInProgress: false }));
+      .finally(() => this.setState({plantsInProgress: false}));
 
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { location } = this.props;
+    const {location} = this.props;
     if (prevProps.location !== location) {
       this.updateInitialValuesFromLocation(location);
     }
@@ -57,10 +57,10 @@ class PlantsPage extends React.PureComponent {
       strict: false
     };
 
-    const { pathname } = location;
+    const {pathname} = location;
 
-    const editPath = matchPath(pathname, { ...options, path: Routes.PLANTS_EDIT });
-    const createPath = matchPath(pathname, { ...options, path: Routes.PLANTS_CREATE });
+    const editPath = matchPath(pathname, {...options, path: Routes.PLANTS_EDIT});
+    const createPath = matchPath(pathname, {...options, path: Routes.PLANTS_CREATE});
 
     const getInitialValues = memoize(PlantFormFields.getInitialValues);
 
@@ -69,13 +69,13 @@ class PlantsPage extends React.PureComponent {
       const plants = this.state.plants;
       const plant = plants.find((item) => item.id === plantId);
       const initialValues = getInitialValues(plant);
-      this.setState({ initialValues });
+      this.setState({initialValues});
     }
 
     if (createPath !== null) {
       const plant = new Plant();
       const initialValues = getInitialValues(plant);
-      this.setState({ initialValues });
+      this.setState({initialValues});
     }
 
   };
@@ -128,6 +128,11 @@ class PlantsPage extends React.PureComponent {
   onSubmitPlantCreate = (plant) => {
     console.warn('Created plant:');
     console.log(plant);
+    const path = generatePath(Routes.PLANTS);
+    this.props.history.push(path);
+    const plants = [...this.state.plants];
+    plants.push(plant);
+    this.setState({plants: plants});
 
   };
 
@@ -144,7 +149,7 @@ class PlantsPage extends React.PureComponent {
   };
 
   onEdit = (plantId) => {
-    const path = generatePath(Routes.PLANTS_EDIT, { plantId });
+    const path = generatePath(Routes.PLANTS_EDIT, {plantId});
     this.props.history.push(path);
   };
 
@@ -170,43 +175,43 @@ class PlantsPage extends React.PureComponent {
       <Switch>
         <Route
           exact
-          path={ Routes.PLANTS }
-          render={ () =>
+          path={Routes.PLANTS}
+          render={() =>
             <PlantList
-              categories={ categories }
-              onEdit={ this.onEdit }
-              plants={ plants }
-              plantsErrorMessage={ plantsErrorMessage }
-              plantsInProgress={ plantsInProgress }
-              plantsSuccess={ plantsSuccess }
-              rooms={ rooms }
-              success={ success }
+              categories={categories}
+              onEdit={this.onEdit}
+              plants={plants}
+              plantsErrorMessage={plantsErrorMessage}
+              plantsInProgress={plantsInProgress}
+              plantsSuccess={plantsSuccess}
+              rooms={rooms}
+              success={success}
             />
           }
         />
         <Route
-          path={ [ Routes.PLANTS_CREATE ] }
-          render={ () => (
+          path={[Routes.PLANTS_CREATE]}
+          render={() => (
             <PlantFormCard
-              categories={ categories }
+              categories={categories}
               formLabel="Create new plant"
-              initialValues={ initialValues }
-              onSubmit={ this.onSubmitPlantCreate }
-              rooms={ rooms }
+              initialValues={initialValues}
+              onSubmit={this.onSubmitPlantCreate}
+              rooms={rooms}
             />
-          ) }
+          )}
         />
         <Route
-          path={ Routes.PLANTS_EDIT }
-          render={ () => (
+          path={Routes.PLANTS_EDIT}
+          render={() => (
             <PlantFormCard
-              categories={ categories }
+              categories={categories}
               formLabel="Edit plant"
-              initialValues={ initialValues }
-              onSubmit={ this.onSubmitPlantUpdate }
-              rooms={ rooms }
+              initialValues={initialValues}
+              onSubmit={this.onSubmitPlantUpdate}
+              rooms={rooms}
             />
-          ) }
+          )}
         />
       </Switch>
     );

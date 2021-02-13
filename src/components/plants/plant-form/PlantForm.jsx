@@ -17,6 +17,7 @@ const PlantForm = (props) => {
 
   const onSubmit = (values) => {
     const plant = PlantFormFields.toModel(values);
+    console.log(props.onSubmit);
     props.onSubmit(plant);
   };
 

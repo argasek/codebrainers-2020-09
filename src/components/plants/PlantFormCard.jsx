@@ -29,6 +29,7 @@ const PlantFormCard = ({ formLabel, initialValues, ...rest }) => {
   const defaultPlantName = get(initialValues, PlantFormFields.NAME, '');
   const [ plantName, setPlantName ] = useState(defaultPlantName);
   const cardHeaderLabel = get(initialValues, 'id') ? plantName || '…' : formLabel;
+  // debugger;
   return initialValues ? (
     <Card className="mb-4" color="light">
       <CardBody>
