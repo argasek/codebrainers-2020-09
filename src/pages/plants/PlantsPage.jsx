@@ -21,6 +21,7 @@ class PlantsPage extends React.PureComponent {
     plantsErrorMessage: undefined,
     plantsSuccess: undefined,
     plantsInProgress: false,
+    createPlantErrorMessage: "",
   };
 
   componentDidMount() {
@@ -132,7 +133,7 @@ class PlantsPage extends React.PureComponent {
     const path = generatePath(Routes.PLANTS);
 
 
-    axios.post(Api.PLANTS, classToPlain(plant))
+    axios.post("pi" + Api.PLANTS, classToPlain(plant))
       .then((response) => {
         const data = response.data;
         const plant = plainToClass(Plant, data);
@@ -141,6 +142,13 @@ class PlantsPage extends React.PureComponent {
         this.setState({plants: plants});
         this.props.history.push(path);
       })
+      .catch((error) => {
+        const plantsErrorMessage = "Error creating plant";
+        this.props.history.push(path);
+        this.setState({
+          createPlantErrorMessage: plantsErrorMessage,
+        });
+      });
 
 
   };
@@ -169,6 +177,7 @@ class PlantsPage extends React.PureComponent {
       plantsErrorMessage,
       plantsInProgress,
       plantsSuccess,
+      createPlantErrorMessage,
     } = this.state;
 
     const {
@@ -186,16 +195,23 @@ class PlantsPage extends React.PureComponent {
           exact
           path={Routes.PLANTS}
           render={() =>
-            <PlantList
-              categories={categories}
-              onEdit={this.onEdit}
-              plants={plants}
-              plantsErrorMessage={plantsErrorMessage}
-              plantsInProgress={plantsInProgress}
-              plantsSuccess={plantsSuccess}
-              rooms={rooms}
-              success={success}
-            />
+            <React.Fragment>
+              {
+                createPlantErrorMessage !== "" && <p>{createPlantErrorMessage}</p>
+              }
+
+              <PlantList
+                categories={categories}
+                onEdit={this.onEdit}
+                plants={plants}
+                plantsErrorMessage={plantsErrorMessage}
+                plantsInProgress={plantsInProgress}
+                plantsSuccess={plantsSuccess}
+                rooms={rooms}
+                success={success}
+              />
+
+            </React.Fragment>
           }
         />
         <Route
