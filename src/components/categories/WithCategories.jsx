@@ -18,7 +18,7 @@ const withCategories = (WrappedComponent) => {
       }
     }
 
-    fetchCategories() {
+    fetchCategories = () => {
 
       const requestUrl = 'http://gentle-tor-07382.herokuapp.com/categories/';
       this.setState({categoriesInProgress: true});
@@ -43,7 +43,11 @@ const withCategories = (WrappedComponent) => {
 
     render() {
       return (
-        <WrappedComponent/>
+        <WrappedComponent
+          {...this.state}
+          {...this.props}
+          fetchCategories={this.fetchCategories}
+        />
 
 
       )
@@ -51,3 +55,5 @@ const withCategories = (WrappedComponent) => {
   }
 
 }
+
+export default withCategories;

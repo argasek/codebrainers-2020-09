@@ -1,49 +1,34 @@
-import { Card, CardBody, ListGroup } from "reactstrap";
+import {Card, CardBody, ListGroup} from "reactstrap";
 import React from "react";
 import CategoryItem from "components/categories/CategoryItem";
 import InProgress from "components/shared/InProgress";
 import axios from 'axios';
-
-const CATEGORIES_FETCH_DELAY = 500;
+import withCategories from "components/categories/WithCategories";
 
 class Categories extends React.PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      inProgress: false,
-      successCategories: undefined,
-      categories: [],
-    };
-  }
 
   componentDidMount() {
-    this.fetchCategories()
-      .finally(() => {
-        this.setState({ inProgress: false });
-      })
+    this.props.fetchCategories()
   }
-
-
 
   render() {
     const {
-      inProgress,
-      successCategories,
+      categoriesInProgress,
+      categoriesSuccess,
       categories,
-    } = this.state;
-
+    } = this.props;
 
     return (
       <Card>
         <CardBody>
           <div className="app-container">
-            <InProgress inProgress={inProgress} />
+            <InProgress inProgress={categoriesInProgress}/>
             {
-              successCategories === false &&
+              categoriesSuccess === false &&
               <p>Nie udało się pobrać Kategorii</p>
             }
             {
-              successCategories &&
+              categoriesSuccess &&
               <ListGroup className="categories">
                 {
                   categories.map((item, index, arr) =>
@@ -65,5 +50,4 @@ class Categories extends React.PureComponent {
   }
 }
 
-
-export default Categories;
+export default withCategories(Categories);
