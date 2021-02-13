@@ -18,6 +18,26 @@ it like this:
 export default withRooms(withCategories(Plants));
 ```
 
+#### Task 2.
+
+Switch to branch `exercise-13`. Implement updating of
+already existing plants, along with some error handling.
+
+Hint: instead of POST request send an analogous PUT request.
+
+Use the following Reactstrap component to render the message:
+
+#### Task 3.
+
+Show error message from Task 2 while still having
+the Plant Create (or Edit) Form displayed.
+
+```js
+<Alert color="danger">
+  This is a danger alert — check it out!
+</Alert>
+```
+
 ### Homework 2021-02-02
 
 #### Task 1.
