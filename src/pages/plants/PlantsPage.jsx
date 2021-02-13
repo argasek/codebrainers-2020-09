@@ -116,6 +116,7 @@ class PlantsPage extends React.PureComponent {
 
   navigateToPlantList = () => {
     this.props.history.push(Routes.PLANTS);
+
   };
 
   onSubmitPlantCreateSuccess = () => {
@@ -129,10 +130,18 @@ class PlantsPage extends React.PureComponent {
     console.warn('Created plant:');
     console.log(plant);
     const path = generatePath(Routes.PLANTS);
-    this.props.history.push(path);
-    const plants = [...this.state.plants];
-    plants.push(plant);
-    this.setState({plants: plants});
+
+
+    axios.post(Api.PLANTS, classToPlain(plant))
+      .then((response) => {
+        const data = response.data;
+        const plant = plainToClass(Plant, data);
+        const plants = [...this.state.plants];
+        plants.push(plant);
+        this.setState({plants: plants});
+        this.props.history.push(path);
+      })
+
 
   };
 
