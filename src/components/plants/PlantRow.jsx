@@ -117,7 +117,7 @@ class PlantRow extends React.PureComponent {
       wateringInterval
     } = plant;
 
-    console.log(categoryId, categories);
+    // console.log(categoryId, categories);
 
     return (
       <tr>

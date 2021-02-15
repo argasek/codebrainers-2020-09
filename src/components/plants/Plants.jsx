@@ -24,8 +24,8 @@ import {
   temperatureMapping
 } from 'constants/PlantConstants';
 import withCategories from "components/categories/WithCategories";
+import withRooms from "components/rooms/WithRooms";
 
-const ROOMS_FETCH_DELAY = 100;
 const PLANTS_FETCH_DELAY = 100;
 
 class Plants extends React.PureComponent {
@@ -37,9 +37,6 @@ class Plants extends React.PureComponent {
       plantsSuccess: undefined,
       plantsInProgress: false,
 
-      rooms: [],
-      roomsSuccess: undefined,
-      roomsInProgress: false,
 
       sortKey: undefined
     };
@@ -47,7 +44,7 @@ class Plants extends React.PureComponent {
 
   componentDidMount() {
     this.fetchPlants();
-    this.fetchRooms();
+    this.props.fetchRooms();
     this.props.fetchCategories();
   }
 
@@ -65,47 +62,6 @@ class Plants extends React.PureComponent {
     });
   }
 
-  fetchRooms() {
-    const requestUrl = 'http://gentle-tor-07382.herokuapp.com/rooms/';
-    this.setState({roomsInProgress: true});
-
-    return this.props.delayFetch(ROOMS_FETCH_DELAY, (resolve, reject) => {
-      const promise = axios.get(requestUrl);
-
-      promise
-        .then((response) => {
-          const data = response.data;
-          const rooms = data.map((item) => {
-            const {
-              id,
-              name,
-              exposure,
-              temperature,
-              humidity,
-              draft,
-            } = item;
-            return {
-              id,
-              name,
-              exposure,
-              temperature,
-              humidity,
-              draft,
-            };
-          });
-          const roomsSuccess = true;
-          this.setState({rooms, roomsSuccess});
-          resolve();
-        })
-        .catch((error) => {
-          this.setState({roomsSuccess: false});
-          reject();
-        })
-        .finally(() => {
-          this.setState({roomsInProgress: false});
-        });
-    });
-  }
 
   fetchPlantsSuccess(response, resolve) {
     const data = response.data;
@@ -149,8 +105,8 @@ class Plants extends React.PureComponent {
   getSortComparator = (sortKey) => {
     const lexicalFieldComparator = this.comparator(this.fieldExtractor(sortKey));
 
-    const categoryComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.state.categories, 'id', 'name'));
-    const roomComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.state.rooms, 'id', 'name'));
+    const categoryComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.props.categories, 'id', 'name'));
+    const roomComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.props.rooms, 'id', 'name'));
 
     const staticMappedFieldExtractor = (mappingArray) => this.comparator(this.mappedFieldExtractor(sortKey, mappingArray, 'id', 'value'));
 
@@ -194,12 +150,9 @@ class Plants extends React.PureComponent {
 
   render() {
     const {
-      rooms,
-      roomsInProgress,
-      roomsSuccess,
-      plants,
       plantsSuccess,
       plantsInProgress,
+      plants,
       sortKey
     } = this.state;
 
@@ -208,6 +161,11 @@ class Plants extends React.PureComponent {
       categories,
       categoriesInProgress,
       categoriesSuccess,
+      rooms,
+      roomsInProgress,
+      roomsSuccess,
+
+
     } = this.props;
 
     const sort = this.sort;
@@ -271,4 +229,4 @@ Plants.propTypes = {
 };
 
 
-export default withCategories(Plants);
+export default withRooms(withCategories(Plants));

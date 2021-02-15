@@ -19,12 +19,7 @@ class App extends React.PureComponent {
     };
   }
 
-  // componentDidMount() {
-  //   setInterval(() => {
-  //     const userFullNameDelayed = Date.now().toString();
-  //     this.setState({ userFullNameDelayed });
-  //   }, 100)
-  // }
+
 
   handleUserFullNameChange = (event) => {
     const userFullName = event.target.value;
