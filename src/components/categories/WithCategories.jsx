@@ -7,19 +7,19 @@ const delayFetch = (ms, func) => {
   return new Promise((resolve, reject) => setTimeout(() => func(resolve, reject), ms));
 }
 
+
 const withCategories = (WrappedComponent) => {
   return class extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        categoriesInProgress: false,
-        categoriesSuccess: undefined,
         categories: [],
+        categoriesSuccess: undefined,
+        categoriesInProgress: false,
       }
     }
 
     fetchCategories = () => {
-
       const requestUrl = 'http://gentle-tor-07382.herokuapp.com/categories/';
       this.setState({categoriesInProgress: true});
 
@@ -48,12 +48,9 @@ const withCategories = (WrappedComponent) => {
           {...this.props}
           fetchCategories={this.fetchCategories}
         />
-
-
       )
     }
   }
-
 }
 
 export default withCategories;

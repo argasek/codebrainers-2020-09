@@ -24,6 +24,8 @@ import {
   temperatureMapping
 } from 'constants/PlantConstants';
 import withCategories from "components/categories/WithCategories";
+import withRooms from "components/rooms/WithRooms";
+import {Button} from "reactstrap/es";
 
 const ROOMS_FETCH_DELAY = 100;
 const PLANTS_FETCH_DELAY = 100;
@@ -32,22 +34,18 @@ class Plants extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-
       plants: [],
       plantsSuccess: undefined,
       plantsInProgress: false,
 
-      rooms: [],
-      roomsSuccess: undefined,
-      roomsInProgress: false,
-
+      plantsDefault: [],
       sortKey: undefined
     };
   }
 
   componentDidMount() {
     this.fetchPlants();
-    this.fetchRooms();
+    this.props.fetchRooms();
     this.props.fetchCategories();
   }
 
@@ -65,56 +63,15 @@ class Plants extends React.PureComponent {
     });
   }
 
-  fetchRooms() {
-    const requestUrl = 'http://gentle-tor-07382.herokuapp.com/rooms/';
-    this.setState({roomsInProgress: true});
-
-    return this.props.delayFetch(ROOMS_FETCH_DELAY, (resolve, reject) => {
-      const promise = axios.get(requestUrl);
-
-      promise
-        .then((response) => {
-          const data = response.data;
-          const rooms = data.map((item) => {
-            const {
-              id,
-              name,
-              exposure,
-              temperature,
-              humidity,
-              draft,
-            } = item;
-            return {
-              id,
-              name,
-              exposure,
-              temperature,
-              humidity,
-              draft,
-            };
-          });
-          const roomsSuccess = true;
-          this.setState({rooms, roomsSuccess});
-          resolve();
-        })
-        .catch((error) => {
-          this.setState({roomsSuccess: false});
-          reject();
-        })
-        .finally(() => {
-          this.setState({roomsInProgress: false});
-        });
-    });
-  }
-
   fetchPlantsSuccess(response, resolve) {
     const data = response.data;
     const plants = data.map((item) => {
       const plant = new Plant();
       return plant.fromPlain(item);
     });
+    const plantsDefault = [...plants]
     const plantsSuccess = true;
-    this.setState({plants, plantsSuccess});
+    this.setState({plants, plantsSuccess, plantsDefault});
     resolve();
   }
 
@@ -149,8 +106,8 @@ class Plants extends React.PureComponent {
   getSortComparator = (sortKey) => {
     const lexicalFieldComparator = this.comparator(this.fieldExtractor(sortKey));
 
-    const categoryComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.state.categories, 'id', 'name'));
-    const roomComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.state.rooms, 'id', 'name'));
+    const categoryComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.props.categories, 'id', 'name'));
+    const roomComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.props.rooms, 'id', 'name'));
 
     const staticMappedFieldExtractor = (mappingArray) => this.comparator(this.mappedFieldExtractor(sortKey, mappingArray, 'id', 'value'));
 
@@ -192,25 +149,28 @@ class Plants extends React.PureComponent {
     }
   };
 
+  sortReset = () => {
+    this.setState({plants: this.state.plantsDefault});
+  };
+
   render() {
     const {
-      rooms,
-      roomsInProgress,
-      roomsSuccess,
       plants,
       plantsSuccess,
       plantsInProgress,
       sortKey
     } = this.state;
 
-
     const {
       categories,
-      categoriesInProgress,
       categoriesSuccess,
+      categoriesInProgress,
+      rooms,
+      roomsSuccess,
+      roomsInProgress,
     } = this.props;
 
-    const sort = this.sort;
+    const [sort, sortReset] = [this.sort, this.sortReset];
 
     return (
       <Card className="mb-4">
@@ -222,43 +182,48 @@ class Plants extends React.PureComponent {
           }
           {
             plantsSuccess && categoriesSuccess && roomsSuccess && (
-              <div className="plants-container">
-                <Table>
-                  <thead className="plants-container-header">
-                  <tr>
-                    <PlantsTableHeaderCell>No.</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_ID}>Id</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_NAME}>Name</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_CATEGORY_ID}>Category</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_WATERING_INTERVAL}>Watering Interval</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_FERTILIZING_INTERVAL}>Fertilizing
-                      Interval</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_REQUIRED_EXPOSURE}>Required Exposure</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_REQUIRED_HUMIDITY}>Required Humidity</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_REQUIRED_TEMPERATURE}>Required
-                      Temperature</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_BLOOMING}>Blooming</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_DIFFICULTY}>Difficulty</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_ROOM_ID}>Room</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell>Last Watered</PlantsTableHeaderCell>
-                    <PlantsTableHeaderCell>Last Fertilized</PlantsTableHeaderCell>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {
-                    plants.map((plant, index, arr) => (
-                      <PlantRow
-                        categories={categories}
-                        rooms={rooms}
-                        plant={plant}
-                        key={plant.id}
-                        index={index + 1}
-                      />
-                    ))
-                  }
-                  </tbody>
-                </Table>
-              </div>
+              <>
+                <Button onClick={sortReset}
+                        style={{marginBottom: "20px"}} block size="lg"
+                >Sort Reset</Button>
+                <div className="plants-container">
+                  <Table>
+                    <thead className="plants-container-header">
+                    <tr>
+                      <PlantsTableHeaderCell>No.</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_ID}>Id</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_NAME}>Name</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_CATEGORY_ID}>Category</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_WATERING_INTERVAL}>Watering Interval</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_FERTILIZING_INTERVAL}>Fertilizing
+                        Interval</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_REQUIRED_EXPOSURE}>Required Exposure</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_REQUIRED_HUMIDITY}>Required Humidity</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_REQUIRED_TEMPERATURE}>Required
+                        Temperature</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_BLOOMING}>Blooming</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_DIFFICULTY}>Difficulty</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell onSort={sort} sortKey={sortKey} sortBy={PLANT_SORT_KEY_ROOM_ID}>Room</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell>Last Watered</PlantsTableHeaderCell>
+                      <PlantsTableHeaderCell>Last Fertilized</PlantsTableHeaderCell>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                      plants.map((plant, index, arr) => (
+                        <PlantRow
+                          categories={categories}
+                          rooms={rooms}
+                          plant={plant}
+                          key={plant.id}
+                          index={index + 1}
+                        />
+                      ))
+                    }
+                    </tbody>
+                  </Table>
+                </div>
+              </>
             )}
         </CardBody>
       </Card>
@@ -271,4 +236,4 @@ Plants.propTypes = {
 };
 
 
-export default withCategories(Plants);
+export default withRooms(withCategories(Plants));

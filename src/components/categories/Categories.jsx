@@ -13,9 +13,9 @@ class Categories extends React.PureComponent {
 
   render() {
     const {
-      categoriesInProgress,
-      categoriesSuccess,
       categories,
+      categoriesSuccess,
+      categoriesInProgress,
     } = this.props;
 
     return (
@@ -25,7 +25,7 @@ class Categories extends React.PureComponent {
             <InProgress inProgress={categoriesInProgress}/>
             {
               categoriesSuccess === false &&
-              <p>Nie udało się pobrać Kategorii</p>
+              <p>Unable to fetch categories.</p>
             }
             {
               categoriesSuccess &&
