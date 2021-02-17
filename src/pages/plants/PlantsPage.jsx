@@ -22,6 +22,7 @@ class PlantsPage extends React.PureComponent {
     plantsSuccess: undefined,
     plantsInProgress: false,
     createPlantErrorMessage: "",
+    updatePlantErrorMessage: "",
   };
 
   componentDidMount() {
@@ -132,8 +133,7 @@ class PlantsPage extends React.PureComponent {
     console.log(plant);
     const path = generatePath(Routes.PLANTS);
 
-
-    axios.post("pi" + Api.PLANTS, classToPlain(plant))
+    axios.post(Api.PLANTS, classToPlain(plant))
       .then((response) => {
         const data = response.data;
         const plant = plainToClass(Plant, data);
@@ -149,8 +149,6 @@ class PlantsPage extends React.PureComponent {
           createPlantErrorMessage: plantsErrorMessage,
         });
       });
-
-
   };
 
   /**
@@ -159,6 +157,25 @@ class PlantsPage extends React.PureComponent {
   onSubmitPlantUpdate = (plant) => {
     console.warn('Edited plant:');
     console.log(plant);
+    const path = generatePath(Routes.PLANTS);
+
+    axios.put(Api.PLANTS + plant.id + '/', classToPlain(plant))
+      .then((response) => {
+        const data = response.data;
+        const plant = plainToClass(Plant, data);
+        const plants = [...this.state.plants];
+        const getIndex = plants.findIndex(item => item.id === plant.id);
+        plants[getIndex] = plant;
+        this.setState({plants: plants});
+        this.props.history.push(path);
+      })
+      .catch((error) => {
+        const plantsErrorMessage = "Error updating plant";
+        this.props.history.push(path);
+        this.setState({
+          updatePlantErrorMessage: plantsErrorMessage,
+        });
+      });
   };
 
   onSubmit = (plant, routeProps) => {
