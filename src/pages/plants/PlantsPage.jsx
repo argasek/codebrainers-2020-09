@@ -133,7 +133,7 @@ class PlantsPage extends React.PureComponent {
     const path = generatePath(Routes.PLANTS);
 
 
-    axios.post("pi" + Api.PLANTS, classToPlain(plant))
+    axios.post(Api.PLANTS, classToPlain(plant))
       .then((response) => {
         const data = response.data;
         const plant = plainToClass(Plant, data);
@@ -159,6 +159,26 @@ class PlantsPage extends React.PureComponent {
   onSubmitPlantUpdate = (plant) => {
     console.warn('Edited plant:');
     console.log(plant);
+    // const path = generatePath(Routes.PLANTS);
+    //
+    // axios.put(Api.PLANTS, classToPlain(plant))
+    //   .then((response) => {
+    //     const data = response.data;
+    //     const plant = plainToClass(Plant, data);
+    //     const plants = [...this.state.plants];
+    //     plants.push(plant);
+    //     this.setState({plants: plants});
+    //     this.props.history.push(path);
+    //   })
+    //   .catch((error) => {
+    //     const editPlantsErrorMessage = "Error editing plant";
+    //     this.props.history.push(path);
+    //     this.setState({
+    //       createPlantErrorMessage: editPlantsErrorMessage,
+    //     });
+    //   });
+
+
   };
 
   onSubmit = (plant, routeProps) => {
