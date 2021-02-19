@@ -14,6 +14,7 @@ import {generatePath, matchPath, Route, Switch, withRouter} from 'react-router-d
 import Routes from 'constants/Routes';
 import PlantList from 'components/plants/PlantList';
 import memoize from 'lodash-es/memoize';
+import {Alert} from 'reactstrap';
 
 class PlantsPage extends React.PureComponent {
   state = {
@@ -22,6 +23,7 @@ class PlantsPage extends React.PureComponent {
     plantsSuccess: undefined,
     plantsInProgress: false,
     createPlantErrorMessage: "",
+    updatePlantErrorMessage: "",
   };
 
   componentDidMount() {
@@ -159,6 +161,26 @@ class PlantsPage extends React.PureComponent {
   onSubmitPlantUpdate = (plant) => {
     console.warn('Edited plant:');
     console.log(plant);
+    const path = generatePath(Routes.PLANTS);
+
+    axios.put("pi" + Api.PLANTS + plant.id + '/', classToPlain(plant))
+      .then((response) => {
+        const data = response.data;
+        const plant = plainToClass(Plant, data);
+        const plants = [...this.state.plants];
+        const getIndex = plants.findIndex(item => item.id === plant.id);
+
+        plants[getIndex](plant);
+        this.setState({plants: plants});
+        this.props.history.push(path);
+      })
+      .catch((error) => {
+        const plantsErrorMessage = "Error updating plant";
+        this.props.history.push(path);
+        this.setState({
+          updatePlantErrorMessage: plantsErrorMessage,
+        });
+      });
   };
 
   onSubmit = (plant, routeProps) => {
@@ -178,6 +200,7 @@ class PlantsPage extends React.PureComponent {
       plantsInProgress,
       plantsSuccess,
       createPlantErrorMessage,
+      updatePlantErrorMessage,
     } = this.state;
 
     const {
@@ -196,8 +219,17 @@ class PlantsPage extends React.PureComponent {
           path={Routes.PLANTS}
           render={() =>
             <React.Fragment>
+
               {
-                createPlantErrorMessage !== "" && <p>{createPlantErrorMessage}</p>
+                createPlantErrorMessage !== ""  && <Alert color="danger">
+              {createPlantErrorMessage}
+              </Alert>
+              }
+
+              {
+                updatePlantErrorMessage !== ""  && <Alert color="danger">
+              {updatePlantErrorMessage}
+              </Alert>
               }
 
               <PlantList
