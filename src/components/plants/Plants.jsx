@@ -24,6 +24,7 @@ import {
   temperatureMapping
 } from 'constants/PlantConstants';
 import withCategories from "components/categories/WithCategories";
+import withRooms from "components/rooms/WithRooms";
 
 const ROOMS_FETCH_DELAY = 100;
 const PLANTS_FETCH_DELAY = 100;
@@ -149,8 +150,8 @@ class Plants extends React.PureComponent {
   getSortComparator = (sortKey) => {
     const lexicalFieldComparator = this.comparator(this.fieldExtractor(sortKey));
 
-    const categoryComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.state.categories, 'id', 'name'));
-    const roomComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.state.rooms, 'id', 'name'));
+    const categoryComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.props.categories, 'id', 'name'));
+    const roomComparator = this.comparator(this.mappedFieldExtractor(sortKey, this.props.rooms, 'id', 'name'));
 
     const staticMappedFieldExtractor = (mappingArray) => this.comparator(this.mappedFieldExtractor(sortKey, mappingArray, 'id', 'value'));
 
@@ -271,4 +272,4 @@ Plants.propTypes = {
 };
 
 
-export default withCategories(Plants);
+export default withRooms(withCategories(Plants));
