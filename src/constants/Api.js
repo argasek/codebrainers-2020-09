@@ -1,8 +1,8 @@
 class Api {
-  static baseUrl = 'http://gentle-tor-07382.herokuapp.com';
-  static PLANTS = '/plants';
-  static CATEGORIES = '/categories';
-  static ROOMS = '/rooms';
+  static baseUrl = 'https://still-fortress-69660.herokuapp.com/';
+  static PLANTS = '/plant';
+  static CATEGORIES = '/category';
+  static ROOMS = '/room';
 }
 
 export default Api;
