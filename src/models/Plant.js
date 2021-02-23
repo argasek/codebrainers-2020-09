@@ -65,7 +65,7 @@ class Plant {
   @JsonProperty()
   wateringInterval = 0;
 
-  @JsonType(String)
+  @JsonType(Number)
   @JsonProperty()
   user = undefined;
 

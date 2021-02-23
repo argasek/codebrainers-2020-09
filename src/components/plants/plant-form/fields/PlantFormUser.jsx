@@ -17,6 +17,7 @@ const PlantFormUser = (props) => {
         name={ PlantFormFields.USER }
         placeholder="user"
         type="text"
+
       />
     </FormGroup>
   );

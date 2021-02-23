@@ -26,6 +26,7 @@ const LoginPage = ({ onTokenObtained }) => {
       .finally(onSignInFinally);
   };
 
+
   const onSignInError = (error, onSubmitError) => {
     const api = new Api();
     const { errors, status } = api.getErrorsFromApi(error);

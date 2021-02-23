@@ -14,6 +14,7 @@ const LoginForm = (props) => {
   const initialStatus = formFields.getInitialStatus();
   const validationSchema = formFields.getValidationSchema();
   const validateOnMount = formFields.getValidateOnMount();
+  console.log();
 
   /**
    *
