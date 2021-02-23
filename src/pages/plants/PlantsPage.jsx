@@ -159,26 +159,25 @@ class PlantsPage extends React.PureComponent {
   onSubmitPlantUpdate = (plant) => {
     console.warn('Edited plant:');
     console.log(plant);
-    // const path = generatePath(Routes.PLANTS);
-    //
-    // axios.put(Api.PLANTS, classToPlain(plant))
-    //   .then((response) => {
-    //     const data = response.data;
-    //     const plant = plainToClass(Plant, data);
-    //     const plants = [...this.state.plants];
-    //     plants.push(plant);
-    //     this.setState({plants: plants});
-    //     this.props.history.push(path);
-    //   })
-    //   .catch((error) => {
-    //     const editPlantsErrorMessage = "Error editing plant";
-    //     this.props.history.push(path);
-    //     this.setState({
-    //       createPlantErrorMessage: editPlantsErrorMessage,
-    //     });
-    //   });
+    const path = generatePath(Routes.PLANTS);
 
-
+    axios.put(Api.PLANTS + plant.id + '/', classToPlain(plant))
+      .then((response) => {
+        const data = response.data;
+        const plant = plainToClass(Plant, data);
+        const plants = [...this.state.plants];
+        const getIndex = plants.findIndex(item => item.id === plant.id);
+        plants[getIndex] = plant;
+        this.setState({plants: plants});
+        this.props.history.push(path);
+      })
+      .catch((error) => {
+        const plantsErrorMessage = "Error updating plant";
+        this.props.history.push(path);
+        this.setState({
+          updatePlantErrorMessage: plantsErrorMessage,
+        });
+      });
   };
 
   onSubmit = (plant, routeProps) => {
