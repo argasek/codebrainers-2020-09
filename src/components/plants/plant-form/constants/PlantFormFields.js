@@ -17,6 +17,7 @@ class PlantFormFields {
   static LAST_FERTILIZED = 'lastFertilized';
   static LAST_WATERED = 'lastWatered';
   static NAME = 'name';
+  static USER = 'user';
   static REQUIRED_EXPOSURE = 'requiredExposure';
   static REQUIRED_HUMIDITY = 'requiredHumidity';
   static REQUIRED_TEMPERATURE = 'requiredTemperature';

@@ -7,6 +7,7 @@ import PlantFormSection from 'components/plants/plant-form/PlantFormSection';
 import PlantFormBlooming from 'components/plants/plant-form/fields/PlantFormBlooming';
 import PlantFormCategory from 'components/plants/plant-form/fields/PlantFormCategory';
 import PlantFormRoom from 'components/plants/plant-form/fields/PlantFormRoom';
+import PlantFormUser from "components/plants/plant-form/fields/PlantFormUser";
 import { plantFormInformationPropTypes } from 'proptypes/PlantFormPropTypes';
 
 const PlantFormInformation = ({ categories, rooms }) => {
@@ -16,6 +17,9 @@ const PlantFormInformation = ({ categories, rooms }) => {
       <Row>
         <Col xs={ 12 } lg={ 4 }>
           <PlantFormName />
+        </Col>
+        <Col xs={ 12 } lg={ 4 }>
+          <PlantFormUser />
         </Col>
         <Col xs={ 12 } lg={ 6 }>
           <PlantFormDifficulty />
