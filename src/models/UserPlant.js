@@ -2,7 +2,7 @@ import { JsonConverter, JsonObject, JsonProperty, JsonType } from 'ta-json';
 import MomentSerializer from 'serializers/MomentSerializer';
 
 @JsonObject()
-class Plant {
+class UserPlant {
   @JsonType(Boolean)
   @JsonProperty()
   blooming = false;
@@ -18,10 +18,6 @@ class Plant {
   @JsonType(Number)
   @JsonProperty()
   difficulty = 1;
-
-  @JsonType(Number)
-  @JsonProperty()
-  fertilizingInterval = 0;
 
   @JsonType(Number)
   @JsonProperty()
@@ -57,17 +53,17 @@ class Plant {
   @JsonProperty()
   room = undefined;
 
+  @JsonType(Number)
+  @JsonProperty()
+  plant = undefined;
+
   @JsonType(String)
   @JsonProperty()
   url = '';
 
   @JsonType(Number)
   @JsonProperty()
-  wateringInterval = 0;
-
-  @JsonType(Number)
-  @JsonProperty()
-  user = 1;
+  user = undefined;
 }
 
-export default Plant;
+export default UserPlant;
