@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import {delay, PLANTS_FETCH_DELAY} from "shared/Debug";
 import Plant from 'models/Plant';
 import {classToPlain, plainToClass} from 'serializers/Serializer';
 import withCategories from 'components/categories/Categories';
@@ -143,6 +142,31 @@ class PlantsPage extends React.PureComponent {
       });
   };
 
+  /**
+   * @param {Plant} plant
+   */
+  onPlantDelete = (plant) => {
+    console.warn('Edited plant to delete:');
+    const path = generatePath(Routes.PLANTS);
+    const plantId = this.state.initialValues.id;
+
+    axios.delete(Api.PLANTS + plantId + '/', plant)
+      .then((response) => {
+        const plants = [...this.state.plants];
+        const plantToDelete = plants.findIndex(item => item.id === plantId);
+        plants.splice(plantToDelete, 1);
+        this.setState({plants: plants});
+        this.props.history.push(path);
+      })
+      .catch((error) => {
+        const plantsErrorMessage = "Error updating user plant";
+        this.props.history.push(path);
+        this.setState({
+          updateUserPlantErrorMessage: plantsErrorMessage,
+        });
+      });
+  }
+
   onSubmit = (plant, routeProps) => {
     debugger;
   };
@@ -207,6 +231,7 @@ class PlantsPage extends React.PureComponent {
               formLabel="Create new plant"
               initialValues={initialValues}
               onSubmit={this.onSubmitPlantCreate}
+              onBackToList={this.navigateToPlantList}
               rooms={rooms}
             />
           )}
@@ -219,6 +244,8 @@ class PlantsPage extends React.PureComponent {
               formLabel="Edit plant"
               initialValues={initialValues}
               onSubmit={this.onSubmitPlantUpdate}
+              onDelete={this.onPlantDelete}
+              onBackToList={this.navigateToPlantList}
               rooms={rooms}
             />
           )}

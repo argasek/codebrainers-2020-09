@@ -5,20 +5,20 @@ import PropTypes from 'prop-types';
 /**
  * @component
  */
-const PlantFormButtons = ({ cancelLabel, submitDisabled, submitLabel, deleteLabel, onDelete }) => {
+const PlantFormButtons = ({ cancelLabel, submitDisabled, submitLabel, deleteLabel, onDelete, onBackToList }) => {
   return (
     <React.Fragment>
       <hr className="mb-4 mt-4" />
       <FormGroup className="mb-2">
-        <Button color="primary" type="submit" disabled={ submitDisabled }>
-          { submitLabel }
-        </Button>
-        <Button color="secondary" type="reset" className="ml-0 ml-md-2">
+        <Button color="secondary" type="button" onClick={ onBackToList }>
           { cancelLabel }
+        </Button>
+        <Button color="primary" type="submit" className="ml-0 ml-md-2" disabled={ submitDisabled }>
+          { submitLabel }
         </Button>
         {
           onDelete &&
-          <Button color="danger" type="button" className="ml-0 ml-md-2" onClick={onDelete}>
+          <Button color="danger" type="button" className="ml-0 ml-md-2" onClick={ onDelete }>
             { deleteLabel }
           </Button>
         }
