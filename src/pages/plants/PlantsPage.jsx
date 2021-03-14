@@ -17,11 +17,7 @@ import memoize from 'lodash-es/memoize';
 
 
 class PlantsPage extends React.PureComponent {
-  state = {
-    plantsInProgress: false,
-    createPlantErrorMessage: "",
-    updatePlantErrorMessage: "",
-  };
+  state = {};
 
   componentDidMount() {
     const roomsPromise = this.props.fetchRooms();
@@ -31,7 +27,8 @@ class PlantsPage extends React.PureComponent {
     plantsPromise
       .then(() => this.updateInitialValuesFromLocation(this.props.location));
 
-    this.setState({plantsInProgress: true});
+    // this.setState({plantsInProgress: true});
+    this.props.handlePlantsInProgress(true);
 
     const additionalPromises = Promise.all([
       roomsPromise,
@@ -40,7 +37,7 @@ class PlantsPage extends React.PureComponent {
     ]);
 
     additionalPromises
-      .finally(() => this.setState({plantsInProgress: false}));
+      .finally(() => this.props.handlePlantsInProgress(false));
 
   }
 
@@ -103,15 +100,13 @@ class PlantsPage extends React.PureComponent {
         const plant = plainToClass(Plant, data);
         const plants = [...this.props.plants]
         plants.push(plant);
-        this.setState({plants: plants});
+        this.props.handlePlantListUpdate(plants);
         this.props.history.push(path);
       })
       .catch((error) => {
         const plantsErrorMessage = "Error creating plant";
         this.props.history.push(path);
-        this.setState({
-          createPlantErrorMessage: plantsErrorMessage,
-        });
+        this.props.handleCreatePlantErrorMessage(plantsErrorMessage);
       });
   };
 
@@ -130,15 +125,13 @@ class PlantsPage extends React.PureComponent {
         const plants = [...this.props.plants];
         const getIndex = plants.findIndex(item => item.id === plant.id);
         plants[getIndex] = plant;
-        this.setState({plants: plants});
+        this.props.handlePlantListUpdate(plants);
         this.props.history.push(path);
       })
       .catch((error) => {
         const plantsErrorMessage = "Error updating plant";
         this.props.history.push(path);
-        this.setState({
-          updatePlantErrorMessage: plantsErrorMessage,
-        });
+        this.props.handleUpdatePlantErrorMessage(plantsErrorMessage)
       });
   };
 
@@ -152,18 +145,16 @@ class PlantsPage extends React.PureComponent {
 
     axios.delete(Api.PLANTS + plantId + '/', plant)
       .then((response) => {
-        const plants = [...this.state.plants];
+        const plants = [...this.props.plants];
         const plantToDelete = plants.findIndex(item => item.id === plantId);
         plants.splice(plantToDelete, 1);
-        this.setState({plants: plants});
+        this.props.handlePlantListUpdate(plants);
         this.props.history.push(path);
       })
       .catch((error) => {
         const plantsErrorMessage = "Error updating user plant";
         this.props.history.push(path);
-        this.setState({
-          updateUserPlantErrorMessage: plantsErrorMessage,
-        });
+        this.props.handleDeletePlantErrorMessage(plantsErrorMessage);
       });
   }
 
@@ -179,15 +170,15 @@ class PlantsPage extends React.PureComponent {
   render() {
     const {
       initialValues,
-      plantsErrorMessage,
-      plantsInProgress,
-      createPlantErrorMessage,
-      updatePlantErrorMessage,
     } = this.state;
 
     const {
       plants,
       plantsSuccess,
+      plantsErrorMessage,
+      plantsInProgress,
+      createPlantErrorMessage,
+      updatePlantErrorMessage,
       categories,
       categoriesSuccess,
       rooms,

@@ -23,6 +23,7 @@ class UserPlantsPage extends React.PureComponent {
     userPlantsInProgress: false,
     addUserPlantErrorMessage: "",
     updateUserPlantErrorMessage: "",
+    deleteUserPlantErrorMessage: "",
   };
 
   componentDidMount() {
@@ -131,7 +132,7 @@ class UserPlantsPage extends React.PureComponent {
   /**
    * @param {UserPlant} userPlant
    */
-  onSubmitPlantCreate = (userPlant) => {
+  onSubmitPlantAdd = (userPlant) => {
     console.warn('Add plant:');
     console.log(userPlant);
     const path = generatePath(Routes.USER_PLANTS);
@@ -199,10 +200,10 @@ class UserPlantsPage extends React.PureComponent {
         this.props.history.push(path);
       })
       .catch((error) => {
-        const plantsErrorMessage = "Error updating user plant";
+        const plantsErrorMessage = "Error deleting user plant";
         this.props.history.push(path);
         this.setState({
-          updateUserPlantErrorMessage: plantsErrorMessage,
+          deleteUserPlantErrorMessage: plantsErrorMessage,
         });
       });
   }
@@ -273,7 +274,7 @@ class UserPlantsPage extends React.PureComponent {
               categories={categories}
               formLabel="Add new plant"
               initialValues={initialValues}
-              onSubmit={this.onSubmitPlantCreate}
+              onSubmit={this.onSubmitPlantAdd}
               onBackToList={this.navigateToPlantList}
               rooms={rooms}
               plants={plants}
