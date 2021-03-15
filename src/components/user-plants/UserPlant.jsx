@@ -10,7 +10,7 @@ import {
   plantHumidityUnknown,
   plantTemperatureOptions,
 } from 'constants/PlantConstants';
-import { plantPropTypes } from 'proptypes/PlantsPropTypes';
+// import { plantPropTypes } from 'proptypes/PlantsPropTypes';
 import PlantExposureIcon from 'components/plants/icons/PlantExposureIcon';
 import PlantHumidityIcon from 'components/plants/icons/PlantHumidityIcon';
 import PlantBloomingIcon from 'components/plants/icons/PlantBloomingIcon';
@@ -26,9 +26,10 @@ const UserPlant = ({ categories, onEdit, userPlant, rooms, plants }) => {
   const asYmd = UserPlantFormFields.getDateAsYMD;
   const asAgo = (value) => moment.isMoment(value) ? value.fromNow() : '';
 
-  const userPlantCategory = findValueByKey(categories, userPlant.category);
   const userPlantRoom = findValueByKey(rooms, userPlant.room);
-  const userPlantPlant = findValueByKey(plants, userPlant.plant);
+
+  const userPlantWateringInterval = userPlant.wateringInterval;
+  const userPlantFertilizingInterval = userPlant.fertilizingInterval;
 
   const userPlantDifficulty = findValueByKey(plantDifficultyOptions, userPlant.difficulty);
   /**
@@ -45,23 +46,23 @@ const UserPlant = ({ categories, onEdit, userPlant, rooms, plants }) => {
 
   return (
     <tr key={ userPlant.id } onClick={ () => onEdit(userPlant.id) }>
-      <td>{ userPlant.name }</td>
-      <td>{ userPlantPlant }</td>
-      <td>{ userPlantCategory }</td>
+      <td className="text-center">{ userPlant.name }</td>
+      <td className="text-center">{ userPlantWateringInterval }</td>
+      <td className="text-center">{ userPlantFertilizingInterval }</td>
+      <td className="text-center">{ userPlantRoom }</td>
       <td className="plant-attribute-icon text-center" title={ userPlantExposure.name }>
         <PlantExposureIcon plantExposure={ userPlantExposure } />
       </td>
       <td className="plant-attribute-icon-sm text-center">
         <PlantHumidityIcon plantHumidity={ userPlantHumidity } />
       </td>
-      <td>{ userPlantTemperature }</td>
+      <td className="text-center">{ userPlantTemperature }</td>
       <td className="plant-attribute-icon text-center">
         <PlantBloomingIcon plantBlooming={ userPlant.blooming } />
       </td>
-      <td>{ userPlantDifficulty }</td>
-      <td>{ userPlantRoom }</td>
-      <td>{ userPlantLastFertilized }</td>
-      <td>{ userPlantLastWatered }</td>
+      <td className="text-center">{ userPlantDifficulty }</td>
+      <td className="text-center">{ userPlantLastFertilized }</td>
+      <td className="text-center">{ userPlantLastWatered }</td>
     </tr>
   );
 };

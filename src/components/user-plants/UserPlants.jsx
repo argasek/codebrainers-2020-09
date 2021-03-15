@@ -19,17 +19,17 @@ const UserPlants = ({ userPlants, ...rest }) => {
     <Table hover striped responsive>
       <thead className="thead-dark">
       <tr>
-        <th>Name</th>
-        <th>Type of Plant</th>
-        <th>Category of Plant</th>
-        <th>Exposure</th>
-        <th>Humidity</th>
-        <th>Temperature</th>
-        <th>Blooming</th>
-        <th>Difficulty</th>
-        <th>Room</th>
-        <th>Last Fertilized</th>
-        <th>Last Watered</th>
+        <th className="text-center">Name</th>
+        <th className="text-center">Watering Interval</th>
+        <th className="text-center">Fertilizing Interval</th>
+        <th className="text-center">Room</th>
+        <th className="text-center">Exposure</th>
+        <th className="text-center">Humidity</th>
+        <th className="text-center">Temperature</th>
+        <th className="text-center">Blooming</th>
+        <th className="text-center">Difficulty</th>
+        <th className="text-center">Last Fertilized</th>
+        <th className="text-center">Last Watered</th>
       </tr>
       </thead>
       <tbody>

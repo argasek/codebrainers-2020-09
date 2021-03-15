@@ -64,6 +64,14 @@ class UserPlant {
   @JsonType(Number)
   @JsonProperty()
   user = undefined;
+
+  @JsonType(Number)
+  @JsonProperty()
+  wateringInterval = 0;
+
+  @JsonType(Number)
+  @JsonProperty()
+  fertilizingInterval = 0;
 }
 
 export default UserPlant;
